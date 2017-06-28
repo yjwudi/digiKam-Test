@@ -6,7 +6,7 @@
 #include "../geomotry/drectangle.h"
 #include "../geomotry/rectangle.h"
 
-namespace dlib
+//namespace dlib
 {
 
 // ----------------------------------------------------------------------------------------
@@ -71,8 +71,8 @@ namespace dlib
         !*/
 
         bool operator() (
-            const dlib::rectangle& a,
-            const dlib::rectangle& b
+            const  rectangle& a,
+            const  rectangle& b
         ) const;
         /*!
             ensures

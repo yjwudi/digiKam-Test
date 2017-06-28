@@ -7,8 +7,8 @@
 #include "utilities_abstract.h"
 //#include "../geometry.h"
 
-namespace dlib
-{
+//namespace dlib
+//{
 
 // ----------------------------------------------------------------------------------------
 
@@ -32,7 +32,7 @@ namespace dlib
     inline void randomize_parameters (
         tensor& params,
         unsigned long num_inputs_and_outputs,
-        rand& rnd
+        drand& rnd
     )
     {
         for (auto& val : params)
@@ -167,7 +167,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #endif // DLIB_DNn_UTILITIES_H_ 
 

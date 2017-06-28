@@ -12,8 +12,8 @@
 #include <limits>
 
 
-namespace dlib
-{
+//namespace dlib
+//{
     /*!
         The point of the two functions defined in this file is to make statements
         of the form conj(trans(m)) and trans(conj(m)) look the same so that it is
@@ -64,7 +64,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #endif // DLIB_MATRIx_CONJ_TRANS_FUNCTIONS
 

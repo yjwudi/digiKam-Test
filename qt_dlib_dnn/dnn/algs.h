@@ -228,7 +228,7 @@ typedef memory_manager_stateless_kernel_1<char> default_memory_manager;
     )
     {
         using std::swap;
-        //using dlib::swap;
+        //using  swap;
 
         if ( one < two )
         {
@@ -341,7 +341,7 @@ typedef memory_manager_stateless_kernel_1<char> default_memory_manager;
     !*/
     {
         using std::swap;
-        //using dlib::swap;
+        //using  swap;
         swap(a,b);
     }
 

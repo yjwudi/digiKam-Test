@@ -6,7 +6,7 @@
 #include "core_abstract.h"
 #include "../image_processing/full_object_detection_abstract.h"
 
-namespace dlib
+//namespace dlib
 {
 
 // ----------------------------------------------------------------------------------------
@@ -23,7 +23,7 @@ namespace dlib
                 But importantly, you are able to define your own loss layers to suit your
                 needs.  You do this by creating a class that defines an interface matching
                 the one described by this EXAMPLE_LOSS_LAYER_ class.  Note that there is no
-                dlib::EXAMPLE_LOSS_LAYER_ type.  It is shown here purely to document the
+                 EXAMPLE_LOSS_LAYER_ type.  It is shown here purely to document the
                 interface that a loss layer must implement.
 
                 A loss layer can optionally provide a to_label() method that converts the

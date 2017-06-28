@@ -8,8 +8,8 @@
 #include "../geomotry/rectangle.h"
 #include <vector>
 
-namespace dlib
-{
+//namespace dlib
+//{
 
 // ----------------------------------------------------------------------------------------
 
@@ -187,7 +187,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #endif // DLIB_BOX_OVERlAP_TESTING_Hh_
 

@@ -6,8 +6,8 @@
 //#include "drectangle_abstract.h"
 #include "../geomotry/rectangle.h"
 
-namespace dlib
-{
+//namespace dlib
+//{
     class drectangle;
     drectangle operator* (
         const drectangle& rect,
@@ -36,7 +36,7 @@ namespace dlib
         {}
 
         drectangle (
-            const dlib::vector<double,2>& p
+            const  dvector<double,2>& p
         ) :
             l(p.x()),
             t(p.y()),
@@ -47,8 +47,8 @@ namespace dlib
 
         template <typename T, typename U>
         drectangle (
-            const vector<T,2>& p1,
-            const vector<U,2>& p2
+            const dvector<T,2>& p1,
+            const dvector<U,2>& p2
         )
         {
             *this = drectangle(p1) + drectangle(p2);
@@ -80,17 +80,17 @@ namespace dlib
         double& right()  { return r; }
         double& bottom() { return b; }
 
-        const dlib::vector<double,2> tl_corner (
-        ) const { return dlib::vector<double,2>(left(), top()); }
+        const  dvector<double,2> tl_corner (
+        ) const { return  dvector<double,2>(left(), top()); }
 
-        const dlib::vector<double,2> bl_corner (
-        ) const { return dlib::vector<double,2>(left(), bottom()); } 
+        const  dvector<double,2> bl_corner (
+        ) const { return  dvector<double,2>(left(), bottom()); } 
 
-        const dlib::vector<double,2> tr_corner (
-        ) const { return dlib::vector<double,2>(right(), top()); }
+        const  dvector<double,2> tr_corner (
+        ) const { return  dvector<double,2>(right(), top()); }
 
-        const dlib::vector<double,2> br_corner (
-        ) const { return dlib::vector<double,2>(right(), bottom()); }
+        const  dvector<double,2> br_corner (
+        ) const { return  dvector<double,2>(right(), bottom()); }
 
         double width (
         ) const 
@@ -149,7 +149,7 @@ namespace dlib
         }
 
         bool contains (
-            const dlib::vector<double,2>& p
+            const  dvector<double,2>& p
         ) const
         {
             if (p.x() < l || p.x() > r || p.y() < t || p.y() > b)
@@ -188,7 +188,7 @@ namespace dlib
         }
 
         drectangle& operator += (
-            const dlib::vector<double,2>& p
+            const  dvector<double,2>& p
         )
         {
             *this = *this + drectangle(p);
@@ -279,7 +279,7 @@ namespace dlib
             return in;
         }
 
-        dlib::vector<double,2> p1, p2;
+         dvector<double,2> p1, p2;
         in >> p1;
         in >> p2;
         item = drectangle(p1) + drectangle(p2);
@@ -297,17 +297,17 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-    inline dlib::vector<double,2> center (
+    inline  dvector<double,2> center (
         const drectangle& rect
     )
     {
-        dlib::vector<double,2> temp(rect.left() + rect.right(),
+         dvector<double,2> temp(rect.left() + rect.right(),
                                     rect.top() + rect.bottom());
 
         return temp/2.0;
     }
 
-    inline dlib::vector<double,2> dcenter (
+    inline  dvector<double,2> dcenter (
         const drectangle& rect
     )
     {
@@ -323,7 +323,7 @@ namespace dlib
         {
             const double width = (rect.right()-rect.left())*scale;
             const double height = (rect.bottom()-rect.top())*scale;
-            const dlib::vector<double,2> p = center(rect);
+            const  dvector<double,2> p = center(rect);
             return drectangle(p.x()-width/2, p.y()-height/2, p.x()+width/2, p.y()+height/2);
         }
         else
@@ -350,14 +350,14 @@ namespace dlib
 
     inline drectangle operator+ (
         const drectangle& r,
-        const dlib::vector<double,2>& p
+        const  dvector<double,2>& p
     )
     {
         return r + drectangle(p);
     }
 
     inline drectangle operator+ (
-        const dlib::vector<double,2>& p,
+        const  dvector<double,2>& p,
         const drectangle& r
     )
     {
@@ -367,7 +367,7 @@ namespace dlib
     template <typename T>
     inline drectangle translate_rect (
         const drectangle& rect,
-        const dlib::vector<T,2>& p
+        const  dvector<T,2>& p
     )
     {
         drectangle result;
@@ -388,7 +388,7 @@ namespace dlib
     ) { return a.area(); }
 
     inline drectangle centered_drect (
-        const dlib::vector<double,2>& p,
+        const  dvector<double,2>& p,
         double width,
         double height
     )
@@ -459,7 +459,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #endif // DLIB_DRECTANGLe_
 

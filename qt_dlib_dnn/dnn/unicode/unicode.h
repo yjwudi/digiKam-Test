@@ -11,8 +11,8 @@
 
 #include <fstream>
 
-namespace dlib
-{
+//namespace dlib
+//{
 
 // ----------------------------------------------------------------------------------------
 
@@ -21,8 +21,8 @@ namespace dlib
 #if defined(__GNUC__) && __GNUC__ < 4 && __GNUC_MINOR__ < 4
     struct unichar_traits 
     {
-        typedef dlib::unichar    char_type;
-        typedef dlib::unichar    int_type;
+        typedef  unichar    char_type;
+        typedef  unichar    int_type;
         typedef std::streamoff   off_type;
         typedef std::streampos   pos_type;
         typedef std::mbstate_t   state_type;
@@ -612,7 +612,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #ifdef NO_MAKEFILE
 #include "unicode.cpp"

@@ -7,7 +7,7 @@
 #include <string>
 #include "hash.h"
 
-namespace dlib 
+//namespace dlib 
 {
 
 // ----------------------------------------------------------------------------------------

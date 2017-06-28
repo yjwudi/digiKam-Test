@@ -8,7 +8,7 @@
 #include <iostream>
 #include "../matrix/matrix_abstract.h"
 
-namespace dlib
+//namespace dlib
 {
     template <
         typename T,
@@ -37,9 +37,9 @@ namespace dlib
                 Also note that this object performs the appropriate integer and 
                 floating point conversions and promotions when vectors of mixed
                 type are used together.  For example:
-                    vector<int,3> vi;
-                    vector<double,2> vd;
-                    vd + vi == a vector<double,3> object type since that is what
+                    dvector<int,3> vi;
+                    dvector<double,2> vd;
+                    vd + vi == a dvector<double,3> object type since that is what
                                is needed to contain the result of vi+vd without
                                any loss of information.
         !*/
@@ -84,7 +84,7 @@ namespace dlib
 
         template <typename U, long NRv>
         vector (
-            const vector<U,NRv>& v
+            const dvector<U,NRv>& v
         );
         /*!
             ensures
@@ -215,7 +215,7 @@ namespace dlib
                 - returns the result of the dot product between *this and rhs
         !*/
 
-        vector<T,3> cross (
+        dvector<T,3> cross (
             const vector& rhs
         ) const;
         /*!
@@ -223,7 +223,7 @@ namespace dlib
                 - returns the result of the cross product between *this and rhs
         !*/
 
-        vector<double,NR> normalize (
+        dvector<double,NR> normalize (
         ) const;
         /*!
             ensures
@@ -310,7 +310,7 @@ namespace dlib
 
         template <typename U, long NR2>
         bool operator== (
-            const vector<U,NR2>& rhs
+            const dvector<U,NR2>& rhs
         ) const;
         /*!
             ensures
@@ -322,7 +322,7 @@ namespace dlib
 
         template <typename U, long NR2>
         bool operator!= (
-            const vector<U,NR2>& rhs
+            const dvector<U,NR2>& rhs
         ) const;
         /*!
             ensures
@@ -343,7 +343,7 @@ namespace dlib
 
     template<typename T, typename U, long NR>
     vector operator* (
-        const vector<T,NR> & lhs,
+        const dvector<T,NR> & lhs,
         const U rhs
     );
     /*!
@@ -354,7 +354,7 @@ namespace dlib
     template<typename T, typename U, long NR>
     vector operator* (
         const U lhs,
-        const vector<T,NR> & rhs   
+        const dvector<T,NR> & rhs   
     );
     /*! 
         ensures
@@ -363,8 +363,8 @@ namespace dlib
 
     template<typename T, long NR>
     inline void swap (
-        vector<T,NR> & a, 
-        vector<T,NR> & b 
+        dvector<T,NR> & a, 
+        dvector<T,NR> & b 
     ) { a.swap(b); }   
     /*!
         provides a global swap function
@@ -372,7 +372,7 @@ namespace dlib
 
     template<typename T, long NR>
     void serialize (
-        const vector<T,NR>& item, 
+        const dvector<T,NR>& item, 
         std::ostream& out
     );   
     /*!
@@ -381,7 +381,7 @@ namespace dlib
 
     template<typename T, long NR>
     void deserialize (
-        vector<T,NR>& item, 
+        dvector<T,NR>& item, 
         std::istream& in
     );   
     /*!
@@ -391,7 +391,7 @@ namespace dlib
     template<typename T>
     std::ostream& operator<< (
         std::ostream& out, 
-        const vector<T,3>& item 
+        const dvector<T,3>& item 
     );   
     /*!
         ensures
@@ -401,7 +401,7 @@ namespace dlib
     template<typename T>
     std::istream& operator>>(
         std::istream& in, 
-        vector<T,3>& item 
+        dvector<T,3>& item 
     );   
     /*!
         ensures
@@ -412,7 +412,7 @@ namespace dlib
     template<typename T>
     std::ostream& operator<< (
         std::ostream& out, 
-        const vector<T,2>& item 
+        const dvector<T,2>& item 
     );   
     /*!
         ensures
@@ -422,7 +422,7 @@ namespace dlib
     template<typename T>
     std::istream& operator>>(
         std::istream& in, 
-        vector<T,2>& item 
+        dvector<T,2>& item 
     );   
     /*!
         ensures
@@ -436,13 +436,13 @@ namespace dlib
         This is just a typedef of the vector object. 
     !*/
 
-    typedef vector<long,2> point;
+    typedef dvector<long,2> point;
 
     /*!A dpoint
         This is just a typedef of the vector object. 
     !*/
 
-    typedef vector<double,2> dpoint;
+    typedef dvector<double,2> dpoint;
 
 // ----------------------------------------------------------------------------------------
 
@@ -451,12 +451,12 @@ namespace dlib
 namespace std
 {
     /*!
-        Define std::less<vector<T,3> > so that you can use vectors in the associative containers.
+        Define std::less<dvector<T,3> > so that you can use vectors in the associative containers.
     !*/
     template<typename T>
-    struct less<dlib::vector<T,3> > : public binary_function<dlib::vector<T,3> ,dlib::vector<T,3> ,bool>
+    struct less< dvector<T,3> > : public binary_function< dvector<T,3> , dvector<T,3> ,bool>
     {
-        inline bool operator() (const dlib::vector<T,3> & a, const dlib::vector<T,3> & b) const
+        inline bool operator() (const  dvector<T,3> & a, const  dvector<T,3> & b) const
         { 
             if      (a.x() < b.x()) return true;
             else if (a.x() > b.x()) return false;
@@ -469,12 +469,12 @@ namespace std
     };
 
     /*!
-        Define std::less<vector<T,2> > so that you can use vector<T,2>s in the associative containers.
+        Define std::less<dvector<T,2> > so that you can use dvector<T,2>s in the associative containers.
     !*/
     template<typename T>
-    struct less<dlib::vector<T,2> > : public binary_function<dlib::vector<T,2> ,dlib::vector<T,2> ,bool>
+    struct less< dvector<T,2> > : public binary_function< dvector<T,2> , dvector<T,2> ,bool>
     {
-        inline bool operator() (const dlib::vector<T,2> & a, const dlib::vector<T,2> & b) const
+        inline bool operator() (const  dvector<T,2> & a, const  dvector<T,2> & b) const
         { 
             if      (a.x() < b.x()) return true;
             else if (a.x() > b.x()) return false;

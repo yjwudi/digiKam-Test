@@ -8,8 +8,8 @@
 #include <iostream>
 #include "layers.h"
 
-namespace dlib
-{
+//namespace dlib
+//{
     class sgd
     {
     public:
@@ -99,26 +99,26 @@ namespace dlib
             update_considering_bias(learning_rate, l, params_grad, params_grad.size()/2);
             return v;
         }
-
+/*
         friend void serialize(const sgd& item, std::ostream& out)
         {
-            serialize("sgd2", out);
+            serialize_str("sgd2", out);
             serialize(item.v, out);
-            serialize(item.weight_decay, out);
-            serialize(item.momentum, out);
+            serializef(item.weight_decay, out);
+            serializef(item.momentum, out);
         }
 
         friend void deserialize(sgd& item, std::istream& in)
         {
             std::string version;
-            deserialize(version, in);
+            deserialize_str(version, in);
             if (version != "sgd2")
-                throw serialization_error("Unexpected version found while deserializing dlib::sgd.");
+                throw serialization_error("Unexpected version found while deserializing  sgd.");
             deserialize(item.v, in);
-            deserialize(item.weight_decay, in);
-            deserialize(item.momentum, in);
+            deserializef(item.weight_decay, in);
+            deserializef(item.momentum, in);
         }
-
+*/
     private:
 
         template <typename layer_type> 
@@ -266,34 +266,34 @@ namespace dlib
             return s;
         }
 
-
+/*
         friend void serialize(const adam& item, std::ostream& out)
         {
-            serialize("adam2", out);
+            serialize_str("adam2", out);
             serialize(item.m, out);
             serialize(item.v, out);
             serialize(item.s, out);
-            serialize(item.weight_decay, out);
-            serialize(item.momentum1, out);
-            serialize(item.momentum2, out);
-            serialize(item.t, out);
+            serializef(item.weight_decay, out);
+            serializef(item.momentum1, out);
+            serializef(item.momentum2, out);
+            serializef(item.t, out);
         }
 
         friend void deserialize(adam& item, std::istream& in)
         {
             std::string version;
-            deserialize(version, in);
+            deserialize_str(version, in);
             if (version != "adam2")
-                throw serialization_error("Unexpected version found while deserializing dlib::adam.");
+                throw serialization_error("Unexpected version found while deserializing  adam.");
             deserialize(item.m, in);
             deserialize(item.v, in);
             deserialize(item.s, in);
-            deserialize(item.weight_decay, in);
-            deserialize(item.momentum1, in);
-            deserialize(item.momentum2, in);
-            deserialize(item.t, in);
+            deserializef(item.weight_decay, in);
+            deserializef(item.momentum1, in);
+            deserializef(item.momentum2, in);
+            deserializef(item.t, in);
         }
-
+*/
     private:
 
         template <typename layer_type> 
@@ -349,7 +349,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #endif // DLIB_DNn_SOLVERS_H_
 

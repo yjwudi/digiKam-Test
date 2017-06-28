@@ -17,15 +17,15 @@
 #pragma GCC diagnostic ignored "-Warray-bounds"
 #endif
 
-namespace dlib
-{
+//namespace dlib
+//{
 
 // ----------------------------------------------------------------------------------------
 
     /*!
         A matrix layout object is any object that contains a templated class called "layout"
         with an interface identical to one below:
-        (Note that all the template arguments are just the template arguments from the dlib::matrix 
+        (Note that all the template arguments are just the template arguments from the  matrix 
         object and the member functions are defined identically to the ones with the same 
         signatures inside the matrix object.)
 
@@ -1261,7 +1261,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4 && __GNUC_MINOR__ >= 8) || (__GNUC__ > 4))
 #pragma GCC diagnostic pop

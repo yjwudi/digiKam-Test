@@ -6,8 +6,8 @@
 #include "matrix.h"
 #include "../generic_image.h"
 
-namespace dlib
-{
+//namespace dlib
+//{
     template <
         typename T,
         long NR,
@@ -103,7 +103,7 @@ namespace dlib
         return img.nc()*sizeof(T);
     }
 
-}
+//}
 
 #endif // DLIB_MATRIX_GENERIC_iMAGE_Hh_
 

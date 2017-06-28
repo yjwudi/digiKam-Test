@@ -5,7 +5,7 @@
 
 #include "array_kernel_abstract.h"
 
-namespace dlib
+//namespace dlib
 {
     template <typename T>
     void split_array (
@@ -16,7 +16,7 @@ namespace dlib
     /*!
         requires
             - 0 <= frac <= 1
-            - T must be an array type such as dlib::array or std::vector
+            - T must be an array type such as  array or std::vector
         ensures
             - This function takes the elements of a and splits them into two groups.  The
               first group remains in a and the second group is put into b.  The ordering of

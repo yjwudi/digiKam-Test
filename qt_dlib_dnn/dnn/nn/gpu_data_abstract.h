@@ -6,7 +6,7 @@
 #include "cuda_errors.h"
 #include "../serialize.h"
 
-namespace dlib
+//namespace dlib
 {
 
 // ----------------------------------------------------------------------------------------

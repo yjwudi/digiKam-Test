@@ -5,7 +5,7 @@
 
 #include "../algs.h"
 
-namespace dlib
+//namespace dlib
 {
     template <
         typename T

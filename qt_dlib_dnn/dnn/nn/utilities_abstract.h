@@ -6,7 +6,7 @@
 #include "core_abstract.h"
 #include "../geometry/vector_abstract.h"
 
-namespace dlib
+//namespace dlib
 {
 
 // ----------------------------------------------------------------------------------------

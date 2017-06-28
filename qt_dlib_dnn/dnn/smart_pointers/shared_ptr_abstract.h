@@ -40,7 +40,7 @@
                 objects in different threads that point to the same object.
 
                 If you want a thread safe version of this object you should use the
-                dlib::shared_ptr_thread_safe object instead.
+                 shared_ptr_thread_safe object instead.
         !*/
 
     public:

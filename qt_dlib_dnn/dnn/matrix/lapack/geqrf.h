@@ -6,7 +6,7 @@
 #include "fortran_id.h"
 #include "../matrix.h"
 
-namespace dlib
+//namespace dlib
 {
     namespace lapack
     {

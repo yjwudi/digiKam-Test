@@ -13,8 +13,8 @@
 #include "../image_transforms/image_pyramid.h"
 
 
-namespace dlib
-{
+//namespace dlib
+//{
 
 // ----------------------------------------------------------------------------------------
 
@@ -23,7 +23,7 @@ namespace dlib
     {
         const static bool always_false = sizeof(T)!=sizeof(T); 
         static_assert(always_false, "Unsupported type given to input<>.  input<> only supports "
-            "dlib::matrix and dlib::array2d objects."); 
+            " matrix and  array2d objects."); 
     };
 
 // ----------------------------------------------------------------------------------------
@@ -117,7 +117,7 @@ namespace dlib
 /*
         friend void serialize(const input_rgb_image& item, std::ostream& out)
         {
-            serialize("input_rgb_image", out);
+            serialize_str("input_rgb_image", out);
             serialize(item.avg_red, out);
             serialize(item.avg_green, out);
             serialize(item.avg_blue, out);
@@ -128,7 +128,7 @@ namespace dlib
             std::string version;
             deserialize(version, in);
             if (version != "input_rgb_image")
-                throw serialization_error("Unexpected version found while deserializing dlib::input_rgb_image.");
+                throw serialization_error("Unexpected version found while deserializing  input_rgb_image.");
             deserialize(item.avg_red, in);
             deserialize(item.avg_green, in);
             deserialize(item.avg_blue, in);
@@ -239,7 +239,7 @@ namespace dlib
 /*
         friend void serialize(const input_rgb_image_sized& item, std::ostream& out)
         {
-            serialize("input_rgb_image_sized", out);
+            serialize_str("input_rgb_image_sized", out);
             serialize(item.avg_red, out);
             serialize(item.avg_green, out);
             serialize(item.avg_blue, out);
@@ -252,7 +252,7 @@ namespace dlib
             std::string version;
             deserialize(version, in);
             if (version != "input_rgb_image_sized")
-                throw serialization_error("Unexpected version found while deserializing dlib::input_rgb_image_sized.");
+                throw serialization_error("Unexpected version found while deserializing  input_rgb_image_sized.");
             deserialize(item.avg_red, in);
             deserialize(item.avg_green, in);
             deserialize(item.avg_blue, in);
@@ -262,7 +262,7 @@ namespace dlib
             if (nr != NR || nc != NC)
             {
                 std::ostringstream sout;
-                sout << "Wrong image dimensions found while deserializing dlib::input_rgb_image_sized.\n";
+                sout << "Wrong image dimensions found while deserializing  input_rgb_image_sized.\n";
                 sout << "Expected "<<NR<<" rows and "<<NC<< " columns, but found "<<nr<<" rows and "<<nc<<" columns.";
                 throw serialization_error(sout.str());
             }
@@ -370,7 +370,7 @@ namespace dlib
 
 //        friend void serialize(const input& /*item*/, std::ostream& out)
 //        {
-//            serialize("input<matrix>", out);
+//            serialize_str("input<matrix>", out);
 //        }
 
 //        friend void deserialize(input& /*item*/, std::istream& in)
@@ -378,7 +378,7 @@ namespace dlib
 //            std::string version;
 //            deserialize(version, in);
 //            if (version != "input<matrix>")
-//                throw serialization_error("Unexpected version found while deserializing dlib::input.");
+//                throw serialization_error("Unexpected version found while deserializing  input.");
 //        }
 
         friend std::ostream& operator<<(std::ostream& out, const input& /*item*/)
@@ -467,7 +467,7 @@ namespace dlib
         /*
         friend void serialize(const input& item, std::ostream& out)
         {
-            serialize("input<array2d>", out);
+            serialize_str("input<array2d>", out);
         }
 
 
@@ -476,7 +476,7 @@ namespace dlib
             std::string version;
             deserialize(version, in);
             if (version != "input<array2d>")
-                throw serialization_error("Unexpected version found while deserializing dlib::input.");
+                throw serialization_error("Unexpected version found while deserializing  input.");
         }
         */
         friend std::ostream& operator<<(std::ostream& out, const input& item)
@@ -609,7 +609,7 @@ namespace dlib
 /*
         friend void serialize(const input_rgb_image_pyramid& item, std::ostream& out)
         {
-            serialize("input_rgb_image_pyramid", out);
+            serialize_str("input_rgb_image_pyramid", out);
             serialize(item.avg_red, out);
             serialize(item.avg_green, out);
             serialize(item.avg_blue, out);
@@ -620,7 +620,7 @@ namespace dlib
             std::string version;
             deserialize(version, in);
             if (version != "input_rgb_image_pyramid")
-                throw serialization_error("Unexpected version found while deserializing dlib::input_rgb_image_pyramid.");
+                throw serialization_error("Unexpected version found while deserializing  input_rgb_image_pyramid.");
             deserialize(item.avg_red, in);
             deserialize(item.avg_green, in);
             deserialize(item.avg_blue, in);
@@ -645,7 +645,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #endif // DLIB_DNn_INPUT_H_
 

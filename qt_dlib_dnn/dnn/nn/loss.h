@@ -12,8 +12,8 @@
 #include "../image_processing/full_object_detection.h"
 #include <sstream>
 
-namespace dlib
-{
+//namespace dlib
+//{
 
 // ----------------------------------------------------------------------------------------
 
@@ -104,7 +104,7 @@ namespace dlib
             std::string version;
             deserialize_str(version, in);
             if (version != "loss_binary_hinge_")
-                throw serialization_error("Unexpected version found while deserializing dlib::loss_binary_hinge_.");
+                throw serialization_error("Unexpected version found while deserializing  loss_binary_hinge_.");
         }
 
         friend std::ostream& operator<<(std::ostream& out, const loss_binary_hinge_& )
@@ -221,7 +221,7 @@ namespace dlib
             std::string version;
             deserialize_str(version, in);
             if (version != "loss_binary_log_")
-                throw serialization_error("Unexpected version found while deserializing dlib::loss_binary_log_.");
+                throw serialization_error("Unexpected version found while deserializing  loss_binary_log_.");
         }
 
         friend std::ostream& operator<<(std::ostream& out, const loss_binary_log_& )
@@ -338,7 +338,7 @@ namespace dlib
             std::string version;
             deserialize_str(version, in);
             if (version != "loss_multiclass_log_")
-                throw serialization_error("Unexpected version found while deserializing dlib::loss_multiclass_log_.");
+                throw serialization_error("Unexpected version found while deserializing  loss_multiclass_log_.");
         }
 
         friend std::ostream& operator<<(std::ostream& out, const loss_multiclass_log_& )
@@ -419,12 +419,12 @@ namespace dlib
     {
         int version = 1;
 
-        serialize(version, out);
-        serialize(item.detector_width, out);
-        serialize(item.detector_height, out);
-        serialize(item.loss_per_false_alarm, out);
-        serialize(item.loss_per_missed_target, out);
-        serialize(item.truth_match_iou_threshold, out);
+        serialize_int(version, out);
+        serialize_ulong(item.detector_width, out);
+        serialize_ulong(item.detector_height, out);
+        serializelf(item.loss_per_false_alarm, out);
+        serializelf(item.loss_per_missed_target, out);
+        serializelf(item.truth_match_iou_threshold, out);
         serialize(item.overlaps_nms, out);
         serialize(item.overlaps_ignore, out);
     }
@@ -432,14 +432,14 @@ namespace dlib
     inline void deserialize(mmod_options& item, std::istream& in)
     {
         int version = 0;
-        deserialize(version, in);
+        deserialize_int(version, in);
         if (version != 1)
-            throw serialization_error("Unexpected version found while deserializing dlib::mmod_options");
-        deserialize(item.detector_width, in);
-        deserialize(item.detector_height, in);
-        deserialize(item.loss_per_false_alarm, in);
-        deserialize(item.loss_per_missed_target, in);
-        deserialize(item.truth_match_iou_threshold, in);
+            throw serialization_error("Unexpected version found while deserializing  mmod_options");
+        deserialize_ulong(item.detector_width, in);
+        deserialize_ulong(item.detector_height, in);
+        deserializelf(item.loss_per_false_alarm, in);
+        deserializelf(item.loss_per_missed_target, in);
+        deserializelf(item.truth_match_iou_threshold, in);
         deserialize(item.overlaps_nms, in);
         deserialize(item.overlaps_ignore, in);
     }
@@ -684,9 +684,9 @@ namespace dlib
         friend void deserialize(loss_mmod_& item, std::istream& in)
         {
             std::string version;
-            deserialize(version, in);
+            deserialize_str(version, in);
             if (version != "loss_mmod_")
-                throw serialization_error("Unexpected version found while deserializing dlib::loss_mmod_.");
+                throw serialization_error("Unexpected version found while deserializing  loss_mmod_.");
             deserialize(item.options, in);
         }
 
@@ -1061,14 +1061,14 @@ namespace dlib
         friend void serialize(const loss_metric_& item, std::ostream& out)
         {
             serialize_str("loss_metric_2", out);
-            serialize(item.margin, out);
-            serialize(item.dist_thresh, out);
+            serializef(item.margin, out);
+            serializef(item.dist_thresh, out);
         }
 
         friend void deserialize(loss_metric_& item, std::istream& in)
         {
             std::string version;
-            deserialize(version, in);
+            deserialize_str(version, in);
             if (version == "loss_metric_")
             {
                 // These values used to be hard coded, so for this version of the metric
@@ -1079,12 +1079,12 @@ namespace dlib
             }
             else if (version == "loss_metric_2")
             {
-                deserialize(item.margin, in);
-                deserialize(item.dist_thresh, in);
+                deserializef(item.margin, in);
+                deserializef(item.dist_thresh, in);
             }
             else
             {
-                throw serialization_error("Unexpected version found while deserializing dlib::loss_metric_.  Instead found " + version);
+                throw serialization_error("Unexpected version found while deserializing  loss_metric_.  Instead found " + version);
             }
         }
 
@@ -1199,9 +1199,9 @@ namespace dlib
         friend void deserialize(loss_mean_squared_& , std::istream& in)
         {
             std::string version;
-            deserialize(version, in);
+            deserialize_str(version, in);
             if (version != "loss_mean_squared_")
-                throw serialization_error("Unexpected version found while deserializing dlib::loss_mean_squared_.");
+                throw serialization_error("Unexpected version found while deserializing  loss_mean_squared_.");
         }
 
         friend std::ostream& operator<<(std::ostream& out, const loss_mean_squared_& )
@@ -1318,9 +1318,9 @@ namespace dlib
         friend void deserialize(loss_mean_squared_multioutput_& , std::istream& in)
         {
             std::string version;
-            deserialize(version, in);
+            deserialize_str(version, in);
             if (version != "loss_mean_squared_multioutput_")
-                throw serialization_error("Unexpected version found while deserializing dlib::loss_mean_squared_.");
+                throw serialization_error("Unexpected version found while deserializing  loss_mean_squared_.");
         }
 
         friend std::ostream& operator<<(std::ostream& out, const loss_mean_squared_multioutput_& )
@@ -1341,7 +1341,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #endif // DLIB_DNn_LOSS_H_
 

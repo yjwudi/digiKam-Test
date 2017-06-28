@@ -12,7 +12,7 @@
 #include <complex>
 #include "enable_if.h"
 
-using namespace dlib;
+//using namespace dlib;
 
 
 // ----------------------------------------------------------------------------------------

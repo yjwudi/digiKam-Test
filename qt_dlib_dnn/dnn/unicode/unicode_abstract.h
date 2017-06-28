@@ -8,7 +8,7 @@
 #include <string>
 #include <fstream>
 
-namespace dlib
+//namespace dlib
 {
 
 // ----------------------------------------------------------------------------------------

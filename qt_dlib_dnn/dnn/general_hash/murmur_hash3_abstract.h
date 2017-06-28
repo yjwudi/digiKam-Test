@@ -6,7 +6,7 @@
 #include "../uintn.h"
 #include <utility>
 
-namespace dlib
+//namespace dlib
 {
 
 // ----------------------------------------------------------------------------------------

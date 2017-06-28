@@ -33,11 +33,11 @@ do{                                                                             
         std::ostringstream sout;                                               \
         sout << "Error while calling " << #call << " in file " << __FILE__ << ":" << __LINE__ << ". ";\
         sout << "code: " << error << ", reason: " << cublas_get_error_string(error);\
-        throw dlib::cublas_error(sout.str());                            \
+        throw  cublas_error(sout.str());                            \
     }                                                                          \
 }while(false)
 
-namespace dlib
+//namespace dlib
 {
     namespace cuda 
     {

@@ -3,28 +3,32 @@
 #ifndef DLIB_DNn_TRAINER_H_
 #define DLIB_DNn_TRAINER_H_
 
-#include "trainer_abstract.h"
-#include "core.h"
-#include "solvers.h"
-//#include "../statistics.h"
-#include <chrono>
-#include <fstream>
-#include <sstream>
-#include "../serialize.h"
-
-//#include "../pipe.h"
-//#include "../threads.h"
-#include "cuda_dlib.h"
-//#include "../statistics/running_gradient.h"
 #include <atomic>
 #include <cstdio>
 #include <set>
 #include <future>
 #include <exception>
 #include <mutex>
+#include <vector>
+#include <chrono>
+#include <fstream>
+#include <sstream>
+using std::vector;
 
-namespace dlib
-{
+#include "trainer_abstract.h"
+#include "core.h"
+#include "solvers.h"
+//#include "../statistics.h"
+
+#include "../serialize.h"
+
+//#include "../pipe.h"
+//#include "../threads.h"
+#include "cuda_dlib.h"
+//#include "../statistics/running_gradient.h"
+
+
+
 
 // ----------------------------------------------------------------------------------------
 
@@ -80,7 +84,7 @@ namespace dlib
         explicit dnn_trainer(net_type& net_) : job_pipe(0), net(net_)
         {
             solver_type default_solver;
-            devices.push_back(std::make_shared<device_data>(dlib::cuda::get_device(), net, default_solver));
+            devices.push_back(std::make_shared<device_data>( cuda::get_device(), net, default_solver));
 
             init();
         }
@@ -90,7 +94,7 @@ namespace dlib
             const solver_type& solver_
         ) : job_pipe(0), net(net_) 
         {
-            devices.push_back(std::make_shared<device_data>(dlib::cuda::get_device(), net, solver_));
+            devices.push_back(std::make_shared<device_data>( cuda::get_device(), net, solver_));
 
             init();
         }
@@ -101,9 +105,9 @@ namespace dlib
             const std::vector<int>& cuda_extra_devices
         ) : job_pipe(0), net(net_) 
         {
-            devices.push_back(std::make_shared<device_data>(dlib::cuda::get_device(), net, solver_));
+            devices.push_back(std::make_shared<device_data>( cuda::get_device(), net, solver_));
 
-            const int total_devices = dlib::cuda::get_num_devices();
+            const int total_devices =  cuda::get_num_devices();
 
             // Make device contexts for the extra device ids but be careful to avoid any
             // duplicate ids.
@@ -114,12 +118,12 @@ namespace dlib
                 DLIB_CASSERT(0 <= id && id < total_devices, "Invalid CUDA device id given to dnn_trainer.");
                 // Switch to this device so that any tensor objects that get allocated when
                 // we create the device context happen on this device.
-                dlib::cuda::set_device(id);
+                 cuda::set_device(id);
                 devices.push_back(std::make_shared<device_data>(id, net, solver_, clone_net()));
             }
             // Set the current device back to what it was before this constructor was
             // called.
-            dlib::cuda::set_device(devices[0]->device_id);
+             cuda::set_device(devices[0]->device_id);
 
             init();
         }
@@ -187,7 +191,7 @@ namespace dlib
 
         void train_one_step (
             const std::vector<input_type>& data,
-            const std::vector<training_label_type>& labels 
+            const std::vector<training_label_type>& labels
         )
         {
             DLIB_CASSERT(data.size() == labels.size());
@@ -238,7 +242,7 @@ namespace dlib
 
         void test_one_step (
             const std::vector<input_type>& data,
-            const std::vector<training_label_type>& labels 
+            const std::vector<training_label_type>& labels
         )
         {
             DLIB_CASSERT(data.size() == labels.size());
@@ -289,7 +293,7 @@ namespace dlib
 
         void train (
             const std::vector<input_type>& data,
-            const std::vector<training_label_type>& labels 
+            const std::vector<training_label_type>& labels
         ) 
         {
             DLIB_CASSERT(data.size() == labels.size() && data.size() > 0);
@@ -595,7 +599,7 @@ namespace dlib
             if (next_job.have_data[device])
             {
                 auto&& dev = *devices[device];
-                dlib::cuda::set_device(dev.device_id);
+                 cuda::set_device(dev.device_id);
                 if (next_job.test_only)
                     return dev.net.compute_loss(next_job.t[device], next_job.labels[device].begin());
                 else
@@ -612,7 +616,7 @@ namespace dlib
             if (next_job.have_data[device])
             {
                 auto&& dev = *devices[device];
-                dlib::cuda::set_device(dev.device_id);
+                 cuda::set_device(dev.device_id);
                 no_label_type pick_which_run_update;
                 if (next_job.test_only)
                     return dev.net.compute_loss(next_job.t[device]);
@@ -628,7 +632,7 @@ namespace dlib
         void update_parameters(size_t device)
         {
             auto&& dev = *devices[device];
-            dlib::cuda::set_device(dev.device_id);
+             cuda::set_device(dev.device_id);
             dev.net.update_parameters(make_sstack(dev.solvers), learning_rate);
         }
 
@@ -637,7 +641,7 @@ namespace dlib
             training_label_type pick_which_run_update;
             job_t next_job;
 
-            std::vector<dlib::future<double>> losses(devices.size());
+            std::vector< future<double>> losses(devices.size());
 
             std::vector<tt::multi_device_tensor_averager> averagers;
             // An array of all the parameter tensors in the first network.  We will
@@ -898,14 +902,14 @@ namespace dlib
             int version = 0;
             deserialize(version, in);
             if (version != 8)
-                throw serialization_error("Unexpected version found while deserializing dlib::dnn_trainer.");
+                throw serialization_error("Unexpected version found while deserializing  dnn_trainer.");
 
             size_t num_layers = 0;
             deserialize(num_layers, in);
             if (num_layers != dnn_trainer::num_layers)
             {
                 std::ostringstream sout;
-                sout << "Error deserializing dlib::dnn_trainer.  The saved sync file is for a network with " << std::endl;
+                sout << "Error deserializing  dnn_trainer.  The saved sync file is for a network with " << std::endl;
                 sout << "a different number of layers.  We expected the number of layers to be " << dnn_trainer::num_layers << " but" << std::endl;
                 sout << "instead the file contains " << num_layers << " layers." << std::endl;
                 throw serialization_error(sout.str());
@@ -935,17 +939,17 @@ namespace dlib
 
             if (item.devices.size() > 1)
             {
-                const auto prev_dev = dlib::cuda::get_device();
+                const auto prev_dev =  cuda::get_device();
                 // initialize all the other device networks and solver objects
                 for (size_t i = 1; i < item.devices.size(); ++i)
                 {
                     // Switch to this device so that any tensor objects that get allocated when
                     // we copy this stuff happen on this device.
-                    dlib::cuda::set_device(item.devices[i]->device_id);
+                     cuda::set_device(item.devices[i]->device_id);
                     item.devices[i]->solvers = item.devices[0]->solvers;
                     item.devices[i]->net = item.devices[0]->net;
                 }
-                dlib::cuda::set_device(prev_dev);
+                 cuda::set_device(prev_dev);
             }
         }
 
@@ -1100,10 +1104,10 @@ namespace dlib
             // chop the data into devs blocks, each of about block_size elements.
             size_t block_size = (num+devs-1)/devs;
 
-            const auto prev_dev = dlib::cuda::get_device();
+            const auto prev_dev =  cuda::get_device();
             for (size_t i = 0; i < devs; ++i)
             {
-                dlib::cuda::set_device(devices[i]->device_id);
+                 cuda::set_device(devices[i]->device_id);
 
                 size_t start = i*block_size;
                 size_t stop  = std::min(num, start+block_size);
@@ -1120,7 +1124,7 @@ namespace dlib
                 }
             }
 
-            dlib::cuda::set_device(prev_dev);
+             cuda::set_device(prev_dev);
             job_pipe.enqueue(job);
         }
 
@@ -1182,7 +1186,7 @@ namespace dlib
         }
 
         std::vector<std::shared_ptr<device_data>> devices;
-        dlib::pipe<job_t> job_pipe;
+         pipe<job_t> job_pipe;
         job_t job;
 
 
@@ -1234,7 +1238,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+
 
 #endif // DLIB_DNn_TRAINER_H_
 

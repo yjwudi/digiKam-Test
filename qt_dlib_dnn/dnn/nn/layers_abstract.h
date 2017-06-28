@@ -7,7 +7,7 @@
 #include "core_abstract.h"
 
 
-namespace dlib
+//namespace dlib
 {
 
 // ----------------------------------------------------------------------------------------
@@ -32,7 +32,7 @@ namespace dlib
                 Therefore, by "subnetwork" we mean the part of the network closer to the
                 input.
 
-                Note that there is no dlib::SUBNET type.  It is shown here purely to
+                Note that there is no  SUBNET type.  It is shown here purely to
                 document the interface layer objects expect to see when they interact
                 with a network.
         !*/
@@ -130,7 +130,7 @@ namespace dlib
                 you want to define your own then you simply implement a class with the same
                 interface as EXAMPLE_COMPUTATIONAL_LAYER_.
 
-                Note that there is no dlib::EXAMPLE_COMPUTATIONAL_LAYER_ type.  It is shown
+                Note that there is no  EXAMPLE_COMPUTATIONAL_LAYER_ type.  It is shown
                 here purely to document the interface that a layer object must implement.
 
                 The central work of defining a layer is implementing the forward and backward

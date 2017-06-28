@@ -7,7 +7,7 @@
 
 #include "cuda_errors.h"
 
-namespace dlib
+//namespace dlib
 {
     class tensor;
     class resizable_tensor;

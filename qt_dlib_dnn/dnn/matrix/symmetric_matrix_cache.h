@@ -9,8 +9,8 @@
 #include "../algs.h"
 #include "../array.h"
 
-namespace dlib 
-{
+//namespace dlib 
+//{
 
 // ----------------------------------------------------------------------------------------
 
@@ -27,7 +27,7 @@ namespace dlib
         {
             lookup.assign(this->m.nr(), -1);
 
-            diag_cache = matrix_cast<cache_element_type>(dlib::diag(m_));
+            diag_cache = matrix_cast<cache_element_type>( diag(m_));
         }
 
         op_symm_cache (
@@ -458,7 +458,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #endif // DLIB_SYMMETRIC_MATRIX_CAcHE_Hh_
 

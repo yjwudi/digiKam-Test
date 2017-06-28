@@ -6,7 +6,7 @@
 #include "tensor_abstract.h"
 #include <iostream>
 
-namespace dlib
+//namespace dlib
 {
 
 // ----------------------------------------------------------------------------------------
@@ -24,7 +24,7 @@ namespace dlib
                 This allows us to define solvers that have per layer state, for example, a
                 solver may keep a momentum term and apply it to its update rule.
 
-                Note that there is no dlib::EXAMPLE_SOLVER type.  It is shown here purely
+                Note that there is no  EXAMPLE_SOLVER type.  It is shown here purely
                 to document the interface a solver object must implement.
         !*/
 

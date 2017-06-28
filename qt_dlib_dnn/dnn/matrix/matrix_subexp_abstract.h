@@ -6,7 +6,7 @@
 #include "matrix_abstract.h"
 #include "../geometry/rectangle.h"
 
-namespace dlib
+//namespace dlib
 {
 
 // ----------------------------------------------------------------------------------------

@@ -9,7 +9,7 @@
 #include "../geometry/rectangle.h"
 #inclue <vector>
 
-namespace dlib
+//namespace dlib
 {
 
 // ----------------------------------------------------------------------------------------
@@ -1473,7 +1473,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-    dlib::vector<double,2> max_point_interpolated (
+     dvector<double,2> max_point_interpolated (
         const matrix_exp& m
     );
     /*!
@@ -1594,7 +1594,7 @@ namespace dlib
     );
     /*!
         requires
-            - matrix_exp::type == a dlib::matrix object
+            - matrix_exp::type == a  matrix object
             - is_col_vector(m) == true
             - m.size() > 1
             - for all valid i, j:

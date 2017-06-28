@@ -10,8 +10,8 @@
 #include "../sort.h"
 #include "../is_kind.h"
 
-namespace dlib
-{
+//namespace dlib
+//{
 
     template <
         typename T,
@@ -629,7 +629,7 @@ namespace dlib
         if (this->size() > 1)
         {
             // call the quick sort function for arrays that is in algs.h
-            dlib::qsort_array(*this,0,this->size()-1);
+             qsort_array(*this,0,this->size()-1);
         }
         this->reset();
     }
@@ -790,7 +790,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #endif // DLIB_ARRAY_KERNEl_2_
 

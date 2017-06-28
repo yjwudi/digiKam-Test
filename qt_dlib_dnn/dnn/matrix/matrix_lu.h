@@ -16,7 +16,7 @@
 #endif
 
 
-namespace dlib 
+//namespace dlib 
 {
 
     template <

@@ -12,8 +12,8 @@
 #include "matrix_conj_trans.h"
 #include "matrix_mat.h"
 
-namespace dlib
-{
+//namespace dlib
+//{
     /*
         This file contains some templates that are used inside the matrix_blas_bindings.h
         file to bind various matrix expressions to optimized code for carrying them out.
@@ -972,7 +972,7 @@ namespace dlib
 // ----------------------------------------------------------------------------------------
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #endif // DLIB_MATRIx_ASSIGn_
 

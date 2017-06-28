@@ -9,7 +9,7 @@
 #include <chrono>
 
 
-namespace dlib
+//namespace dlib
 {
 
 // ----------------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ namespace dlib
         /*!
             requires
                 - for all valid i:
-                    - 0 <= cuda_extra_devices[i] < dlib::cuda::get_num_devices()
+                    - 0 <= cuda_extra_devices[i] <  cuda::get_num_devices()
             ensures
                 - &#get_net() == &net 
                   (i.e. The dnn_trainer holds a reference to net, it does not copy it.
@@ -344,7 +344,7 @@ namespace dlib
 
         void train (
             const std::vector<input_type>& data,
-            const std::vector<training_label_type>& labels 
+            const std::vector<training_label_type>& labels
         ); 
         /*!
             requires
@@ -402,7 +402,7 @@ namespace dlib
 
         void train_one_step (
             const std::vector<input_type>& data,
-            const std::vector<training_label_type>& labels 
+            const std::vector<training_label_type>& labels
         );
         /*!
             requires
@@ -528,7 +528,7 @@ namespace dlib
         /*!
             ensures
                 - #get_average_loss() == 0
-                - get_average_loss() uses a dlib::running_stats object to keep a running
+                - get_average_loss() uses a  running_stats object to keep a running
                   average of the loss values seen during the previous mini-batch updates
                   applied during training.  Calling clear_average_loss() resets the
                   running_stats object so it forgets about all previous loss values
@@ -551,7 +551,7 @@ namespace dlib
 
         void test_one_step (
             const std::vector<input_type>& data,
-            const std::vector<training_label_type>& labels 
+            const std::vector<training_label_type>& labels
         );
         /*!
             requires

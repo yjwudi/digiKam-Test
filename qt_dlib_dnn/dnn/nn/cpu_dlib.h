@@ -8,8 +8,8 @@
 
 #include "tensor.h"
 
-namespace dlib
-{
+//namespace dlib
+//{
     namespace cpu 
     {
 
@@ -397,7 +397,7 @@ namespace dlib
     // -----------------------------------------------------------------------------------
 
     } 
-}
+//}
 
 #ifdef NO_MAKEFILE
 #include "cpu_dlib.cpp"

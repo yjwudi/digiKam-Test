@@ -6,8 +6,8 @@
 #include "array2d_kernel.h"
 #include "../pixel.h"
 
-namespace dlib
-{
+//namespace dlib
+//{
 
 // ----------------------------------------------------------------------------------------
 
@@ -365,7 +365,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #endif // DLIB_ARRAY2D_SERIALIZE_PIXEL_OvERLOADS_Hh_
 

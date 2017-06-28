@@ -6,7 +6,7 @@
 
 #include "../error.h"
 
-namespace dlib
+//namespace dlib
 {
     struct cuda_error : public error
     {

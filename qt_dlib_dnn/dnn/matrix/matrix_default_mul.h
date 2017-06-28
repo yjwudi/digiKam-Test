@@ -8,8 +8,8 @@
 #include "matrix_utilities.h"
 #include "../enable_if.h"
 
-namespace dlib
-{
+//namespace dlib
+//{
 
 // ------------------------------------------------------------------------------------
 
@@ -51,7 +51,7 @@ namespace dlib
         typename EXP1,
         typename EXP2
         >
-    typename enable_if_c<ma::matrix_is_vector<EXP1>::value == true || ma::matrix_is_vector<EXP2>::value == true>::type 
+    typename enable_if_c<ma::matrix_is_vector<EXP1>::value == true || ma::matrix_is_vector<EXP2>::value == true>::type
     default_matrix_multiply (
         matrix_dest_type& dest,
         const EXP1& lhs,
@@ -68,7 +68,7 @@ namespace dlib
         typename EXP1,
         typename EXP2
         >
-    typename enable_if_c<ma::matrix_is_vector<EXP1>::value == false && ma::matrix_is_vector<EXP2>::value == false>::type 
+    typename enable_if_c<ma::matrix_is_vector<EXP1>::value == false && ma::matrix_is_vector<EXP2>::value == false>::type
     default_matrix_multiply (
         matrix_dest_type& dest,
         const EXP1& lhs,
@@ -128,7 +128,7 @@ namespace dlib
 
 // ------------------------------------------------------------------------------------
 
-}
+//}
 
 #endif // DLIB_MATRIx_DEFAULT_MULTIPLY_
 

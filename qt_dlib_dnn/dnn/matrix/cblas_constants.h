@@ -4,7 +4,7 @@
 #define DLIB_CBLAS_CONSTAnTS_Hh_
 
 #ifndef CBLAS_H
-namespace dlib
+//namespace dlib
 {
     namespace blas_bindings
     {

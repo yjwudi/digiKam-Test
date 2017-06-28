@@ -46,12 +46,12 @@ do{                                                                             
         std::ostringstream sout;                                               \
         sout << "Error while calling " << #call << " in file " << __FILE__ << ":" << __LINE__ << ". ";\
         sout << "code: " << error << ", reason: " << cudnn_get_error_string(error);\
-        throw dlib::cudnn_error(sout.str());                            \
+        throw  cudnn_error(sout.str());                            \
     }                                                                          \
 }while(false)
 
 
-namespace dlib
+//namespace dlib
 {
 
     namespace cuda 

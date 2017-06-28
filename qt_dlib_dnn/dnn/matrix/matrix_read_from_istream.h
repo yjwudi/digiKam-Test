@@ -7,8 +7,8 @@
 #include <vector>
 #include <iostream>
 
-namespace dlib
-{
+//namespace dlib
+//{
 
 // ----------------------------------------------------------------------------------------
 
@@ -32,7 +32,7 @@ namespace dlib
         matrix<T,NR,NC,MM,L>& m
     )
     {
-        using namespace dlib::impl;
+        using namespace  impl;
         long num_rows = 0;
         std::vector<T> buf;
         buf.reserve(100);
@@ -100,7 +100,7 @@ namespace dlib
         }
         return in;
     }
-}
+//}
 
 // ----------------------------------------------------------------------------------------
 

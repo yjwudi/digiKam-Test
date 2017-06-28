@@ -5,7 +5,7 @@
 #include "lapack/fortran_id.h"
 #include "cblas_constants.h"
 
-namespace dlib
+//namespace dlib
 {
     namespace blas_bindings
     {

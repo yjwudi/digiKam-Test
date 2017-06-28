@@ -4,7 +4,7 @@
 #ifdef DLIB_COUNT_BiTS_ABSTRACT_Hh_
 
 
-namespace dlib
+//namespace dlib
 {
 
 // ----------------------------------------------------------------------------------------

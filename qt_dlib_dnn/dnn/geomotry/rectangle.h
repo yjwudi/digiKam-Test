@@ -7,11 +7,11 @@
 #include <algorithm>
 #include <iostream>
 #include "../serialize.h"
-#include "../dlib_vector.h"
+#include "vector.h"
 #include "../generic_image.h"
 
-namespace dlib
-{
+//namespace dlib
+//{
 
 // ----------------------------------------------------------------------------------------
     
@@ -80,8 +80,8 @@ namespace dlib
 
         template <typename T>
         rectangle (
-            const vector<T,2>& p1,
-            const vector<T,2>& p2
+            const dvector<T,2>& p1,
+            const dvector<T,2>& p2
         )
         {
             *this = rectangle(p1) + rectangle(p2);
@@ -259,7 +259,7 @@ namespace dlib
             return !(*this == rect);
         }
 
-        inline bool operator< (const dlib::rectangle& b) const
+        inline bool operator< (const  rectangle& b) const
         { 
             if      (left() < b.left()) return true;
             else if (left() > b.left()) return false;
@@ -396,7 +396,7 @@ namespace dlib
 // ----------------------------------------------------------------------------------------
 
     inline point center (
-        const dlib::rectangle& rect
+        const  rectangle& rect
     )
     {
         point temp(rect.left() + rect.right() + 1,
@@ -413,11 +413,11 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-    inline dlib::vector<double,2> dcenter (
-        const dlib::rectangle& rect
+    inline  dvector<double,2> dcenter (
+        const  rectangle& rect
     )
     {
-        dlib::vector<double,2> temp(rect.left() + rect.right(),
+         dvector<double,2> temp(rect.left() + rect.right(),
                                     rect.top() + rect.bottom());
 
         return temp/2.0;
@@ -502,11 +502,11 @@ namespace dlib
 
     template <typename T, typename U>
     double distance_to_line (
-        const std::pair<vector<T,2>,vector<T,2> >& line,
-        const vector<U,2>& p
+        const std::pair<dvector<T,2>,dvector<T,2> >& line,
+        const dvector<U,2>& p
     )
     {
-        const vector<double,2> delta = p-line.second;
+        const dvector<double,2> delta = p-line.second;
         const double along_dist = (line.first-line.second).normalize().dot(delta);
         return std::sqrt(std::max(0.0,delta.length_squared() - along_dist*along_dist));
     }
@@ -799,7 +799,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #endif // DLIB_RECTANGLe_
 

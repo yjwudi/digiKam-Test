@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 
-namespace dlib
+//namespace dlib
 {
     class vectorstream : public std::iostream
     {

@@ -6,8 +6,8 @@
 #include "random_hashing_abstract.h"
 #include "murmur_hash3.h"
 
-namespace dlib
-{
+//namespace dlib
+//{
 
 // ----------------------------------------------------------------------------------------
 
@@ -871,7 +871,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #endif // DLIB_RANDOM_HAsHING_Hh_
 

@@ -8,8 +8,8 @@
 #include <cstring>
 #include "../serialize.h"
 
-namespace dlib
-{
+//namespace dlib
+//{
 
 // ----------------------------------------------------------------------------------------
 
@@ -196,7 +196,7 @@ namespace dlib
         int version;
         //deserialize(version, in);
         if (version != 1)
-            throw serialization_error("Unexpected version found while deserializing dlib::gpu_data.");
+            throw serialization_error("Unexpected version found while deserializing  gpu_data.");
         size_t s;
         deserialize(s, in);
         item.set_size(s);
@@ -260,7 +260,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #endif // DLIB_GPU_DaTA_H_
 

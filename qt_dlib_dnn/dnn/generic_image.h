@@ -5,8 +5,8 @@
 
 //#include "../assert.h"
 
-namespace dlib
-{
+//namespace dlib
+//{
 
     /*!
         In dlib, an "image" is any object that implements the generic image interface.  In
@@ -20,7 +20,7 @@ namespace dlib
             - long        width_step    (const image_type& img)
             - void        swap          (      image_type& a, image_type& b)
         And also provides a specialization of the image_traits template that looks like:
-            namespace dlib
+            //namespace dlib
             {
                 template <> 
                 struct image_traits<image_type>
@@ -145,7 +145,7 @@ namespace dlib
 
             WHAT THIS OBJECT REPRESENTS
                 This object takes an image object and wraps it with an interface that makes
-                it look like a dlib::array2d.  That is, it makes it look similar to a
+                it look like a  array2d.  That is, it makes it look similar to a
                 regular 2-dimensional C style array, making code which operates on the
                 pixels simple to read.
 
@@ -403,7 +403,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #endif // DLIB_GeNERIC_IMAGE_Hh_
 

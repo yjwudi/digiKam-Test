@@ -20,8 +20,8 @@
 #include "matrix_mat.h"
 
 
-namespace dlib
-{
+//namespace dlib
+//{
 
 // ----------------------------------------------------------------------------------------
 
@@ -114,9 +114,9 @@ namespace dlib
             for (long c = 0; c < m.nc(); ++c)
             {
                 type temp = m(r,c);
-                if (dlib::impl::magnitude(temp) > dlib::impl::magnitude(max_val))
+                if ( impl::magnitude(temp) >  impl::magnitude(max_val))
                     max_val = temp;
-                if (dlib::impl::magnitude(temp) < dlib::impl::magnitude(min_val))
+                if ( impl::magnitude(temp) <  impl::magnitude(min_val))
                     min_val = temp;
             }
         }
@@ -147,7 +147,7 @@ namespace dlib
             for (long c = 0; c < m.nc(); ++c)
             {
                 type temp = m(r,c);
-                if (dlib::impl::magnitude(temp) > dlib::impl::magnitude(val))
+                if ( impl::magnitude(temp) >  impl::magnitude(val))
                 {
                     val = temp;
                     best_point = point(c,r);
@@ -182,7 +182,7 @@ namespace dlib
             for (long c = 0; c < m.nc(); ++c)
             {
                 type temp = m(r,c);
-                if (dlib::impl::magnitude(temp) < dlib::impl::magnitude(val))
+                if ( impl::magnitude(temp) <  impl::magnitude(val))
                 {
                     val = temp;
                     best_point = point(c,r);
@@ -215,7 +215,7 @@ namespace dlib
         for (long i = 1; i < m.size(); ++i)
         {
             type temp = m(i);
-            if (dlib::impl::magnitude(temp) > dlib::impl::magnitude(val))
+            if ( impl::magnitude(temp) >  impl::magnitude(val))
             {
                 val = temp;
                 best_idx = i;
@@ -247,7 +247,7 @@ namespace dlib
         for (long i = 1; i < m.size(); ++i)
         {
             type temp = m(i);
-            if (dlib::impl::magnitude(temp) < dlib::impl::magnitude(val))
+            if ( impl::magnitude(temp) <  impl::magnitude(val))
             {
                 val = temp;
                 best_idx = i;
@@ -278,7 +278,7 @@ namespace dlib
             for (long c = 0; c < m.nc(); ++c)
             {
                 type temp = m(r,c);
-                if (dlib::impl::magnitude(temp) > dlib::impl::magnitude(val))
+                if ( impl::magnitude(temp) >  impl::magnitude(val))
                     val = temp;
             }
         }
@@ -307,7 +307,7 @@ namespace dlib
             for (long c = 0; c < m.nc(); ++c)
             {
                 type temp = m(r,c);
-                if (dlib::impl::magnitude(temp) < dlib::impl::magnitude(val))
+                if ( impl::magnitude(temp) <  impl::magnitude(val))
                     val = temp;
             }
         }
@@ -1689,7 +1689,7 @@ namespace dlib
     )
     {
         using std::pow;
-        using dlib::pow;
+        //using  pow;
         const typename matrix_exp<EXP>::type avg = mean(m);
 
         typedef typename matrix_exp<EXP>::type type;
@@ -1727,7 +1727,7 @@ namespace dlib
     )
     {
         using std::sqrt;
-        using dlib::sqrt;
+        //using  sqrt;
         return sqrt(variance(m));
     }
 
@@ -4434,7 +4434,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #endif // DLIB_MATRIx_UTILITIES_
 

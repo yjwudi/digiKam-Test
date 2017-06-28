@@ -16,7 +16,7 @@
 
 #include "matrix_trsm.h"
 
-namespace dlib 
+//namespace dlib 
 {
 
     template <

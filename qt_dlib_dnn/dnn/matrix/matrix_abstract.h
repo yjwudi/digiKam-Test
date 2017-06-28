@@ -8,7 +8,7 @@
 #include "../algs.h"
 #include "matrix_data_layout_abstract.h"
 
-namespace dlib
+//namespace dlib
 {
 
 // ----------------------------------------------------------------------------------------
@@ -729,7 +729,7 @@ template <
     );   
     /*!
         Provides serialization support.  Note that the serialization formats used by the
-        dlib::matrix and dlib::array2d objects are compatible.  That means you can load the
+         matrix and  array2d objects are compatible.  That means you can load the
         serialized data from one into another and it will work properly.
     !*/
 

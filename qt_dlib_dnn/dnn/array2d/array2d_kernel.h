@@ -9,8 +9,8 @@
 #include "../serialize.h"
 #include "../geomotry/rectangle.h"
 
-namespace dlib
-{
+//namespace dlib
+//{
     template <
         typename T,
         typename mem_manager = default_memory_manager
@@ -494,7 +494,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #endif // DLIB_ARRAY2D_KERNEl_1_ 
 

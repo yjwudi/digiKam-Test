@@ -2,7 +2,7 @@
 #include "../geomotry/rectangle.h"
 #include "../geomotry/drectangle.h"
 
-using namespace dlib;
+//using namespace dlib;
 
 template <
         typename pyramid_type

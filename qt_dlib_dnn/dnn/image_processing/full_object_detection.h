@@ -8,8 +8,8 @@
 #include <vector>
 #include "../serialize.h"
 
-namespace dlib
-{
+//namespace dlib
+//{
 
 // ----------------------------------------------------------------------------------------
 
@@ -72,7 +72,7 @@ namespace dlib
         )
         {
             int version = 1;
-            serialize(version, out);
+            serialize_int(version, out);
             serialize(item.rect, out);
             serialize(item.parts, out);
         }
@@ -83,9 +83,9 @@ namespace dlib
         )
         {
             int version = 0;
-            deserialize(version, in);
+            deserialize_int(version, in);
             if (version != 1)
-                throw serialization_error("Unexpected version encountered while deserializing dlib::full_object_detection.");
+                throw serialization_error("Unexpected version encountered while deserializing  full_object_detection.");
 
             deserialize(item.rect, in);
             deserialize(item.parts, in);
@@ -109,7 +109,7 @@ namespace dlib
 
     private:
         rectangle rect;
-        std::vector<point> parts;  
+        std::vector<point> parts;
     };
 
 // ----------------------------------------------------------------------------------------
@@ -152,26 +152,26 @@ namespace dlib
     inline void serialize(const mmod_rect& item, std::ostream& out)
     {
         int version = 1;
-        serialize(version, out);
+        serialize_int(version, out);
         serialize(item.rect, out);
-        serialize(item.detection_confidence, out);
-        serialize(item.ignore, out);
+        serializelf(item.detection_confidence, out);
+        serialize_bool(item.ignore, out);
     }
 
     inline void deserialize(mmod_rect& item, std::istream& in)
     {
         int version = 0;
-        deserialize(version, in);
+        deserialize_int(version, in);
         if (version != 1)
-            throw serialization_error("Unexpected version found while deserializing dlib::mmod_rect");
+            throw serialization_error("Unexpected version found while deserializing  mmod_rect");
         deserialize(item.rect, in);
-        deserialize(item.detection_confidence, in);
-        deserialize(item.ignore, in);
+        deserializelf(item.detection_confidence, in);
+        deserialize_bool(item.ignore, in);
     }
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #endif // DLIB_FULL_OBJECT_DeTECTION_H_
 

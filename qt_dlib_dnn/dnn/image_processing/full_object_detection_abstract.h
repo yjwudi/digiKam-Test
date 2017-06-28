@@ -7,7 +7,7 @@
 #include "../geometry.h"
 #include "../serialize.h"
 
-namespace dlib
+//namespace dlib
 {
 
 // ----------------------------------------------------------------------------------------

@@ -7,8 +7,8 @@
 #include "../string.h"
 #include <atomic>
 
-namespace dlib
-{
+//namespace dlib
+//{
     namespace
     {
         std::atomic<bool>& dnn_prefer_fastest_algo (
@@ -36,9 +36,10 @@ namespace dlib
     {
         dnn_prefer_fastest_algo() = false;
     }
-}
+//}
 
-namespace dlib { namespace tt
+//namespace dlib {
+namespace tt
 {
 
 // ----------------------------------------------------------------------------------------
@@ -791,7 +792,7 @@ namespace dlib { namespace tt
 
 // ----------------------------------------------------------------------------------------
 
-}}
+}//}
 
 #endif // DLIB_TeNSOR_TOOLS_CPP_
 

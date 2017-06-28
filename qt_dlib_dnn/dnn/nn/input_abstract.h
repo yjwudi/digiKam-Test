@@ -7,7 +7,7 @@
 #include "../pixel.h"
 
 
-namespace dlib
+//namespace dlib
 {
 
 // ----------------------------------------------------------------------------------------
@@ -20,10 +20,10 @@ namespace dlib
                 of the input layer is to convert an input_type into a tensor.  Nothing more
                 and nothing less.  
                 
-                Note that there is no dlib::EXAMPLE_INPUT_LAYER type.  It is shown here
+                Note that there is no  EXAMPLE_INPUT_LAYER type.  It is shown here
                 purely to document the interface that an input layer object must implement.
                 If you are using some kind of image or matrix object as your input_type
-                then you can use the provided dlib::input layer defined below.  Otherwise,
+                then you can use the provided  input layer defined below.  Otherwise,
                 you need to define your own custom input layer.
 
             THREAD SAFETY
@@ -167,7 +167,7 @@ namespace dlib
         /*!
             WHAT THIS OBJECT REPRESENTS
                 This input layer works with RGB images of type matrix<rgb_pixel>.  It is
-                very similar to the dlib::input layer except that it allows you to subtract
+                very similar to the  input layer except that it allows you to subtract
                 the average color value from each color channel when converting an image to
                 a tensor.
         !*/
@@ -273,7 +273,7 @@ namespace dlib
     {
         /*!
             REQUIREMENTS ON PYRAMID_TYPE
-                PYRAMID_TYPE must be an instance of the dlib::pyramid_down template.
+                PYRAMID_TYPE must be an instance of the  pyramid_down template.
 
             WHAT THIS OBJECT REPRESENTS
                 This input layer works with RGB images of type matrix<rgb_pixel>.  It is

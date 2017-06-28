@@ -11,8 +11,8 @@
 
 
 
-namespace dlib
-{
+//namespace dlib
+//{
     class unserialize : public std::istream
     {
         class mystreambuf : public std::streambuf
@@ -92,7 +92,7 @@ namespace dlib
     private:
         mystreambuf buf;
     };
-}
+//}
 
 #endif // DLIB_uNSERIALIZE_Hh_
 

@@ -47,11 +47,11 @@
         *!/
 
     For convenience, you can also serialize to a file using this syntax:
-        serialize("your_file.dat") << some_object << another_object;
+        serialize_str("your_file.dat") << some_object << another_object;
 
     That overwrites the contents of your_file.dat with the serialized data from some_object
     and another_object.  Then to recall the objects from the file you can do:
-        deserialize("your_file.dat") >> some_object >> another_object;
+        deserialize_str("your_file.dat") >> some_object >> another_object;
 
     Finally, you can chain as many objects together using the << and >> operators as you
     like.
@@ -68,8 +68,8 @@
         - std::set
         - std::pair
         - std::complex
-        - dlib::uint64
-        - dlib::int64
+        -  uint64
+        -  int64
         - float_details
         - enumerable<T> where T is a serializable type
         - map_pair<D,R> where D and R are both serializable types.
@@ -87,8 +87,8 @@
         - std::set
         - std::pair
         - std::complex
-        - dlib::uint64
-        - dlib::int64
+        -  uint64
+        -  int64
         - float_details
         - C style arrays of serializable types
         - Google protocol buffer objects.
@@ -98,7 +98,7 @@
 
     Note that you can deserialize an integer value to any integral type (except for a
     char type) if its value will fit into the target integer type.  I.e.  the types
-    short, int, long, unsigned short, unsigned int, unsigned long, and dlib::uint64
+    short, int, long, unsigned short, unsigned int, unsigned long, and  uint64
     can all receive serialized data from each other so long as the actual serizlied
     value fits within the receiving integral type's range.
 
@@ -162,8 +162,8 @@
 #include "float_details.h"
 #include "smart_pointers/shared_ptr.h"
 
-namespace dlib
-{
+//namespace dlib
+//{
 
 // ----------------------------------------------------------------------------------------
 
@@ -496,6 +496,17 @@ namespace dlib
             throw serialization_error("Error deserializing object of type "); 
     }
 
+    void serialize_ulong (const unsigned long& item, std::ostream& out)
+    { 
+        if (ser_helper::pack_int(item,out)) 
+            throw serialization_error("Error serializing object of type "); 
+    }
+    void deserialize_ulong (unsigned long& item, std::istream& in)
+    { 
+        if (ser_helper::unpack_int(item,in)) 
+            throw serialization_error("Error deserializing object of type "); 
+    }
+
 
     /*
     inline void serialize (const unsigned char& item,std::ostream& out)
@@ -778,7 +789,7 @@ namespace dlib
 // ----------------------------------------------------------------------------------------
 // ----------------------------------------------------------------------------------------
 
-    inline void serialize (
+    inline void serialize_bool (
         bool item,
         std::ostream& out
     )
@@ -792,7 +803,7 @@ namespace dlib
             throw serialization_error("Error serializing object of type bool");
     }
 
-    inline void deserialize (
+    inline void deserialize_bool (
         bool& item,
         std::istream& in
     )
@@ -1561,7 +1572,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 // forward declare the MessageLite object so we can reference it below.
 namespace google
@@ -1572,8 +1583,8 @@ namespace google
     }
 }
 
-namespace dlib
-{
+//namespace dlib
+//{
 
     /*!A is_protocol_buffer
         This is a template that tells you if a type is a Google protocol buffer object.
@@ -1605,9 +1616,9 @@ namespace dlib
         // serialize into temp string
         std::string temp;
         if (!item.SerializeToString(&temp))
-            throw dlib::serialization_error("Error while serializing a Google Protocol Buffer object.");
+            throw  serialization_error("Error while serializing a Google Protocol Buffer object.");
         if (temp.size() > std::numeric_limits<uint32>::max())
-            throw dlib::serialization_error("Error while serializing a Google Protocol Buffer object, message too large.");
+            throw  serialization_error("Error while serializing a Google Protocol Buffer object, message too large.");
 
         // write temp to the output stream
         uint32 size = temp.size();
@@ -1632,7 +1643,7 @@ namespace dlib
         in.read((char*)&size, sizeof(size));
         bo.little_to_host(size);
         if (!in || size == 0)
-            throw dlib::serialization_error("Error while deserializing a Google Protocol Buffer object.");
+            throw  serialization_error("Error while deserializing a Google Protocol Buffer object.");
 
         // read the bytes into temp
         std::string temp;
@@ -1642,13 +1653,13 @@ namespace dlib
         // parse temp into item
         if (!in || !item.ParseFromString(temp))
         {
-            throw dlib::serialization_error("Error while deserializing a Google Protocol Buffer object.");
+            throw  serialization_error("Error while deserializing a Google Protocol Buffer object.");
         }
     }
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #endif // DLIB_SERIALIZe_
 

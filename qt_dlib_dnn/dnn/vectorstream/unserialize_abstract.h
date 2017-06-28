@@ -6,7 +6,7 @@
 #include "../serialize.h"
 #include <iostream>
 
-namespace dlib
+//namespace dlib
 {
     class unserialize : public std::istream
     {

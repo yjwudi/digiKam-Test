@@ -8,7 +8,7 @@
 #include <string>
 #include <map>
 
-namespace dlib
+//namespace dlib
 {
 
 // ----------------------------------------------------------------------------------------

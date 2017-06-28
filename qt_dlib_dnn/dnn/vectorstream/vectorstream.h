@@ -20,8 +20,8 @@
 #pragma warning(disable : 4250)
 #endif // _MSC_VER
 
-namespace dlib
-{
+//namespace dlib
+//{
     class vectorstream : public std::iostream
     {
         class vector_streambuf : public std::streambuf
@@ -132,7 +132,7 @@ namespace dlib
     private:
         vector_streambuf buf;
     };
-}
+//}
 
 #endif // DLIB_VECTORStREAM_Hh_
 

@@ -7,7 +7,7 @@
 #include "../string.h"
 #include <vector>
 
-namespace dlib
+//namespace dlib
 {
 
 // ----------------------------------------------------------------------------------------

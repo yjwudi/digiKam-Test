@@ -8,7 +8,7 @@
 #include "nn/loss.h"
 #include "nn/core.h"
 #include "nn/solvers.h"
-#include "nn/trainer.h"
+//#include "nn/trainer.h"
 #include "nn/cpu_dlib.h"
 #include "nn/tensor_tools.h"
 #include "nn/utilities.h"

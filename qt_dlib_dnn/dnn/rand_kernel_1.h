@@ -11,11 +11,13 @@
 #include "serialize.h"
 #include "string.h"
 
-namespace dlib
-{
+//using namespace std;
+
+//namespace dlib
+//{
 
 
-    class rand
+    class drand
     {
 
         /*!       
@@ -30,16 +32,16 @@ namespace dlib
         public:
 
             // These typedefs are here for backwards compatibility with older versions of dlib.
-            typedef rand kernel_1a;
-            typedef rand float_1a;
+            typedef drand kernel_1a;
+            typedef drand float_1a;
 
-            rand(
+            drand(
             ) 
             {
                 init();
             }
 
-            rand (
+            drand (
                 time_t seed_value
             )
             {
@@ -47,7 +49,7 @@ namespace dlib
                 set_seed(cast_to_string(seed_value));
             }
 
-            rand (
+            drand (
                 const std::string& seed_value
             )
             {
@@ -55,7 +57,7 @@ namespace dlib
                 set_seed(seed_value);
             }
 
-            virtual ~rand(
+            virtual ~drand(
             )
             {}
 
@@ -150,14 +152,14 @@ namespace dlib
             {
                 uint32 temp;
 
-                temp = rand::get_random_32bit_number();
+                temp = drand::get_random_32bit_number();
                 temp &= 0xFFFFFF;
 
                 double val = static_cast<double>(temp);
 
                 val *= 0x1000000;
 
-                temp = rand::get_random_32bit_number();
+                temp = drand::get_random_32bit_number();
                 temp &= 0xFFFFFF;
 
                 val += temp;
@@ -180,7 +182,7 @@ namespace dlib
             {
                 uint32 temp;
 
-                temp = rand::get_random_32bit_number();
+                temp = drand::get_random_32bit_number();
                 temp &= 0xFFFFFF;
 
                 const float scale = 1.0/0x1000000;
@@ -228,7 +230,7 @@ namespace dlib
             }
 
             void swap (
-                rand& item
+                drand& item
             )
             {
                 exchange(mt,item.mt);
@@ -238,12 +240,12 @@ namespace dlib
             }
     
             friend void serialize(
-                const rand& item, 
+                const drand& item, 
                 std::ostream& out
             );
 
             friend void deserialize(
-                rand& item, 
+                drand& item, 
                 std::istream& in 
             );
 
@@ -276,20 +278,21 @@ namespace dlib
     };
 
 
-    inline void swap (
-        rand& a, 
-        rand& b 
+
+    void swap_rand (
+        drand& a, 
+        drand& b 
     ) { a.swap(b); }   
 
-/*
+
     template <>
-    struct is_rand<rand>
+    struct is_rand<drand>
     {
         static const bool value = true; 
     };
-*/
+
     inline void serialize(
-        const rand& item, 
+        const drand& item, 
         std::ostream& out
     )
     {
@@ -299,26 +302,27 @@ namespace dlib
         serialize(item.mt, out);
         serialize(item.seed, out);
         serialize(item.has_gaussian, out);
-        serialize(item.next_gaussian, out);
+        serializelf(item.next_gaussian, out);
     }
-/*
+
     inline void deserialize(
-        rand& item, 
+        drand& item, 
         std::istream& in 
     )
     {
         int version;
         deserialize(version, in);
         if (version != 1)
-            throw serialization_error("Error deserializing object of type rand: unexpected version."); 
+            throw serialization_error("Error deserializing object of type drand: unexpected version."); 
 
         deserialize(item.mt, in);
         deserialize(item.seed, in);
-        deserialize(item.has_gaussian, in);
-        deserialize(item.next_gaussian, in);
+        deserialize_bool(item.has_gaussian, in);
+        deserializelf(item.next_gaussian, in);
     }
-}
-*/
+
+//}
+
 
 #endif // DLIB_RAND_KERNEl_1_
 

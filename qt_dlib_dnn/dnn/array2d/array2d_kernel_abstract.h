@@ -8,7 +8,7 @@
 #include "../algs.h"
 #include "../geometry/rectangle_abstract.h"
 
-namespace dlib
+//namespace dlib
 {
 
     template <
@@ -244,12 +244,12 @@ namespace dlib
                 - returns the size of one row of the image, in bytes.  
                   More precisely, return a number N such that:
                   (char*)&item[0][0] + N == (char*)&item[1][0].
-                - for dlib::array2d objects, the returned value
+                - for  array2d objects, the returned value
                   is always equal to sizeof(type)*nc().  However,
-                  other objects which implement dlib::array2d style
+                  other objects which implement  array2d style
                   interfaces might have padding at the ends of their
                   rows and therefore might return larger numbers.
-                  An example of such an object is the dlib::cv_image.
+                  An example of such an object is the  cv_image.
         !*/
 
     private:
@@ -282,7 +282,7 @@ namespace dlib
     );   
     /*!
         Provides serialization support.  Note that the serialization formats used by the
-        dlib::matrix and dlib::array2d objects are compatible.  That means you can load the
+         matrix and  array2d objects are compatible.  That means you can load the
         serialized data from one into another and it will work properly.
     !*/
 

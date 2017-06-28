@@ -38,7 +38,7 @@
 
 
 
-namespace dlib
+//namespace dlib
 {
     namespace lapack
     {

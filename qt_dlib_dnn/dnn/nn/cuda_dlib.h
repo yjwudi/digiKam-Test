@@ -6,8 +6,8 @@
 
 #include "tensor.h"
 
-namespace dlib
-{
+//namespace dlib
+//{
     namespace cuda 
     {
 
@@ -337,7 +337,7 @@ namespace dlib
             int id
         )
         {
-            DLIB_CASSERT(id == 0, "dlib::cuda::set_device(id) called with an invalid device id.");
+            DLIB_CASSERT(id == 0, " cuda::set_device(id) called with an invalid device id.");
         }
 
         inline int get_device (
@@ -350,7 +350,7 @@ namespace dlib
             int device
         ) 
         {
-            DLIB_CASSERT(device == 0, "dlib::cuda::set_device(id) called with an invalid device id.");
+            DLIB_CASSERT(device == 0, " cuda::set_device(id) called with an invalid device id.");
             return "CUDA_DISABLED";
         }
 
@@ -379,7 +379,7 @@ namespace dlib
 #endif // DLIB_USE_CUDA
 
     } 
-}
+//}
 
 
 #endif // DLIB_DNN_CuDA_H_

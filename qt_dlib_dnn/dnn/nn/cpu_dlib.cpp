@@ -8,7 +8,7 @@
 #include "cpu_dlib.h"
 #include "tensor_tools.h"
 
-namespace dlib
+//namespace dlib
 {
     namespace cpu 
     {

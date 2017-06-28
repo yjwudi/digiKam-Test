@@ -6,8 +6,8 @@
 #include "../assert.h"
 #include "array_tools_abstract.h"
 
-namespace dlib
-{
+//namespace dlib
+//{
     template <typename T>
     void split_array (
         T& a,
@@ -32,7 +32,7 @@ namespace dlib
         }
         a.resize(asize);
     }
-}
+//}
 
 #endif // DLIB_ARRAY_tOOLS_H_
 

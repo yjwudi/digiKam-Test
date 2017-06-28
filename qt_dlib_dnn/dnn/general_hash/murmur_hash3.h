@@ -8,8 +8,8 @@
 #include <utility>
 #include <string.h>
 
-namespace dlib
-{
+//namespace dlib
+//{
     //-----------------------------------------------------------------------------
     // The original MurmurHash3 code was written by Austin Appleby, and is placed 
     // in the public domain. The author hereby disclaims copyright to this source code.
@@ -50,8 +50,8 @@ namespace dlib
         return (x << r) | (x >> (64 - r));
     }
 
-#define	DLIB_ROTL32(x,y)	dlib::murmur_rotl32(x,y)
-#define DLIB_ROTL64(x,y)	dlib::murmur_rotl64(x,y)
+#define	DLIB_ROTL32(x,y)	 murmur_rotl32(x,y)
+#define DLIB_ROTL64(x,y)	 murmur_rotl64(x,y)
 
 #define DLIB_BIG_CONSTANT(x) (x##LLU)
 
@@ -511,7 +511,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #endif // DLIB_MURMUR_HAsH_3_Hh_
 

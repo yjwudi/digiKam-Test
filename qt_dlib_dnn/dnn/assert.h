@@ -68,8 +68,8 @@
 
 // -----------------------------
 
-namespace dlib
-{
+//namespace dlib
+//{
     template <bool value> struct compile_time_assert;
     template <> struct compile_time_assert<true> { enum {value=1};  };
 
@@ -80,7 +80,7 @@ namespace dlib
 
     template <typename T, typename U> struct assert_types_match {enum{value=0};};
     template <typename T> struct assert_types_match<T,T> {enum{value=1};};
-}
+//}
 
 
 // gcc 4.8 will warn about unused typedefs.  But we use typedefs in some of the compile
@@ -95,17 +95,17 @@ namespace dlib
 // messages.
 #ifdef DLIB_HAS_STATIC_ASSERT
     #define COMPILE_TIME_ASSERT(expression) static_assert(expression, "Failed assertion")
-    #define ASSERT_ARE_SAME_TYPE(type1, type2) static_assert(::dlib::assert_types_match<type1,type2>::value, "These types should be the same but aren't.")
-    #define ASSERT_ARE_NOT_SAME_TYPE(type1, type2) static_assert(!::dlib::assert_types_match<type1,type2>::value, "These types should NOT be the same.")
+    #define ASSERT_ARE_SAME_TYPE(type1, type2) static_assert(:: assert_types_match<type1,type2>::value, "These types should be the same but aren't.")
+    #define ASSERT_ARE_NOT_SAME_TYPE(type1, type2) static_assert(!:: assert_types_match<type1,type2>::value, "These types should NOT be the same.")
 #else
     #define COMPILE_TIME_ASSERT(expression) \
-        DLIB_NO_WARN_UNUSED typedef char BOOST_JOIN(DLIB_CTA, __LINE__)[::dlib::compile_time_assert<(bool)(expression)>::value] 
+        DLIB_NO_WARN_UNUSED typedef char BOOST_JOIN(DLIB_CTA, __LINE__)[:: compile_time_assert<(bool)(expression)>::value]
 
     #define ASSERT_ARE_SAME_TYPE(type1, type2) \
-        DLIB_NO_WARN_UNUSED typedef char BOOST_JOIN(DLIB_AAST, __LINE__)[::dlib::assert_are_same_type<type1,type2>::value] 
+        DLIB_NO_WARN_UNUSED typedef char BOOST_JOIN(DLIB_AAST, __LINE__)[:: assert_are_same_type<type1,type2>::value]
 
     #define ASSERT_ARE_NOT_SAME_TYPE(type1, type2) \
-        DLIB_NO_WARN_UNUSED typedef char BOOST_JOIN(DLIB_AANST, __LINE__)[::dlib::assert_are_not_same_type<type1,type2>::value] 
+        DLIB_NO_WARN_UNUSED typedef char BOOST_JOIN(DLIB_AANST, __LINE__)[:: assert_are_not_same_type<type1,type2>::value]
 #endif
 
 // -----------------------------

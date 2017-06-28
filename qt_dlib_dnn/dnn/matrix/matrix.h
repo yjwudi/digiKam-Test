@@ -35,8 +35,8 @@
 
 #endif
 
-namespace dlib
-{
+//namespace dlib
+//{
 
 // ----------------------------------------------------------------------------------------
 
@@ -1866,7 +1866,7 @@ namespace dlib
         }
         catch (serialization_error& e)
         {
-            throw serialization_error(e.info + "\n   while serializing dlib::matrix");
+            throw serialization_error(e.info + "\n   while serializing  matrix");
         }
     }
 
@@ -1896,9 +1896,9 @@ namespace dlib
             }
 
             if (NR != 0 && nr != NR)
-                throw serialization_error("Error while deserializing a dlib::matrix.  Invalid rows");
+                throw serialization_error("Error while deserializing a  matrix.  Invalid rows");
             if (NC != 0 && nc != NC)
-                throw serialization_error("Error while deserializing a dlib::matrix.  Invalid columns");
+                throw serialization_error("Error while deserializing a  matrix.  Invalid columns");
 
             item.set_size(nr,nc);
             for (long r = 0; r < nr; ++r)
@@ -1911,7 +1911,7 @@ namespace dlib
         }
         catch (serialization_error& e)
         {
-            throw serialization_error(e.info + "\n   while deserializing a dlib::matrix");
+            throw serialization_error(e.info + "\n   while deserializing a  matrix");
         }
     }
 
@@ -2093,7 +2093,7 @@ namespace dlib
     typedef matrix<double,0,0,default_memory_manager,column_major_layout> matrix_colmajor;
     typedef matrix<float,0,0,default_memory_manager,column_major_layout> fmatrix_colmajor;
 
-}
+//}
 
 #ifdef _MSC_VER
 // put that warning back to its default setting

@@ -19,14 +19,14 @@
 #pragma warning(disable:4805)
 #endif
 
-namespace dlib
-{
+//namespace dlib
+//{
 
     template <
         typename T,
         long NR = 3
         >
-    class vector;
+    class dvector;
 
 // ----------------------------------------------------------------------------------------
 
@@ -294,7 +294,7 @@ namespace dlib
             const matrix_exp<EXP>& m
         )
         {
-            // you can only assign vectors with 3 elements to a dlib::vector<T,3> object
+            // you can only assign vectors with 3 elements to a  vector<T,3> object
             COMPILE_TIME_ASSERT(EXP::NR*EXP::NC == 3 || EXP::NR*EXP::NC == 0);
 
             // make sure requires clause is not broken
@@ -655,7 +655,7 @@ namespace dlib
             const matrix_exp<EXP>& m
         )
         {
-            // you can only assign vectors with 2 elements to a dlib::vector<T,2> object
+            // you can only assign vectors with 2 elements to a  vector<T,2> object
             COMPILE_TIME_ASSERT(EXP::NR*EXP::NC == 2 || EXP::NR*EXP::NC == 0);
 
             // make sure requires clause is not broken
@@ -1283,9 +1283,9 @@ namespace std
         Define std::less<vector<T,3> > so that you can use vectors in the associative containers.
     !*/
     template<typename T>
-    struct less<dlib::vector<T,3> > : public binary_function<dlib::vector<T,3> ,dlib::vector<T,3> ,bool>
+    struct less< vector<T,3> > : public binary_function< vector<T,3> , vector<T,3> ,bool>
     {
-        inline bool operator() (const dlib::vector<T,3> & a, const dlib::vector<T,3> & b) const
+        inline bool operator() (const  vector<T,3> & a, const  vector<T,3> & b) const
         { 
             if      (a.x() < b.x()) return true;
             else if (a.x() > b.x()) return false;
@@ -1301,9 +1301,9 @@ namespace std
         Define std::less<vector<T,2> > so that you can use vector<T,2>s in the associative containers.
     !*/
     template<typename T>
-    struct less<dlib::vector<T,2> > : public binary_function<dlib::vector<T,2> ,dlib::vector<T,2> ,bool>
+    struct less< vector<T,2> > : public binary_function< vector<T,2> , vector<T,2> ,bool>
     {
-        inline bool operator() (const dlib::vector<T,2> & a, const dlib::vector<T,2> & b) const
+        inline bool operator() (const  vector<T,2> & a, const  vector<T,2> & b) const
         { 
             if      (a.x() < b.x()) return true;
             else if (a.x() > b.x()) return false;
@@ -1312,7 +1312,7 @@ namespace std
             else                    return false;
         }
     };
-}
+//}
 
 #if defined(_MSC_VER) && _MSC_VER < 1400
 // turn this warning back on

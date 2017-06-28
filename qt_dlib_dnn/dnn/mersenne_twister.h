@@ -101,8 +101,8 @@
                 std::ostream& out
             )
             {
-                dlib::serialize(item.x, out);
-                dlib::serialize(item.i, out);
+                 serialize(item.x, out);
+                 serialize(item.i, out);
             }
 
             friend void deserialize(
@@ -110,8 +110,8 @@
                 std::istream& in 
             )
             {
-                dlib::deserialize(item.x, in);
-                dlib::deserialize(item.i, in);
+                 deserialize(item.x, in);
+                 deserialize(item.i, in);
             }
 
         private:

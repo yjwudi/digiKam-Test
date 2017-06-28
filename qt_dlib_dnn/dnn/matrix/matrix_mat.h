@@ -12,8 +12,8 @@
 #include "../generic_image.h"
 
 
-namespace dlib
-{
+//namespace dlib
+//{
 
 // ----------------------------------------------------------------------------------------
     
@@ -421,14 +421,14 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 namespace arma
 {
     template <typename T> class Mat;
 }
-namespace dlib
-{
+//namespace dlib
+//{
     template <typename T>
     struct op_arma_Mat_to_mat : does_not_alias 
     {
@@ -462,7 +462,7 @@ namespace dlib
         typedef op_arma_Mat_to_mat< ::arma::Mat<T> > op;
         return matrix_op<op>(op(array));
     }
-}
+//}
 
 namespace Eigen
 {
@@ -470,8 +470,8 @@ namespace Eigen
     class Matrix;
 }
 
-namespace dlib
-{
+//namespace dlib
+//{
     template <typename T, int _Rows, int _Cols>
     struct op_eigen_Matrix_to_mat : does_not_alias 
     {
@@ -697,7 +697,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #endif // DLIB_MATRIx_MAT_Hh_
 

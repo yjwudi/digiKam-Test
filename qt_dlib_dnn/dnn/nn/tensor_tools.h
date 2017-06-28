@@ -12,14 +12,15 @@
 #include "../rand_kernel_1.h"
 #include <memory>
 
-namespace dlib
-{
+//namespace dlib
+//{
     bool dnn_prefer_fastest_algorithms();
     void set_dnn_prefer_fastest_algorithms();
     void set_dnn_prefer_smallest_algorithms();
-}
+//}
 
-namespace dlib { namespace tt
+//namespace dlib {
+namespace tt
 {
 
 // ----------------------------------------------------------------------------------------
@@ -169,7 +170,7 @@ namespace dlib { namespace tt
 #ifdef DLIB_USE_CUDA
         cuda::curand_generator rnd;
 #else
-        rand rnd;
+        drand rnd;
 #endif
     };
 
@@ -1199,7 +1200,7 @@ namespace dlib { namespace tt
                   between device transfers now and use them when you call average().  
         !*/
         {
-            using namespace dlib::cuda;
+            using namespace  cuda;
             accessible_groups.clear();
             epa.clear();
             if (items.size() < 1)
@@ -1254,7 +1255,7 @@ namespace dlib { namespace tt
                   all equal to the average.
         !*/
         {
-            using namespace dlib::cuda;
+            using namespace  cuda;
 
 
             // First we average things within each group
@@ -1302,7 +1303,7 @@ namespace dlib { namespace tt
         }
 
     private:
-        std::vector<std::unique_ptr<dlib::cuda::enable_peer_access>> epa;
+        std::vector<std::unique_ptr< cuda::enable_peer_access>> epa;
         std::vector<std::vector<tensor*>> accessible_groups;
         float scale;
 
@@ -1332,7 +1333,7 @@ namespace dlib { namespace tt
 
 // ----------------------------------------------------------------------------------------
 
-}}
+}//}
 
 #ifdef NO_MAKEFILE
 #include "tensor_tools.cpp"

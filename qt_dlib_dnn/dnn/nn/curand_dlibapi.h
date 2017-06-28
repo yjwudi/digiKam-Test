@@ -8,7 +8,7 @@
 #include "tensor.h"
 #include "cuda_errors.h"
 
-namespace dlib
+//namespace dlib
 {
     namespace cuda 
     {

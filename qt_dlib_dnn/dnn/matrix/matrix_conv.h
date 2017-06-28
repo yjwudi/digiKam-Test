@@ -6,8 +6,8 @@
 #include "matrix_conv_abstract.h"
 #include "matrix.h"
 
-namespace dlib
-{
+//namespace dlib
+//{
 
 // ----------------------------------------------------------------------------------------
 
@@ -65,7 +65,7 @@ namespace dlib
                 for (long cc = min_cc; cc <= max_cc; ++cc)
                 {
                     if (flip_m2)
-                        temp += m1(rr,cc)*dlib::impl::conj(m2(m2.nr()-r+rr-1, m2.nc()-c+cc-1));
+                        temp += m1(rr,cc)* impl::conj(m2(m2.nr()-r+rr-1, m2.nc()-c+cc-1));
                     else
                         temp += m1(rr,cc)*m2(r-rr,c-cc);
                 }
@@ -157,7 +157,7 @@ namespace dlib
                 for (long cc = min_cc; cc <= max_cc; ++cc)
                 {
                     if (flip_m2)
-                        temp += m1(rr,cc)*dlib::impl::conj(m2(m2.nr()-r+rr-1, m2.nc()-c+cc-1));
+                        temp += m1(rr,cc)* impl::conj(m2(m2.nr()-r+rr-1, m2.nc()-c+cc-1));
                     else
                         temp += m1(rr,cc)*m2(r-rr,c-cc);
                 }
@@ -252,7 +252,7 @@ namespace dlib
                 for (long cc = min_cc; cc <= max_cc; ++cc)
                 {
                     if (flip_m2)
-                        temp += m1(rr,cc)*dlib::impl::conj(m2(m2.nr()-r+rr-1, m2.nc()-c+cc-1));
+                        temp += m1(rr,cc)* impl::conj(m2(m2.nr()-r+rr-1, m2.nc()-c+cc-1));
                     else
                         temp += m1(rr,cc)*m2(r-rr,c-cc);
                 }
@@ -302,7 +302,7 @@ namespace dlib
 // ----------------------------------------------------------------------------------------
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #endif // DLIB_MATRIx_CONV_Hh_
 

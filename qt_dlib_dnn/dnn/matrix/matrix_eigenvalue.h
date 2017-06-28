@@ -20,7 +20,7 @@
 
 #define DLIB_LAPACK_EIGENVALUE_DECOMP_SIZE_THRESH 4
 
-namespace dlib 
+//namespace dlib 
 {
 
     template <

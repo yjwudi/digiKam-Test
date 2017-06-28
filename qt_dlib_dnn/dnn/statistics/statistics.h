@@ -5,8 +5,8 @@
 
 
 
-namespace dlib
-{
+//namespace dlib
+//{
 	template <
         typename T
         >
@@ -218,4 +218,4 @@ namespace dlib
         T cubed  (const T& val) const {return val*val*val; }
         T quaded (const T& val) const {return val*val*val*val; }
     };
-}
+//}

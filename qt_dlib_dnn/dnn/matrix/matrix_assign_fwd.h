@@ -14,8 +14,8 @@
 #include "matrix_data_layout.h"
 #include "../algs.h"
 
-namespace dlib
-{
+//namespace dlib
+//{
     
     /*
         The point of the matrix_assign() functions is to contain all the various 
@@ -402,7 +402,7 @@ namespace dlib
 
 // ----------------------------------------------------------------------------------------
 
-}
+//}
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4 && __GNUC_MINOR__ >= 8) || (__GNUC__ > 4))
 #pragma GCC diagnostic pop

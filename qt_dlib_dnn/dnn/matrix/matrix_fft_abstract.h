@@ -6,7 +6,7 @@
 #include "matrix_abstract.h"
 #include "../algs.h"
 
-namespace dlib
+//namespace dlib
 {
 
 // ----------------------------------------------------------------------------------------
