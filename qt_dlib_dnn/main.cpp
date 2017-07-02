@@ -1,5 +1,25 @@
 #include <QCoreApplication>
 #include "dnn/dnn.h"
+#include "dnn/matrix.h"
+#include "dnn/cv_image.h"
+#include "dnn/image_transforms/assign_image.h"
+#include <iostream>
+#include <string>
+#include <fstream>
+
+using std::cout;
+using std::endl;
+#define Debug(x) cout << #x << "=" << (x) << endl;
+
+#include <opencv2/core/core.hpp>
+#include <opencv2/core/utility.hpp>
+#include <opencv2/core/persistence.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/ml/ml.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/opencv.hpp>
+#include <opencv2/face.hpp>
+#include <opencv2/objdetect/objdetect.hpp>
 
 template <template <int,template<typename>class,int,typename> class block, int N, template<typename>class BN, typename SUBNET>
 using residual = add_prev1<block<N,BN,1,tag1<SUBNET>>>;
@@ -20,18 +40,141 @@ template <typename SUBNET> using alevel3 = ares<64,ares<64,ares<64,ares_down<64,
 template <typename SUBNET> using alevel4 = ares<32,ares<32,ares<32,SUBNET>>>;
 
 using anet_type = loss_metric<fc_no_bias<128,avg_pool_everything<
-                            alevel0<
-                            alevel1<
-                            alevel2<
-                            alevel3<
-                            alevel4<
-                            max_pool<3,3,2,2,relu<affine<con<32,7,7,2,2,
-                            input_rgb_image_sized<150>
-                            >>>>>>>>>>>>;
+alevel0<
+alevel1<
+alevel2<
+alevel3<
+alevel4<
+max_pool<3,3,2,2,relu<affine<con<32,7,7,2,2,
+input_rgb_image_sized<150>
+>>>>>>>>>>>>;
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
+    anet_type net;
 
-    return a.exec();
+    std::cout << "start read\n";
+    //serialize.h 1521行读文件
+    deserialize("dlib_face_recognition_resnet_model_v1.dat") >> net;
+    std::cout << "read over\n";
+
+    std::string trainf = "/home/yjwudi/face_recognizer/orl/orltrain.txt";
+    std::string testf = "/home/yjwudi/face_recognizer/orl/orltest.txt";
+    std::vector<std::string> train_vec, test_vec;
+    std::vector<int> train_label, test_label;
+    int i, j;
+    std::vector<int> label_vec;
+
+    std::ifstream in;
+    in.open(trainf.c_str());
+    if(in.bad())
+    {
+        cout << "no such file: " << trainf << endl;
+        return  0;
+    }
+    std::string fname;
+    int label;
+    std::cout << "reading " << trainf << endl;
+    while(in >> fname >> label)
+    {
+        train_vec.push_back(fname);
+        train_label.push_back(label);
+        //cout << fname << endl;
+    }
+    in.close();
+    in.open(testf.c_str());
+    if(in.bad())
+    {
+        cout << "no such file: " << testf << endl;
+        return  0;
+    }
+    cout << "reading " << testf << endl;
+    while(in >> fname >> label)
+    {
+        test_vec.push_back(fname);
+        test_label.push_back(label);
+        //cout << fname << endl;
+    }
+    in.close();
+
+    //training
+    matrix<rgb_pixel> img;
+    std::vector<matrix<rgb_pixel>> faces;
+    cout << "training...\n";
+    for(i = 0; i < (int)train_vec.size(); i++)
+    {
+        Debug(i);
+        cv::Mat tmp_mat = cv::imread(train_vec[i]);
+        cv::resize(tmp_mat, tmp_mat, cv::Size(150, 150), (0, 0), (0, 0), cv::INTER_LINEAR);
+        assign_image(img, cv_image<rgb_pixel>(tmp_mat));
+        faces.push_back(img);
+        /*
+        int cc = 0;
+        for (auto face : detector(img))
+        {
+            if(cc>1)
+                break;
+            auto shape = sp(img, face);
+            matrix<rgb_pixel> face_chip;
+            extract_image_chip(img, get_face_chip_details(shape,150,0.25), face_chip);
+            faces.push_back(move(face_chip));
+            cc++;
+            // Also put some boxes on the faces so we can see that the detector is finding
+            // them.
+            //win.add_overlay(face);
+            //image_window win(face);
+            //cin.get();
+        }
+        if(cc==0)
+        {
+            puts("bad");
+            cv::resize(tmp_mat, tmp_mat, cv::Size(150, 150));
+            assign_image(img, cv_image<rgb_pixel>(tmp_mat));
+            faces.push_back(img);
+        }
+        */
+    }
+    cout << "input\n";
+    std::vector<matrix<float,0,1>> face_descriptors = net(faces);
+    cout << "face descriptors size: " << face_descriptors.size() << endl;
+    int aaa;
+    std::cin >> aaa;
+
+    return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

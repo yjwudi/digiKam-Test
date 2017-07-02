@@ -9,12 +9,12 @@
 
 
     /*!
-        uint64 is a typedef for an unsigned integer that is exactly 64 bits wide.
+        duint64 is a typedef for an unsigned integer that is exactly 64 bits wide.
         uint32 is a typedef for an unsigned integer that is exactly 32 bits wide.
         uint16 is a typedef for an unsigned integer that is exactly 16 bits wide.
         uint8  is a typedef for an unsigned integer that is exactly 8  bits wide.
 
-        int64 is a typedef for an integer that is exactly 64 bits wide.
+        dint64 is a typedef for an integer that is exactly 64 bits wide.
         int32 is a typedef for an integer that is exactly 32 bits wide.
         int16 is a typedef for an integer that is exactly 16 bits wide.
         int8  is a typedef for an integer that is exactly 8  bits wide.
@@ -22,17 +22,17 @@
 
 
 #ifdef __GNUC__
-    typedef unsigned long long uint64;
-    typedef long long int64;
+    typedef unsigned long long duint64;
+    typedef long long dint64;
 #elif defined(__BORLANDC__)
-    typedef unsigned __int64 uint64;
-    typedef __int64 int64;
+    typedef unsigned __int64 duint64;
+    typedef __int64 dint64;
 #elif defined(_MSC_VER)
-    typedef unsigned __int64 uint64;
-    typedef __int64 int64;
+    typedef unsigned __int64 duint64;
+    typedef __int64 dint64;
 #else
-    typedef unsigned long long uint64;
-    typedef long long int64;
+    typedef unsigned long long duint64;
+    typedef long long dint64;
 #endif
 
     typedef unsigned short uint16;
@@ -49,12 +49,12 @@
     COMPILE_TIME_ASSERT(sizeof(uint8)  == 1);
     COMPILE_TIME_ASSERT(sizeof(uint16) == 2);
     COMPILE_TIME_ASSERT(sizeof(uint32) == 4);
-    COMPILE_TIME_ASSERT(sizeof(uint64) == 8);
+    COMPILE_TIME_ASSERT(sizeof(duint64) == 8);
 
     COMPILE_TIME_ASSERT(sizeof(int8)  == 1);
     COMPILE_TIME_ASSERT(sizeof(int16) == 2);
     COMPILE_TIME_ASSERT(sizeof(int32) == 4);
-    COMPILE_TIME_ASSERT(sizeof(int64) == 8);
+    COMPILE_TIME_ASSERT(sizeof(dint64) == 8);
 */
 
 
@@ -67,7 +67,7 @@
     template <typename T>
     struct unsigned_type<T,4> { typedef uint32 type; };
     template <typename T>
-    struct unsigned_type<T,8> { typedef uint64 type; };
+    struct unsigned_type<T,8> { typedef duint64 type; };
     /*!
         ensures
             - sizeof(unsigned_type<T>::type) == sizeof(T)

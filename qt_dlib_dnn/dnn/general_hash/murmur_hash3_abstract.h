@@ -62,7 +62,7 @@
 
 // ----------------------------------------------------------------------------------------
 
-    std::pair<uint64,uint64> murmur_hash3_128bit ( 
+    std::pair<duint64,duint64> murmur_hash3_128bit ( 
         const void* key, 
         const int len,
         const uint32 seed = 0
@@ -83,7 +83,7 @@
 
 // ----------------------------------------------------------------------------------------
 
-    std::pair<uint64,uint64> murmur_hash3_128bit ( 
+    std::pair<duint64,duint64> murmur_hash3_128bit ( 
         const uint32& v1, 
         const uint32& v2, 
         const uint32& v3, 
@@ -101,10 +101,10 @@
 
 // ----------------------------------------------------------------------------------------
 
-    std::pair<uint64,uint64> murmur_hash3_128bit_3 ( 
-        uint64 k1, 
-        uint64 k2,
-        uint64 k3 
+    std::pair<duint64,duint64> murmur_hash3_128bit_3 ( 
+        duint64 k1, 
+        duint64 k2,
+        duint64 k3 
     );
     /*!
         ensures

@@ -130,11 +130,11 @@
                 return mt();
             }
 
-            inline uint64 get_random_64bit_number (
+            inline duint64 get_random_64bit_number (
             )
             {
-                const uint64 a = get_random_32bit_number();
-                const uint64 b = get_random_32bit_number();
+                const duint64 a = get_random_32bit_number();
+                const duint64 b = get_random_32bit_number();
                 return (a<<32)|b;
             }
 

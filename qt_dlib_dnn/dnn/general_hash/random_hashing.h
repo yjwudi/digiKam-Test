@@ -12,13 +12,13 @@
 // ----------------------------------------------------------------------------------------
 
     inline double uniform_random_hash (
-        const uint64& k1,
-        const uint64& k2,
-        const uint64& k3
+        const duint64& k1,
+        const duint64& k2,
+        const duint64& k3
     )
     {
-        const std::pair<uint64,uint64> h = murmur_hash3_128bit_3(k1,k2,k3);
-        const uint64 mask = DLIB_BIG_CONSTANT(0xFFFFFFFFFF); 
+        const std::pair<duint64,duint64> h = murmur_hash3_128bit_3(k1,k2,k3);
+        const duint64 mask = DLIB_BIG_CONSTANT(0xFFFFFFFFFF); 
         const double max = mask+1;
         return static_cast<double>(h.first&mask)/max;
     }
@@ -26,12 +26,12 @@
 // ----------------------------------------------------------------------------------------
 
     inline double gaussian_random_hash (
-        const uint64& k1,
-        const uint64& k2,
-        const uint64& k3
+        const duint64& k1,
+        const duint64& k2,
+        const duint64& k3
     )
     {
-        const std::pair<uint64,uint64> h = murmur_hash3_128bit_3(k1,k2,k3);
+        const std::pair<duint64,duint64> h = murmur_hash3_128bit_3(k1,k2,k3);
 
         const static unsigned int max = 4096;
 
@@ -859,7 +859,7 @@
         0.9997, 0.9998, 0.9998, 0.9998, 0.9999, 0.9999, 0.9999, 0.9999, 0.9999, 1, 
         1, 1, 1, 1, 1, 1};
 
-        const static uint64 mask = max-1; 
+        const static duint64 mask = max-1; 
         return logvals[h.first&mask]*cosvals[h.second&mask];
 
         // Note that we are just using the Box–Muller transform to compute the result.  In

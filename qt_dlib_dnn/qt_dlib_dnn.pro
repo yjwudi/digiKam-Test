@@ -7,7 +7,7 @@ TARGET = qt_dlib_dnn
 CONFIG += console
 CONFIG -= app_bundle
 
-TEMPLATE = app
+#TEMPLATE = app
 
 SOURCES += main.cpp \
     dnn/nn/cpu_dlib.cpp \
@@ -121,7 +121,6 @@ HEADERS += \
     dnn/array.h \
     dnn/array2d.h \
     dnn/generic_image.h \
-    dnn/dlib_vector.h \
     dnn/sort.h \
     dnn/error.h \
     dnn/assert.h \
@@ -145,8 +144,6 @@ HEADERS += \
     dnn/nn/solvers.h \
     dnn/nn/solvers_abstract.h \
     dnn/nn/tensor_tools.h \
-    dnn/nn/trainer.h \
-    dnn/nn/trainer_abstract.h \
     dnn/nn/utilities.h \
     dnn/nn/utilities_abstract.h \
     dnn/nn/validation.h \
@@ -174,4 +171,11 @@ HEADERS += \
     dnn/image_processing/box_overlap_testing_abstract.h \
     dnn/image_processing/full_object_detection.h \
     dnn/image_processing/full_object_detection_abstract.h \
-    dnn/geometry.h
+    dnn/geometry.h \
+    dnn/cv_image.h \
+    dnn/cv_image_abstract.h \
+    dnn/image_transforms/assign_image.h \
+    dnn/image_transforms/assign_image_abstract.h
+
+
+LIBS += -I/usr/local/include/opencv -I/usr/local/include -L/usr/local/lib -lopencv_stitching -lopencv_superres -lopencv_videostab -lopencv_aruco -lopencv_bgsegm -lopencv_bioinspired -lopencv_ccalib -lopencv_dpm -lopencv_freetype -lopencv_fuzzy -lopencv_hdf -lopencv_line_descriptor -lopencv_optflow -lopencv_reg -lopencv_saliency -lopencv_stereo -lopencv_structured_light -lopencv_phase_unwrapping -lopencv_rgbd -lopencv_surface_matching -lopencv_tracking -lopencv_datasets -lopencv_text -lopencv_face -lopencv_plot -lopencv_dnn -lopencv_xfeatures2d -lopencv_shape -lopencv_video -lopencv_ximgproc -lopencv_calib3d -lopencv_features2d -lopencv_flann -lopencv_xobjdetect -lopencv_objdetect -lopencv_ml -lopencv_xphoto -lopencv_highgui -lopencv_videoio -lopencv_imgcodecs -lopencv_photo -lopencv_imgproc -lopencv_core

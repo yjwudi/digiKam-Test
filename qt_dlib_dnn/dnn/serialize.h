@@ -68,8 +68,8 @@
         - std::set
         - std::pair
         - std::complex
-        -  uint64
-        -  int64
+        -  duint64
+        -  dint64
         - float_details
         - enumerable<T> where T is a serializable type
         - map_pair<D,R> where D and R are both serializable types.
@@ -87,8 +87,8 @@
         - std::set
         - std::pair
         - std::complex
-        -  uint64
-        -  int64
+        -  duint64
+        -  dint64
         - float_details
         - C style arrays of serializable types
         - Google protocol buffer objects.
@@ -98,7 +98,7 @@
 
     Note that you can deserialize an integer value to any integral type (except for a
     char type) if its value will fit into the target integer type.  I.e.  the types
-    short, int, long, unsigned short, unsigned int, unsigned long, and  uint64
+    short, int, long, unsigned short, unsigned int, unsigned long, and  duint64
     can all receive serialized data from each other so long as the actual serizlied
     value fits within the receiving integral type's range.
 
@@ -465,8 +465,8 @@
     USE_DEFAULT_INT_SERIALIZATION_FOR(unsigned short)
     USE_DEFAULT_INT_SERIALIZATION_FOR(unsigned int)
     USE_DEFAULT_INT_SERIALIZATION_FOR(unsigned long)
-    USE_DEFAULT_INT_SERIALIZATION_FOR(uint64)
-    USE_DEFAULT_INT_SERIALIZATION_FOR(int64)
+    USE_DEFAULT_INT_SERIALIZATION_FOR(duint64)
+    USE_DEFAULT_INT_SERIALIZATION_FOR(dint64)
     
 
     USE_DEFAULT_BYTE_SERIALIZATION_FOR(char)

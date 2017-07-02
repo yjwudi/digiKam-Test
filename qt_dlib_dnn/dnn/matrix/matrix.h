@@ -660,7 +660,29 @@
         M_ref_type m;
         const type s;
     };
-
+    template <
+        typename EXP
+        >
+    inline typename disable_if<is_matrix<float>, const matrix_mul_scal_exp<EXP> >::type op_multi_float (
+        const matrix_exp<EXP>& m,
+        const float& s
+    )
+    {
+        typedef typename EXP::type type;
+        return matrix_mul_scal_exp<EXP>(m.ref(),static_cast<type>(s));
+    }
+    template <
+        typename EXP
+        >
+    inline typename disable_if<is_matrix<float>, const matrix_mul_scal_exp<EXP> >::type op_multi_float (
+        const float& s,
+        const matrix_exp<EXP>& m
+    )
+    {
+        typedef typename EXP::type type;
+        return matrix_mul_scal_exp<EXP>(m.ref(),static_cast<type>(s));
+    }
+/*
     template <
         typename EXP,
         typename S 
@@ -676,6 +698,20 @@
 
     template <
         typename EXP,
+        typename S 
+        >
+    inline typename disable_if<is_matrix<S>, const matrix_mul_scal_exp<EXP> >::type operator* (
+        const S& s,
+        const matrix_exp<EXP>& m
+    )
+    {
+        typedef typename EXP::type type;
+        return matrix_mul_scal_exp<EXP>(m.ref(),static_cast<type>(s));
+    }
+*/
+
+    template <
+        typename EXP,
         typename S,
         bool B
         >
@@ -686,19 +722,6 @@
     {
         typedef typename EXP::type type;
         return matrix_mul_scal_exp<EXP>(m.m,static_cast<type>(s)*m.s);
-    }
-
-    template <
-        typename EXP,
-        typename S 
-        >
-    inline typename disable_if<is_matrix<S>, const matrix_mul_scal_exp<EXP> >::type operator* (
-        const S& s,
-        const matrix_exp<EXP>& m
-    )
-    {
-        typedef typename EXP::type type;
-        return matrix_mul_scal_exp<EXP>(m.ref(),static_cast<type>(s));
     }
 
     template <
@@ -820,6 +843,20 @@
     };
 
     template <
+        typename EXP
+        >
+    const typename disable_if<is_matrix<double>, matrix_op<op_add_scalar<EXP> > >::type op_plus_double(
+        const matrix_exp<EXP>& m,
+        const double& val
+    )
+    {
+        typedef typename EXP::type type;
+
+        typedef op_add_scalar<EXP> op;
+        return matrix_op<op>(op(m.ref(), static_cast<type>(val)));
+    }
+/*
+    template <
         typename EXP,
         typename T
         >
@@ -848,7 +885,7 @@
         typedef op_add_scalar<EXP> op;
         return matrix_op<op>(op(m.ref(), static_cast<type>(val)));
     }
-
+*/
 // ----------------------------------------------------------------------------------------
 
     template <typename M>
@@ -867,7 +904,7 @@
             return s - this->m(r,c) ;
         }
     };
-
+/*
     template <
         typename EXP,
         typename T
@@ -882,7 +919,7 @@
         typedef op_subl_scalar<EXP> op;
         return matrix_op<op>(op(m.ref(), static_cast<type>(val)));
     }
-
+*/
 // ----------------------------------------------------------------------------------------
 
     template <typename M>
@@ -903,6 +940,20 @@
     };
 
     template <
+        typename EXP
+        >
+    const typename disable_if<is_matrix<double>, matrix_op<op_subr_scalar<EXP> > >::type op_minus_double(
+        const matrix_exp<EXP>& m,
+        const double& val
+    )
+    {
+        typedef typename EXP::type type;
+
+        typedef op_subr_scalar<EXP> op;
+        return matrix_op<op>(op(m.ref(), static_cast<type>(val)));
+    }
+/*
+    template <
         typename EXP,
         typename T
         >
@@ -916,7 +967,7 @@
         typedef op_subr_scalar<EXP> op;
         return matrix_op<op>(op(m.ref(), static_cast<type>(val)));
     }
-
+*/
 // ----------------------------------------------------------------------------------------
 
     template <

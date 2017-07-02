@@ -366,7 +366,7 @@
     DLIB_STRING_CAST_INTEGRAL(int)
     DLIB_STRING_CAST_INTEGRAL(unsigned long)
     DLIB_STRING_CAST_INTEGRAL(long)
-    DLIB_STRING_CAST_INTEGRAL(uint64)
+    DLIB_STRING_CAST_INTEGRAL(duint64)
 
     template <
         typename T,

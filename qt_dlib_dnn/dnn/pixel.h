@@ -522,8 +522,8 @@
     template <> struct pixel_traits<int>            : public grayscale_pixel_traits<int> {};
     template <> struct pixel_traits<long>           : public grayscale_pixel_traits<long> {};
 
-    template <> struct pixel_traits<int64>          : public grayscale_pixel_traits<int64> {};
-    template <> struct pixel_traits<uint64>         : public grayscale_pixel_traits<uint64> {};
+    template <> struct pixel_traits<dint64>          : public grayscale_pixel_traits<dint64> {};
+    template <> struct pixel_traits<duint64>         : public grayscale_pixel_traits<duint64> {};
 
 // ----------------------------------------------------------------------------------------
 

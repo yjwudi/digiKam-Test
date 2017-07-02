@@ -15,6 +15,7 @@
 #include <utility>
 #include <tuple>
 #include <cmath>
+#include <iostream>
 #include <vector>
 #include "tensor_tools.h"
 #include <type_traits>
@@ -366,6 +367,7 @@
             // So rather than writing a bunch of hard to read template magic around call
             // sites we just have this overload that doesn't do anything (and an assert to
             // make sure that's the case).
+            std::cout << "call layer forward 1\n";
             DLIB_CASSERT(false, "This should never happen");
         }
 
@@ -376,6 +378,7 @@
             resizable_tensor& data_output
         ) -> decltype(layer.forward(sub,data_output))
         {
+            std::cout << "call layer forward 2\n";
             layer.forward(sub,data_output);
         }
 
@@ -386,6 +389,7 @@
             tensor& data_output
         ) -> decltype(layer.forward_inplace(sub.get_output(),data_output))
         {
+            std::cout << "call layer forward 3\n";
             layer.forward_inplace(sub.get_output(),data_output);
         }
 
@@ -396,6 +400,7 @@
             resizable_tensor& data_output
         ) -> decltype(layer.forward_inplace(sub.get_output(),data_output))
         {
+            std::cout << "call layer forward 4\n";
             if (!have_same_dimensions(data_output, sub.get_output()))
                 data_output.copy_size(sub.get_output());
             layer.forward_inplace(sub.get_output(),static_cast<tensor&>(data_output));
@@ -781,7 +786,9 @@
 
         const tensor& forward(const tensor& x)
         {
+            std::cout << "forward...\n";
             subnetwork->forward(x);
+            std::cout << "forward over\n";
             const dimpl::subnet_wrapper<subnet_type> wsub(*subnetwork);
             if (!this_layer_setup_called)
             {
@@ -909,7 +916,7 @@
             serialize(item.cached_output, out);
             serialize(item.params_grad, out);
         }
-
+*/
         friend void deserialize(add_layer& item, std::istream& in)
         {
             int version = 0;
@@ -918,15 +925,15 @@
                 throw serialization_error("Unexpected version found while deserializing  add_layer.");
             deserialize(*item.subnetwork, in);
             deserialize(item.details, in);
-            deserialize(item.this_layer_setup_called, in);
-            deserialize(item.gradient_input_is_stale, in);
-            deserialize(item.get_output_and_gradient_input_disabled, in);
+            deserialize_bool(item.this_layer_setup_called, in);
+            deserialize_bool(item.gradient_input_is_stale, in);
+            deserialize_bool(item.get_output_and_gradient_input_disabled, in);
             deserialize(item.x_grad, in);
             deserialize(item.cached_output, in);
             if (version == 2)
                 deserialize(item.params_grad, in);
         }
-*/
+
         friend std::ostream& operator<< (std::ostream& out, const add_layer& item)
         {
             int min_length = 0;
@@ -1272,7 +1279,7 @@
             serialize(item.grad_final, out);
             serialize(item._sample_expansion_factor, out);
         }
-
+*/
         friend void deserialize(add_layer& item, std::istream& in)
         {
             int version = 0;
@@ -1281,9 +1288,9 @@
                 throw serialization_error("Unexpected version found while deserializing  add_layer.");
             deserialize(item.input_layer, in);
             deserialize(item.details, in);
-            deserialize(item.this_layer_setup_called, in);
-            deserialize(item.gradient_input_is_stale, in);
-            deserialize(item.get_output_and_gradient_input_disabled, in);
+            deserialize_bool(item.this_layer_setup_called, in);
+            deserialize_bool(item.gradient_input_is_stale, in);
+            deserialize_bool(item.get_output_and_gradient_input_disabled, in);
             deserialize(item.x_grad, in);
             deserialize(item.cached_output, in);
             deserialize(item.grad_final, in);
@@ -1292,7 +1299,7 @@
             else
                 item._sample_expansion_factor = 1; // all layer types set this to 1 in older dlib versions, so that's what we put here.
         }
-*/
+
         friend std::ostream& operator<< (std::ostream& out, const add_layer& item)
         {
             int min_length = 0;
@@ -1495,7 +1502,7 @@
             serialize(version, out);
             serialize(item.subnetwork, out);
         }
-
+*/
         friend void deserialize(add_tag_layer& item, std::istream& in)
         {
             int version = 0;
@@ -1504,7 +1511,7 @@
                 throw serialization_error("Unexpected version found while deserializing  add_tag_layer.");
             deserialize(item.subnetwork, in);
         }
-*/
+
         friend std::ostream& operator<< (std::ostream& out, const add_tag_layer& item)
         {
             int min_length = 0;
@@ -1789,7 +1796,7 @@
             serialize(item.details, out);
             serialize(item.subnetwork, out);
         }
-
+*/
         friend void deserialize(repeat& item, std::istream& in)
         {
             int version = 0;
@@ -1799,7 +1806,7 @@
             deserialize(item.details, in);
             deserialize(item.subnetwork, in);
         }
-*/
+
         friend std::ostream& operator<< (std::ostream& out, const repeat& item)
         {
             int min_length = 0;
@@ -2019,7 +2026,7 @@
             serialize(item.gradient_input_is_stale, out);
             serialize(item._sample_expansion_factor, out);
         }
-
+*/
         friend void deserialize(add_tag_layer& item, std::istream& in)
         {
             int version = 0;
@@ -2037,7 +2044,7 @@
                 item._sample_expansion_factor = 1; // all layer types set this to 1 in older dlib versions, so that's what we put here.
 
         }
-*/
+
         friend std::ostream& operator<< (std::ostream& out, const add_tag_layer& item)
         {
             int min_length = 0;
@@ -2236,6 +2243,7 @@
             resizable_tensor& data
         ) const
         {
+            std::cout << "to tensor in add_loss_layer\n";
             subnetwork.to_tensor(ibegin,iend,data);
         }
 
@@ -2247,7 +2255,7 @@
             output_iterator obegin
         )
         {
-            subnetwork.forward(x);
+            subnetwork.forward(x);//here problem exists
             const dimpl::subnet_wrapper<subnet_type> wsub(subnetwork);
             loss.to_label(x, wsub, obegin);
         }
@@ -2275,12 +2283,16 @@
             size_t batch_size = 128
         )
         {
+            std::cout << "here\n";
             std::vector<output_label_type> results(std::distance(data.begin(), data.end()));
+            std::cout << "ddd " << (int)results.size() << "  ";
             auto o = results.begin();
             auto i = data.begin();
             auto num_remaining = results.size();
-            while(num_remaining != 0)
+            std::cout << (int)num_remaining << "\n";
+            while(num_remaining > 0)
             {
+                std::cout << (int)num_remaining << "\n";
                 auto inc = std::min(batch_size, num_remaining);
                 (*this)(i, i+inc, o);
                 i += inc;
@@ -2401,7 +2413,7 @@
             serialize(item.loss, out);
             serialize(item.subnetwork, out);
         }
-
+*/
         friend void deserialize(add_loss_layer& item, std::istream& in)
         {
             int version = 0;
@@ -2411,7 +2423,7 @@
             deserialize(item.loss, in);
             deserialize(item.subnetwork, in);
         }
-*/
+
         friend std::ostream& operator<< (std::ostream& out, const add_loss_layer& item)
         {
             int min_length = 0;
@@ -2795,7 +2807,7 @@
             serialize(version, out);
             serialize(item.subnetwork, out);
         }
-
+*/
         friend void deserialize(add_skip_layer& item, std::istream& in)
         {
             int version = 0;
@@ -2804,7 +2816,7 @@
                 throw serialization_error("Unexpected version found while deserializing  add_skip_layer.");
             deserialize(item.subnetwork, in);
         }
-*/
+
         friend std::ostream& operator<< (std::ostream& out, const add_skip_layer& item)
         {
             int min_length = 0;
@@ -3051,8 +3063,7 @@
                 resizable_tensor ip_out;
                 impl::call_layer_forward(ll, subnetwork2, ip_out);
                 impl::call_layer_forward(ll, subnetwork2, subnetwork2.get_mutable_output());
-                //operator minus
-                const auto forward_error = 0;//max(abs(mat(ip_out) - mat(subnetwork2.get_output())));
+                const auto forward_error = max(dabs(mat(ip_out) - mat(subnetwork2.get_output())));
                 if (forward_error > 0.00001)
                 {
                     using namespace std;
@@ -3084,8 +3095,7 @@
                 data_grad2 = subnetwork2.get_gradient_input();
                 if (params_grad.size() != 0)
                 {
-                    //operator minus
-                    const auto backward_param_error = 0;//max(abs(mat(params_grad1) - mat(params_grad2)));
+                    const auto backward_param_error = max(dabs(mat(params_grad1) - mat(params_grad2)));
                     if (backward_param_error > 0.00001)
                     {
                         using namespace std;
@@ -3094,8 +3104,7 @@
                         return layer_test_results(sout.str());
                     }
                 }
-                //operator minus
-                const auto backward_data_error = 0;//max(abs(mat(data_grad1)-9 - mat(data_grad2)));
+                const auto backward_data_error = max(dabs(op_minus_double(mat(data_grad1),9) - mat(data_grad2)));
                 if (backward_data_error > 0.00001)
                 {
                     using namespace std;

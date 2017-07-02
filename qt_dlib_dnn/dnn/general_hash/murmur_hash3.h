@@ -45,7 +45,7 @@
         return (x << r) | (x >> (32 - r));
     }
 
-    inline uint64 murmur_rotl64 ( uint64 x, int8 r )
+    inline duint64 murmur_rotl64 ( duint64 x, int8 r )
     {
         return (x << r) | (x >> (64 - r));
     }
@@ -88,22 +88,22 @@
         return temp.val;
     }
 
-    DLIB_FORCE_INLINE uint64 murmur_getblock ( const uint64 * p, int i )
+    DLIB_FORCE_INLINE duint64 murmur_getblock ( const duint64 * p, int i )
     {
         // The reason we do a memcpy() here instead of simply returning p[i] is because
         // doing it this way avoids violations of the strict aliasing rule when all these
         // functions are inlined into the user's code.
-        uint64 temp;
+        duint64 temp;
         memcpy(&temp, p+i, 8);
         return temp;
     }
 
-    DLIB_FORCE_INLINE uint64 murmur_getblock_byte_swap ( const uint64 * p, int i )
+    DLIB_FORCE_INLINE duint64 murmur_getblock_byte_swap ( const duint64 * p, int i )
     {
         union 
         {
             uint8 bytes[8];
-            uint64 val;
+            duint64 val;
         } temp;
 
         const uint8* pp = reinterpret_cast<const uint8*>(p + i);
@@ -135,7 +135,7 @@
 
 // ----------------------------------------------------------------------------------------
 
-    DLIB_FORCE_INLINE uint64 murmur_fmix ( uint64 k )
+    DLIB_FORCE_INLINE duint64 murmur_fmix ( duint64 k )
     {
         k ^= k >> 33;
         k *= DLIB_BIG_CONSTANT(0xff51afd7ed558ccd);
@@ -315,7 +315,7 @@
 
 // ----------------------------------------------------------------------------------------
 
-    inline std::pair<uint64,uint64> murmur_hash3_128bit ( 
+    inline std::pair<duint64,duint64> murmur_hash3_128bit ( 
         const void* key, 
         const int len,
         const uint32 seed = 0
@@ -324,16 +324,16 @@
         const uint8 * data = (const uint8*)key;
         const int nblocks = len / 16;
 
-        uint64 h1 = seed;
-        uint64 h2 = seed;
+        duint64 h1 = seed;
+        duint64 h2 = seed;
 
-        uint64 c1 = DLIB_BIG_CONSTANT(0x87c37b91114253d5);
-        uint64 c2 = DLIB_BIG_CONSTANT(0x4cf5ad432745937f);
+        duint64 c1 = DLIB_BIG_CONSTANT(0x87c37b91114253d5);
+        duint64 c2 = DLIB_BIG_CONSTANT(0x4cf5ad432745937f);
 
         //----------
         // body
 
-        const uint64 * blocks = (const uint64 *)(data);
+        const duint64 * blocks = (const duint64 *)(data);
 
         bool is_little_endian = true;
         uint32 endian_test = 1;
@@ -345,8 +345,8 @@
         {
             for(int i = 0; i < nblocks; i++)
             {
-                uint64 k1 = murmur_getblock(blocks,i*2+0);
-                uint64 k2 = murmur_getblock(blocks,i*2+1);
+                duint64 k1 = murmur_getblock(blocks,i*2+0);
+                duint64 k2 = murmur_getblock(blocks,i*2+1);
 
                 k1 *= c1; k1  = DLIB_ROTL64(k1,31); k1 *= c2; h1 ^= k1;
 
@@ -361,8 +361,8 @@
         {
             for(int i = 0; i < nblocks; i++)
             {
-                uint64 k1 = murmur_getblock_byte_swap(blocks,i*2+0);
-                uint64 k2 = murmur_getblock_byte_swap(blocks,i*2+1);
+                duint64 k1 = murmur_getblock_byte_swap(blocks,i*2+0);
+                duint64 k2 = murmur_getblock_byte_swap(blocks,i*2+1);
 
                 k1 *= c1; k1  = DLIB_ROTL64(k1,31); k1 *= c2; h1 ^= k1;
 
@@ -379,28 +379,28 @@
 
         const uint8 * tail = (const uint8*)(data + nblocks*16);
 
-        uint64 k1 = 0;
-        uint64 k2 = 0;
+        duint64 k1 = 0;
+        duint64 k2 = 0;
 
         switch(len & 15)
         {
-            case 15: k2 ^= uint64(tail[14]) << 48;
-            case 14: k2 ^= uint64(tail[13]) << 40;
-            case 13: k2 ^= uint64(tail[12]) << 32;
-            case 12: k2 ^= uint64(tail[11]) << 24;
-            case 11: k2 ^= uint64(tail[10]) << 16;
-            case 10: k2 ^= uint64(tail[ 9]) << 8;
-            case  9: k2 ^= uint64(tail[ 8]) << 0;
+            case 15: k2 ^= duint64(tail[14]) << 48;
+            case 14: k2 ^= duint64(tail[13]) << 40;
+            case 13: k2 ^= duint64(tail[12]) << 32;
+            case 12: k2 ^= duint64(tail[11]) << 24;
+            case 11: k2 ^= duint64(tail[10]) << 16;
+            case 10: k2 ^= duint64(tail[ 9]) << 8;
+            case  9: k2 ^= duint64(tail[ 8]) << 0;
                      k2 *= c2; k2  = DLIB_ROTL64(k2,33); k2 *= c1; h2 ^= k2;
 
-            case  8: k1 ^= uint64(tail[ 7]) << 56;
-            case  7: k1 ^= uint64(tail[ 6]) << 48;
-            case  6: k1 ^= uint64(tail[ 5]) << 40;
-            case  5: k1 ^= uint64(tail[ 4]) << 32;
-            case  4: k1 ^= uint64(tail[ 3]) << 24;
-            case  3: k1 ^= uint64(tail[ 2]) << 16;
-            case  2: k1 ^= uint64(tail[ 1]) << 8;
-            case  1: k1 ^= uint64(tail[ 0]) << 0;
+            case  8: k1 ^= duint64(tail[ 7]) << 56;
+            case  7: k1 ^= duint64(tail[ 6]) << 48;
+            case  6: k1 ^= duint64(tail[ 5]) << 40;
+            case  5: k1 ^= duint64(tail[ 4]) << 32;
+            case  4: k1 ^= duint64(tail[ 3]) << 24;
+            case  3: k1 ^= duint64(tail[ 2]) << 16;
+            case  2: k1 ^= duint64(tail[ 1]) << 8;
+            case  1: k1 ^= duint64(tail[ 0]) << 0;
                      k1 *= c1; k1  = DLIB_ROTL64(k1,31); k1 *= c2; h1 ^= k1;
         };
 
@@ -423,24 +423,24 @@
 
 // ----------------------------------------------------------------------------------------
 
-    inline std::pair<uint64,uint64> murmur_hash3_128bit ( 
+    inline std::pair<duint64,duint64> murmur_hash3_128bit ( 
         const uint32& v1, 
         const uint32& v2, 
         const uint32& v3, 
         const uint32& v4 
     )
     {
-        uint64 h1 = 0;
-        uint64 h2 = 0;
+        duint64 h1 = 0;
+        duint64 h2 = 0;
 
-        const uint64 c1 = DLIB_BIG_CONSTANT(0x87c37b91114253d5);
-        const uint64 c2 = DLIB_BIG_CONSTANT(0x4cf5ad432745937f);
+        const duint64 c1 = DLIB_BIG_CONSTANT(0x87c37b91114253d5);
+        const duint64 c2 = DLIB_BIG_CONSTANT(0x4cf5ad432745937f);
 
         //----------
         // body
 
-        uint64 k1 = (static_cast<uint64>(v2)<<32)|v1; 
-        uint64 k2 = (static_cast<uint64>(v4)<<32)|v3; 
+        duint64 k1 = (static_cast<duint64>(v2)<<32)|v1; 
+        duint64 k2 = (static_cast<duint64>(v4)<<32)|v3; 
 
         k1 *= c1; k1  = DLIB_ROTL64(k1,31); k1 *= c2;
 
@@ -469,17 +469,17 @@
 
 // ----------------------------------------------------------------------------------------
 
-    inline std::pair<uint64,uint64> murmur_hash3_128bit_3 ( 
-        uint64 k1, 
-        uint64 k2,
-        uint64 k3 
+    inline std::pair<duint64,duint64> murmur_hash3_128bit_3 ( 
+        duint64 k1, 
+        duint64 k2,
+        duint64 k3 
     )
     {
-        uint64 h1 = k3;
-        uint64 h2 = k3;
+        duint64 h1 = k3;
+        duint64 h2 = k3;
 
-        const uint64 c1 = DLIB_BIG_CONSTANT(0x87c37b91114253d5);
-        const uint64 c2 = DLIB_BIG_CONSTANT(0x4cf5ad432745937f);
+        const duint64 c1 = DLIB_BIG_CONSTANT(0x87c37b91114253d5);
+        const duint64 c2 = DLIB_BIG_CONSTANT(0x4cf5ad432745937f);
 
         //----------
         // body

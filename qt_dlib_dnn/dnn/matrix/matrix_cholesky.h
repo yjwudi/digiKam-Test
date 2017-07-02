@@ -113,7 +113,7 @@
 
 #ifdef DLIB_USE_LAPACK
         L_ = A_;
-        const type eps = max(abs(diag(L_)))*std::sqrt(std::numeric_limits<type>::epsilon())/100;
+        const type eps = max(dabs(diag(L_)))*std::sqrt(std::numeric_limits<type>::epsilon())/100;
 
         // check if the matrix is actually symmetric
         bool is_symmetric = true;
@@ -130,7 +130,7 @@
         int info = lapack::potrf('L', L_);
 
         // check if it's really SPD
-        if (info == 0 && is_symmetric && min(abs(diag(L_))) > eps*100)
+        if (info == 0 && is_symmetric && min(dabs(diag(L_))) > eps*100)
             isspd = true;
         else
             isspd = false;
@@ -145,7 +145,7 @@
         const long n = A.nc();
         L_.set_size(n,n); 
 
-        const type eps = max(abs(diag(A)))*std::sqrt(std::numeric_limits<type>::epsilon())/100;
+        const type eps = max(dabs(diag(A)))*std::sqrt(std::numeric_limits<type>::epsilon())/100;
 
         // Main loop.
         for (long j = 0; j < n; j++) 

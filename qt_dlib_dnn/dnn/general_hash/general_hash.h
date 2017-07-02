@@ -54,8 +54,8 @@
         const T& item
     ) const
     {
-        // hash any types that have a conversion to uint64 
-        return hash(static_cast<uint64>(item));
+        // hash any types that have a conversion to duint64 
+        return hash(static_cast<duint64>(item));
     }
 
 

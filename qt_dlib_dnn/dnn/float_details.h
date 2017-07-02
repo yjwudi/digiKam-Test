@@ -36,7 +36,7 @@
         !*/
 
         float_details(
-            int64 man,
+            dint64 man,
             int16 exp
         ) : mantissa(man), exponent(exp) {}
         /*!
@@ -85,7 +85,7 @@
         const static int16 is_ninf = 32001;
         const static int16 is_nan  = 32002;
 
-        int64 mantissa;
+        dint64 mantissa;
         int16 exponent;
 
 
@@ -118,7 +118,7 @@
             else if (val < std::numeric_limits<T>::infinity())
             {
                 int exp;
-                mantissa = static_cast<int64>(std::frexp(val, &exp)*(((uint64)1)<<digits));
+                mantissa = static_cast<dint64>(std::frexp(val, &exp)*(((duint64)1)<<digits));
                 exponent = exp - digits;
 
                 // Compact the representation a bit by shifting off any low order bytes 

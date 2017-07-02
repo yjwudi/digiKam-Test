@@ -3,6 +3,7 @@
 #ifndef DLIB_TeNSOR_TOOLS_CPP_
 #define DLIB_TeNSOR_TOOLS_CPP_
 
+#include "../matrix/matrix_math_functions.h"
 #include "tensor_tools.h"
 #include "../string.h"
 #include <atomic>
@@ -53,7 +54,7 @@ namespace tt
 #ifdef DLIB_USE_CUDA
         cuda::inverse_norms(invnorms, data, eps);
 #else
-        invnorms = reciprocal(sqrt(sum_cols(squared(mat(data))) + eps));
+        invnorms = impl::reciprocal(sqrt(sum_cols(squared(mat(data))) + eps));
 #endif
     }
 
@@ -151,6 +152,7 @@ namespace tt
 #ifdef DLIB_USE_CUDA
         cuda::gemm(beta, dest, alpha, lhs, trans_lhs, rhs, trans_rhs);
 #else
+/*
         if (beta != 0)
         {
             if (trans_lhs && trans_rhs)
@@ -172,6 +174,37 @@ namespace tt
                 dest = alpha*trans(mat(lhs))*mat(rhs);
             else
                 dest = alpha*mat(lhs)*mat(rhs);
+        }
+*/
+        if (beta != 0)
+        {
+            if (trans_lhs && trans_rhs)
+            {
+                dest = op_multi_float(alpha, trans(mat(lhs)))*trans(mat(rhs)) + op_multi_float(beta, mat(dest));
+            }
+            else if (!trans_lhs && trans_rhs)
+            {
+                dest = op_multi_float(alpha,mat(lhs))*trans(mat(rhs)) + op_multi_float(beta, mat(dest));
+            }
+            else if (trans_lhs && !trans_rhs)
+            {
+                dest = op_multi_float(alpha, trans(mat(lhs)))*mat(rhs) + op_multi_float(beta, mat(dest));
+            }
+            else
+            {
+                dest = op_multi_float(alpha, mat(lhs))*mat(rhs) + op_multi_float(beta, mat(dest));
+            }
+        }
+        else
+        {
+            if (trans_lhs && trans_rhs)
+                dest = op_multi_float(alpha, trans(mat(lhs)))*trans(mat(rhs));
+            else if (!trans_lhs && trans_rhs)
+                dest = op_multi_float(alpha,mat(lhs))*trans(mat(rhs));
+            else if (trans_lhs && !trans_rhs)
+                dest = op_multi_float(alpha, trans(mat(lhs)))*mat(rhs);
+            else
+                dest = op_multi_float(alpha, mat(lhs))*mat(rhs);
         }
 #endif
     }

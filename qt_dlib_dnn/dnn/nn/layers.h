@@ -15,6 +15,7 @@
 #include "utilities.h"
 #include <sstream>
 #include "../serialize.h"
+#include "../matrix/matrix_math_functions.h"
 
 //using namespace dlib;
 
@@ -150,6 +151,7 @@
         template <typename SUBNET>
         void forward(const SUBNET& sub, resizable_tensor& output)
         {
+            std::cout << "con_\n";
             conv(output,
                 sub.get_output(),
                 filters(params,0),
@@ -219,10 +221,10 @@
                 deserialize(item.padding_x_, in);
                 deserialize(item.filters, in);
                 deserialize(item.biases, in);
-                deserialize(item.learning_rate_multiplier, in);
-                deserialize(item.weight_decay_multiplier, in);
-                deserialize(item.bias_learning_rate_multiplier, in);
-                deserialize(item.bias_weight_decay_multiplier, in);
+                deserializelf(item.learning_rate_multiplier, in);
+                deserializelf(item.weight_decay_multiplier, in);
+                deserializelf(item.bias_learning_rate_multiplier, in);
+                deserializelf(item.bias_weight_decay_multiplier, in);
                 if (item.padding_y_ != _padding_y) throw serialization_error("Wrong padding_y found while deserializing  con_");
                 if (item.padding_x_ != _padding_x) throw serialization_error("Wrong padding_x found while deserializing  con_");
                 if (num_filters != _num_filters) 
@@ -396,6 +398,7 @@
         template <typename SUBNET>
         void forward(const SUBNET& sub, resizable_tensor& output)
         {
+            std::cout << "max_pool_\n";
             mp.setup_max_pooling(_nr!=0?_nr:sub.get_output().nr(), 
                                  _nc!=0?_nc:sub.get_output().nc(),
                                  _stride_y, _stride_x, padding_y_, padding_x_);
@@ -593,6 +596,7 @@
         template <typename SUBNET>
         void forward(const SUBNET& sub, resizable_tensor& output)
         {
+            std::cout << "avg_pool_\n";
             ap.setup_avg_pooling(_nr!=0?_nr:sub.get_output().nr(), 
                                  _nc!=0?_nc:sub.get_output().nc(),
                                  _stride_y, _stride_x, padding_y_, padding_x_);
@@ -788,7 +792,7 @@
 
         template <typename SUBNET>
         void forward(const SUBNET& sub, resizable_tensor& output)
-        {
+        {std::cout << "bn_\n";
             auto g = gamma(params,0);
             auto b = beta(params,gamma.size());
             if (sub.get_output().num_samples() > 1)
@@ -1063,7 +1067,7 @@
 
         template <typename SUBNET>
         void forward(const SUBNET& sub, resizable_tensor& output)
-        {
+        {std::cout << "fc_\n";
             output.set_size(sub.get_output().num_samples(), num_outputs);
 
             auto w = weights(params, 0);
@@ -1156,10 +1160,10 @@
             int bmode = 0;
             deserialize_int(bmode, in);
             if (bias_mode != (fc_bias_mode)bmode) throw serialization_error("Wrong fc_bias_mode found while deserializing  fc_");
-            deserialize(item.learning_rate_multiplier, in);
-            deserialize(item.weight_decay_multiplier, in);
-            deserialize(item.bias_learning_rate_multiplier, in);
-            deserialize(item.bias_weight_decay_multiplier, in);
+            deserializelf(item.learning_rate_multiplier, in);
+            deserializelf(item.weight_decay_multiplier, in);
+            deserializelf(item.bias_learning_rate_multiplier, in);
+            deserializelf(item.bias_weight_decay_multiplier, in);
         }
 
         friend std::ostream& operator<<(std::ostream& out, const fc_& item)
@@ -1310,7 +1314,7 @@
             serializef(item.drop_rate, out);
             serialize(item.mask, out);
         }
-
+*/
         friend void deserialize(dropout_& item, std::istream& in)
         {
             std::string version;
@@ -1320,7 +1324,7 @@
             deserializef(item.drop_rate, in);
             deserialize(item.mask, in);
         }
-*/
+
         friend std::ostream& operator<<(std::ostream& out, const dropout_& item)
         {
             out << "dropout\t ("
@@ -1400,7 +1404,7 @@
             serialize_str("multiply_", out);
             serializef(item.val, out);
         }
-
+*/
         friend void deserialize(multiply_& item, std::istream& in)
         {
             std::string version;
@@ -1420,7 +1424,7 @@
                 throw serialization_error("Unexpected version '"+version+"' found while deserializing  multiply_.");
             deserializef(item.val, in);
         }
-*/
+
         friend std::ostream& operator<<(std::ostream& out, const multiply_& item)
         {
             out << "multiply ("
@@ -1479,7 +1483,8 @@
             auto sg = gamma(temp,0);
             auto sb = beta(temp,gamma.size());
 
-            g = pointwise_multiply(mat(sg), 1.0f/sqrt(mat(item.running_variances)+item.get_eps()));
+            //g = pointwise_multiply(mat(sg), 1.0f/impl::dsqrt(mat(item.running_variances)+item.get_eps()));
+            g = pointwise_multiply(mat(sg), 1.0f/impl::dsqrt(op_plus_double(mat(item.running_variances),item.get_eps())));
             b = mat(sb) - pointwise_multiply(mat(g), mat(item.running_means));
         }
 
@@ -1557,7 +1562,7 @@
             serialize(item.beta, out);
             serialize_int((int)item.mode, out);
         }
-
+*/
         friend void deserialize(affine_& item, std::istream& in)
         {
             std::string version;
@@ -1592,7 +1597,7 @@
             deserialize_int(mode, in);
             item.mode = (layer_mode)mode;
         }
-*/
+
         friend std::ostream& operator<<(std::ostream& out, const affine_& )
         {
             out << "affine";
@@ -1641,7 +1646,7 @@
 
         template <typename SUBNET>
         void forward(const SUBNET& sub, resizable_tensor& output)
-        {
+        {std::cout << "add_prev_\n";
             auto&& t1 = sub.get_output();
             auto&& t2 = layer<tag>(sub).get_output();
             output.set_size(std::max(t1.num_samples(),t2.num_samples()),
@@ -1812,7 +1817,7 @@
             const SUBNET& sub, 
             resizable_tensor& data_output
         )
-        {
+        {std::cout << "prelu_\n";
             data_output.copy_size(sub.get_output());
             tt::prelu(data_output, sub.get_output(), params);
         }
@@ -1840,7 +1845,7 @@
             serialize(item.params, out);
             serializef(item.initial_param_value, out);
         }
-
+*/
         friend void deserialize(prelu_& item, std::istream& in)
         {
             std::string version;
@@ -1850,7 +1855,7 @@
             deserialize(item.params, in);
             deserializef(item.initial_param_value, in);
         }
-*/
+
         friend std::ostream& operator<<(std::ostream& out, const prelu_& item)
         {
             out << "prelu\t ("
@@ -2155,7 +2160,7 @@
         }
         template <typename SUBNET>
         void forward(const SUBNET& sub, resizable_tensor& output)
-        {
+        {std::cout << "concat_\n";
             // the total depth of result is the sum of depths from all tags
             impl::concat_helper_impl<TAG_TYPES...>::resize_out(output, sub, 0);
 

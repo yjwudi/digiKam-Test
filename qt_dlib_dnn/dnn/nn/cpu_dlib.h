@@ -291,8 +291,7 @@
             pooling(const pooling&) = delete;
             pooling& operator=(const pooling&) = delete;
 
-            pooling (
-            );
+            pooling ();
 
             void clear(
             );

@@ -122,18 +122,18 @@
             serialize(item.avg_green, out);
             serialize(item.avg_blue, out);
         }
-
+*/
         friend void deserialize(input_rgb_image& item, std::istream& in)
         {
             std::string version;
             deserialize(version, in);
             if (version != "input_rgb_image")
                 throw serialization_error("Unexpected version found while deserializing  input_rgb_image.");
-            deserialize(item.avg_red, in);
-            deserialize(item.avg_green, in);
-            deserialize(item.avg_blue, in);
+            deserializef(item.avg_red, in);
+            deserializef(item.avg_green, in);
+            deserializef(item.avg_blue, in);
         }
-        */
+
 
         friend std::ostream& operator<<(std::ostream& out, const input_rgb_image& item)
         {
@@ -246,16 +246,16 @@
             serialize(NR, out);
             serialize(NC, out);
         }
-
+*/
         friend void deserialize(input_rgb_image_sized& item, std::istream& in)
         {
             std::string version;
-            deserialize(version, in);
+            deserialize_str(version, in);
             if (version != "input_rgb_image_sized")
                 throw serialization_error("Unexpected version found while deserializing  input_rgb_image_sized.");
-            deserialize(item.avg_red, in);
-            deserialize(item.avg_green, in);
-            deserialize(item.avg_blue, in);
+            deserializef(item.avg_red, in);
+            deserializef(item.avg_green, in);
+            deserializef(item.avg_blue, in);
             size_t nr, nc;
             deserialize(nr, in);
             deserialize(nc, in);
@@ -267,7 +267,7 @@
                 throw serialization_error(sout.str());
             }
         }
-*/
+
         friend std::ostream& operator<<(std::ostream& out, const input_rgb_image_sized& item)
         {
             out << "input_rgb_image_sized("<<item.avg_red<<","<<item.avg_green<<","<<item.avg_blue<<") nr="<<NR<<" nc="<<NC;
@@ -373,13 +373,13 @@
 //            serialize_str("input<matrix>", out);
 //        }
 
-//        friend void deserialize(input& /*item*/, std::istream& in)
-//        {
-//            std::string version;
-//            deserialize(version, in);
-//            if (version != "input<matrix>")
-//                throw serialization_error("Unexpected version found while deserializing  input.");
-//        }
+        friend void deserialize(input& /*item*/, std::istream& in)
+        {
+            std::string version;
+            deserialize(version, in);
+            if (version != "input<matrix>")
+                throw serialization_error("Unexpected version found while deserializing  input.");
+        }
 
         friend std::ostream& operator<<(std::ostream& out, const input& /*item*/)
         {
@@ -469,7 +469,7 @@
         {
             serialize_str("input<array2d>", out);
         }
-
+*/
 
         friend void deserialize(input& item, std::istream& in)
         {
@@ -478,7 +478,7 @@
             if (version != "input<array2d>")
                 throw serialization_error("Unexpected version found while deserializing  input.");
         }
-        */
+
         friend std::ostream& operator<<(std::ostream& out, const input& item)
         {
             out << "input<array2d>";
@@ -614,7 +614,7 @@
             serialize(item.avg_green, out);
             serialize(item.avg_blue, out);
         }
-
+*/
         friend void deserialize(input_rgb_image_pyramid& item, std::istream& in)
         {
             std::string version;
@@ -625,7 +625,7 @@
             deserialize(item.avg_green, in);
             deserialize(item.avg_blue, in);
         }
-*/
+
         friend std::ostream& operator<<(std::ostream& out, const input_rgb_image_pyramid& item)
         {
             out << "input_rgb_image_pyramid("<<item.avg_red<<","<<item.avg_green<<","<<item.avg_blue<<")";

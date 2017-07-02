@@ -7,7 +7,7 @@
 #include "cudnn_dlibapi.h"
 #include "cublas_dlibapi.h"
 #include "curand_dlibapi.h"
-#include "cpu_dlib.h"
+#include "cpu_dlib.cpp"
 #include "cuda_dlib.h"
 #include "../rand_kernel_1.h"
 #include <memory>
@@ -872,8 +872,9 @@ namespace tt
         pooling(const pooling&) = delete;
         pooling& operator=(const pooling&) = delete;
 
-        pooling (
-        ) = default;
+        //pooling (
+        //) = default;
+        pooling(){}
 
         void clear(
         ) { impl.clear(); }
@@ -1335,9 +1336,9 @@ namespace tt
 
 }//}
 
-#ifdef NO_MAKEFILE
+//#ifdef NO_MAKEFILE
 #include "tensor_tools.cpp"
-#endif
+//#endif
 
 #endif // DLIB_TeNSOR_TOOLS_H_
 

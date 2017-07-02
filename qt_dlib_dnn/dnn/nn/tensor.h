@@ -461,7 +461,7 @@
             sbuf->sputn((char*)&d, sizeof(d));
         }
     }
-
+*/
     inline void deserialize(resizable_tensor& item, std::istream& in)
     {
         int version;
@@ -488,7 +488,7 @@
             bo.little_to_host(d);
         }
     }
-    */
+
 
 // ----------------------------------------------------------------------------------------
 
@@ -658,11 +658,11 @@
         serialize(item.nr(), out);
         serialize(item.nc(), out);
     }
-
+*/
     inline void deserialize(alias_tensor& item, std::istream& in)
     {
         int version = 0;
-        deserialize(version, in);
+        deserialize_int(version, in);
         if (version != 1)
             throw serialization_error("Unexpected version found while deserializing  alias_tensor.");
         long num_samples, k, nr, nc;
@@ -672,7 +672,7 @@
         deserialize(nc, in);
         item = alias_tensor(num_samples, k, nr, nc);
     }
-*/
+
 // ----------------------------------------------------------------------------------------
 
 //}

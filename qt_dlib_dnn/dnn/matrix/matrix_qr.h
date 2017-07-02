@@ -217,14 +217,14 @@
     is_full_rank(
     ) const		
     {
-        type eps = max(abs(Rdiag));
+        type eps = max(dabs(Rdiag));
         if (eps != 0)
             eps *= std::sqrt(std::numeric_limits<type>::epsilon())/100;
         else
             eps = 1;  // there is no max so just use 1
 
         // check if any of the elements of Rdiag are effectively 0
-        return min(abs(Rdiag)) > eps;
+        return min(dabs(Rdiag)) > eps;
     }
 
 // ----------------------------------------------------------------------------------------

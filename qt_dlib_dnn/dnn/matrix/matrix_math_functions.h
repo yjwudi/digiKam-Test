@@ -18,7 +18,7 @@
 
 // ----------------------------------------------------------------------------------------
 
-    DLIB_DEFINE_FUNCTION_M(op_sqrt, sqrt, std::sqrt ,7);
+    //DLIB_DEFINE_FUNCTION_M(op_sqrt, dsqrt, std::sqrt ,7);
     DLIB_DEFINE_FUNCTION_M(op_log, log, std::log ,7);
     DLIB_DEFINE_FUNCTION_M(op_log10, log10, std::log10 ,7);
     DLIB_DEFINE_FUNCTION_M(op_exp, exp, std::exp ,7);
@@ -37,6 +37,46 @@
     DLIB_DEFINE_FUNCTION_M(op_asin, asin, std::asin ,7);
     DLIB_DEFINE_FUNCTION_M(op_acos, acos, std::acos ,7);
     DLIB_DEFINE_FUNCTION_M(op_atan, atan, std::atan ,7);
+
+// ----------------------------------------------------------------------------------------
+
+    namespace impl
+    {
+        template <typename M>
+        struct op_sqrt                                                                              
+        {                                                                                           
+            op_sqrt(                                                                                
+                const M& m_                                                                         
+            ) : m(m_){}                                                                             
+                                                                                                    
+            const M& m;                                                                             
+                                                                                                    
+            const static long cost = M::cost+(7);                                          
+            const static long NR = M::NR;                                                           
+            const static long NC = M::NC;                                                           
+            typedef typename M::type type;                                                          
+            typedef const typename M::type const_ret_type;                                          
+            typedef typename M::mem_manager_type mem_manager_type;                                  
+            typedef typename M::layout_type layout_type;                                            
+                                                                                                    
+            const_ret_type apply (long r, long c) const { return std::sqrt(m(r,c)); }                
+                                                                                                    
+            long nr () const { return m.nr(); }                                                     
+            long nc () const { return m.nc(); }                                                     
+                                                                                                    
+            template <typename U> bool aliases               ( const matrix_exp<U>& item) const     
+            { return m.aliases(item); }                                                             
+            template <typename U> bool destructively_aliases ( const matrix_exp<U>& item) const     
+            { return m.destructively_aliases(item); }                                               
+                                                                                                    
+        };
+        template < typename M >                                                                     
+        const matrix_op<op_sqrt<M> > dsqrt ( const matrix_exp<M>& m)                                 
+        {                                                                                           
+            typedef op_sqrt<M> op;                                                                  
+            return matrix_op<op>(op(m.ref()));                                                      
+        }
+    }
 
 // ----------------------------------------------------------------------------------------
 
@@ -288,7 +328,7 @@
     template <
         typename EXP
         >
-    const matrix_op<op_abs<EXP> > abs (
+    const matrix_op<op_abs<EXP> > dabs (
         const matrix_exp<EXP>& m
     )
     {

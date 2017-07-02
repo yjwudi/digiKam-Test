@@ -13,6 +13,7 @@
 #include "nn/tensor_tools.h"
 #include "nn/utilities.h"
 #include "nn/validation.h"
+#include "serialize.h"
 
 
 #endif // DNN_H

@@ -12,9 +12,9 @@
 // ----------------------------------------------------------------------------------------
 
     double uniform_random_hash (
-        const uint64& k1,
-        const uint64& k2,
-        const uint64& k3
+        const duint64& k1,
+        const duint64& k2,
+        const duint64& k3
     );
     /*!
         ensures
@@ -32,9 +32,9 @@
 // ----------------------------------------------------------------------------------------
 
     double gaussian_random_hash (
-        const uint64& k1,
-        const uint64& k2,
-        const uint64& k3
+        const duint64& k1,
+        const duint64& k2,
+        const duint64& k3
     );
     /*!
         ensures

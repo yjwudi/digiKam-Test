@@ -107,7 +107,7 @@
             serializef(item.weight_decay, out);
             serializef(item.momentum, out);
         }
-
+*/
         friend void deserialize(sgd& item, std::istream& in)
         {
             std::string version;
@@ -118,7 +118,7 @@
             deserializef(item.weight_decay, in);
             deserializef(item.momentum, in);
         }
-*/
+
     private:
 
         template <typename layer_type> 
@@ -278,7 +278,7 @@
             serializef(item.momentum2, out);
             serializef(item.t, out);
         }
-
+*/
         friend void deserialize(adam& item, std::istream& in)
         {
             std::string version;
@@ -293,7 +293,7 @@
             deserializef(item.momentum2, in);
             deserializef(item.t, in);
         }
-*/
+
     private:
 
         template <typename layer_type> 

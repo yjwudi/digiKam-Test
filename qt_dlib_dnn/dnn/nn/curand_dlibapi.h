@@ -9,7 +9,7 @@
 #include "cuda_errors.h"
 
 //namespace dlib
-{
+//{
     namespace cuda 
     {
 
@@ -56,7 +56,7 @@
     // -----------------------------------------------------------------------------------
 
     }  
-}
+//}
 
 #endif // DLIB_USE_CUDA
 

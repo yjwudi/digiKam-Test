@@ -631,8 +631,8 @@ typedef memory_manager_stateless_kernel_1<char> default_memory_manager;
     template <> struct is_built_in_scalar_type<unsigned short>  { const static bool value = true; };
     template <> struct is_built_in_scalar_type<unsigned int>    { const static bool value = true; };
     template <> struct is_built_in_scalar_type<unsigned long>   { const static bool value = true; };
-    template <> struct is_built_in_scalar_type<uint64>          { const static bool value = true; };
-    template <> struct is_built_in_scalar_type<int64>           { const static bool value = true; };
+    template <> struct is_built_in_scalar_type<duint64>          { const static bool value = true; };
+    template <> struct is_built_in_scalar_type<dint64>           { const static bool value = true; };
     template <> struct is_built_in_scalar_type<char>            { const static bool value = true; };
     template <> struct is_built_in_scalar_type<signed char>     { const static bool value = true; };
     template <> struct is_built_in_scalar_type<unsigned char>   { const static bool value = true; };
@@ -680,8 +680,8 @@ typedef memory_manager_stateless_kernel_1<char> default_memory_manager;
     template <typename T, size_t s = sizeof(T)> struct promote;
     template <typename T> struct promote<T,1> { typedef int32 type; };
     template <typename T> struct promote<T,2> { typedef int32 type; };
-    template <typename T> struct promote<T,4> { typedef int64 type; };
-    template <typename T> struct promote<T,8> { typedef int64 type; };
+    template <typename T> struct promote<T,4> { typedef dint64 type; };
+    template <typename T> struct promote<T,8> { typedef dint64 type; };
 
     template <> struct promote<float,sizeof(float)>             { typedef double type; };
     template <> struct promote<double,sizeof(double)>           { typedef double type; };
@@ -1023,7 +1023,7 @@ typedef memory_manager_stateless_kernel_1<char> default_memory_manager;
             } stuff;
             long double more_stuff;
 
-            uint64 var1;
+            duint64 var1;
             uint32 var2;
             double var3;
 
