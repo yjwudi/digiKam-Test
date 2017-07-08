@@ -17,7 +17,7 @@
 #include "matrix_trsm.h"
 
 //namespace dlib 
-{
+//{
 
     template <
         typename matrix_exp_type
@@ -458,7 +458,7 @@
 
 #endif // DLIB_USE_LAPACK not defined
 
-} 
+//}
 
 #endif // DLIB_MATRIX_QR_DECOMPOSITION_H 
 

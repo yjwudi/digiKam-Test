@@ -1128,7 +1128,7 @@
             throw serialization_error(e.info + "\n   while serializing object of type dvector"); 
         }
     }
-
+/*
     template<typename T>
     inline void deserialize (
         dvector<T,2>& item,  
@@ -1147,7 +1147,7 @@
             throw serialization_error(e.info + "\n   while deserializing object of type dvector"); 
         }
     }
-
+*/
 // ----------------------------------------------------------------------------------------
 
     template<typename T>

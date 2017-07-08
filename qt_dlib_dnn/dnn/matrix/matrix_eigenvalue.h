@@ -21,7 +21,7 @@
 #define DLIB_LAPACK_EIGENVALUE_DECOMP_SIZE_THRESH 4
 
 //namespace dlib 
-{
+//{
 
     template <
         typename matrix_exp_type
@@ -1370,7 +1370,7 @@
 // ----------------------------------------------------------------------------------------
 
 
-} 
+//}
 
 #endif // DLIB_MATRIX_EIGENVALUE_DECOMPOSITION_H 
 

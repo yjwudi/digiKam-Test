@@ -182,7 +182,15 @@
         inline operator const type (
         ) const 
         {
-
+            COMPILE_TIME_ASSERT(NC == 1 || NC == 0);
+            COMPILE_TIME_ASSERT(NR == 1 || NR == 0);
+            DLIB_ASSERT(nr() == 1 && nc() == 1, 
+                "\tmatrix_exp::operator const type() const"
+                << "\n\tYou can only use this operator on a 1x1 matrix"
+                << "\n\tnr(): " << nr()
+                << "\n\tnc(): " << nc()
+                << "\n\tthis: " << this
+                );
             // Put the expression contained in this matrix_exp into
             // a temporary 1x1 matrix so that the expression will encounter
             // all the overloads of matrix_assign() and have the chance to
@@ -207,12 +215,12 @@
 
     // something is a matrix if it is convertible to a matrix_exp object
 
-    /*
+    
     template <typename T>
     struct is_matrix<T, typename enable_if<is_convertible<T, const matrix_exp<typename T::exp_type>& > >::type > 
     { static const bool value = true; }; 
 
-    */
+    
     /*
         is_matrix<T>::value == 1 if T is a matrix type else 0
     */

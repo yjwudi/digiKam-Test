@@ -152,7 +152,7 @@ namespace tt
 #ifdef DLIB_USE_CUDA
         cuda::gemm(beta, dest, alpha, lhs, trans_lhs, rhs, trans_rhs);
 #else
-/*
+
         if (beta != 0)
         {
             if (trans_lhs && trans_rhs)
@@ -175,7 +175,8 @@ namespace tt
             else
                 dest = alpha*mat(lhs)*mat(rhs);
         }
-*/
+
+        /*
         if (beta != 0)
         {
             if (trans_lhs && trans_rhs)
@@ -206,6 +207,7 @@ namespace tt
             else
                 dest = op_multi_float(alpha, mat(lhs))*mat(rhs);
         }
+        */
 #endif
     }
 

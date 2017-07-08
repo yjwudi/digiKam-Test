@@ -1,3 +1,5 @@
+#ifndef DLIB_IMAGE_PYRaMID_Hh_
+#define DLIB_IMAGE_PYRaMID_Hh_
 #include "../assert.h"
 #include "../geomotry/rectangle.h"
 #include "../geomotry/drectangle.h"
@@ -133,3 +135,134 @@ template <
         }
 
     }
+template <
+    unsigned int N
+    >
+class pyramid_down : noncopyable
+{
+public:
+
+    COMPILE_TIME_ASSERT(N > 0);
+
+    template <typename T>
+    dvector<double,2> point_down (
+        const dvector<T,2>& p
+    ) const
+    {
+        const double ratio = (N-1.0)/N;
+        //return (p - 0.3)*ratio;
+        double new_x = (p.x()-0.3)*ratio, new_y = (p.y()-0.3)*ratio;
+        return dvector<double,2>(new_x, new_y);
+
+    }
+
+    template <typename T>
+    dvector<double,2> point_up (
+        const dvector<T,2>& p
+    ) const
+    {
+        const double ratio = N/(N-1.0);
+        return p*ratio + 0.3;
+    }
+
+// -----------------------------
+
+    template <typename T>
+    dvector<double,2> point_down (
+        const dvector<T,2>& p,
+        unsigned int levels
+    ) const
+    {
+        dvector<double,2> temp = p;
+        for (unsigned int i = 0; i < levels; ++i)
+            temp = point_down(temp);
+        return temp;
+    }
+
+    template <typename T>
+    dvector<double,2> point_up (
+        const dvector<T,2>& p,
+        unsigned int levels
+    ) const
+    {
+        dvector<double,2> temp = p;
+        for (unsigned int i = 0; i < levels; ++i)
+            temp = point_up(temp);
+        return temp;
+    }
+
+// -----------------------------
+
+    drectangle rect_up (
+        const drectangle& rect
+    ) const
+    {
+        return drectangle(point_up(rect.tl_corner()), point_up(rect.br_corner()));
+    }
+
+    drectangle rect_up (
+        const drectangle& rect,
+        unsigned int levels
+    ) const
+    {
+        return drectangle(point_up(rect.tl_corner(),levels), point_up(rect.br_corner(),levels));
+    }
+
+// -----------------------------
+
+    drectangle rect_down (
+        const drectangle& rect
+    ) const
+    {
+        return drectangle(point_down(rect.tl_corner()), point_down(rect.br_corner()));
+    }
+
+    drectangle rect_down (
+        const drectangle& rect,
+        unsigned int levels
+    ) const
+    {
+        return drectangle(point_down(rect.tl_corner(),levels), point_down(rect.br_corner(),levels));
+    }
+
+    template <
+        typename in_image_type,
+        typename out_image_type
+        >
+    void operator() (
+        const in_image_type& original,
+        out_image_type& down
+    ) const
+    {
+        // make sure requires clause is not broken
+        DLIB_ASSERT(is_same_object(original, down) == false, 
+                    "\t void pyramid_down::operator()"
+                    << "\n\t is_same_object(original, down): " << is_same_object(original, down) 
+                    << "\n\t this:                           " << this
+                    );
+
+        typedef typename image_traits<in_image_type>::pixel_type in_pixel_type;
+        typedef typename image_traits<out_image_type>::pixel_type out_pixel_type;
+        COMPILE_TIME_ASSERT( pixel_traits<in_pixel_type>::has_alpha == false );
+        COMPILE_TIME_ASSERT( pixel_traits<out_pixel_type>::has_alpha == false );
+
+
+        set_image_size(down, ((N-1)*num_rows(original))/N+0.5, ((N-1)*num_columns(original))/N+0.5);
+        resize_image(original, down);
+    }
+
+    template <
+        typename image_type
+        >
+    void operator() (
+        image_type& img
+    ) const
+    {
+        image_type temp;
+        (*this)(img, temp);
+        swap(temp, img);
+    }
+};
+
+
+#endif

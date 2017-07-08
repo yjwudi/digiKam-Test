@@ -17,7 +17,7 @@
 #include "matrix_trsm.h"
 
 //namespace dlib 
-{
+//{
 
     template <
         typename matrix_exp_type
@@ -222,7 +222,7 @@
 
 
 
-} 
+//}
 
 #endif // DLIB_MATRIX_CHOLESKY_DECOMPOSITION_H 
 

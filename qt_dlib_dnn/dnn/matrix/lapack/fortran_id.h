@@ -39,7 +39,7 @@
 
 
 //namespace dlib
-{
+//{
     namespace lapack
     {
             // stuff from f2c used to define what exactly is an integer in fortran
@@ -52,7 +52,7 @@
 #endif
 
     }
-}
+//}
 
 #endif // DLIB_BOOST_NUMERIC_BINDINGS_TRAITS_FORTRAN_H
 

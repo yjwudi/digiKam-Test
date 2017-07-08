@@ -16,7 +16,9 @@ SOURCES += main.cpp \
     dnn/nn/curand_dlibapi.cpp \
     dnn/nn/gpu_data.cpp \
     dnn/nn/tensor_tools.cpp \
-    dnn/unicode/unicode.cpp
+    dnn/unicode/unicode.cpp \
+    shape-predictor/fullobjectdetection.cpp \
+    shape-predictor/qdatastreamoverloads.cpp
 
 HEADERS += \
     dnn/tensor.h \
@@ -175,7 +177,25 @@ HEADERS += \
     dnn/cv_image.h \
     dnn/cv_image_abstract.h \
     dnn/image_transforms/assign_image.h \
-    dnn/image_transforms/assign_image_abstract.h
+    dnn/image_transforms/assign_image_abstract.h \
+    shape-predictor/fullobjectdetection.h \
+    shape-predictor/libopencv.h \
+    shape-predictor/matrixoperations.h \
+    shape-predictor/pointtransformaffine.h \
+    shape-predictor/qdatastreamoverloads.h \
+    shape-predictor/shapepredictor.h \
+    shape-predictor/vectoroperations.h \
+    dnn/image_transforms/interpolation.h \
+    dnn/matrix/matrix_la.h \
+    dnn/matrix/matrix_la_abstract.h \
+    dnn/simd/simd4f.h \
+    dnn/simd/simd4i.h \
+    dnn/simd/simd8f.h \
+    dnn/simd/simd8i.h \
+    dnn/simd/simd_check.h \
+    dnn/image_processing/frontal_face_detector.h \
+    dnn/image_processing/object_detector.h \
+    dnn/image_processing/scan_fhog_pyramid.h
 
 
 LIBS += -I/usr/local/include/opencv -I/usr/local/include -L/usr/local/lib -lopencv_stitching -lopencv_superres -lopencv_videostab -lopencv_aruco -lopencv_bgsegm -lopencv_bioinspired -lopencv_ccalib -lopencv_dpm -lopencv_freetype -lopencv_fuzzy -lopencv_hdf -lopencv_line_descriptor -lopencv_optflow -lopencv_reg -lopencv_saliency -lopencv_stereo -lopencv_structured_light -lopencv_phase_unwrapping -lopencv_rgbd -lopencv_surface_matching -lopencv_tracking -lopencv_datasets -lopencv_text -lopencv_face -lopencv_plot -lopencv_dnn -lopencv_xfeatures2d -lopencv_shape -lopencv_video -lopencv_ximgproc -lopencv_calib3d -lopencv_features2d -lopencv_flann -lopencv_xobjdetect -lopencv_objdetect -lopencv_ml -lopencv_xphoto -lopencv_highgui -lopencv_videoio -lopencv_imgcodecs -lopencv_photo -lopencv_imgproc -lopencv_core

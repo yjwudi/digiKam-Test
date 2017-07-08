@@ -17,7 +17,7 @@
 
 
 //namespace dlib 
-{
+//{
 
     template <
         typename matrix_exp_type
@@ -354,7 +354,7 @@
 
 // ----------------------------------------------------------------------------------------
 
-} 
+//}
 
 #endif // DLIB_MATRIX_LU_DECOMPOSITION_H 
 

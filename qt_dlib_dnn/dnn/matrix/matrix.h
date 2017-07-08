@@ -217,6 +217,7 @@
         const matrix_exp<EXP2>& m2
     )
     {
+        //std::cout << "operator * 1\n";
         return matrix_multiply_exp<EXP1, EXP2>(m1.ref(), m2.ref());
     }
 
@@ -244,6 +245,7 @@
         const matrix_mul_scal_exp<EXP2>& m2
     )
     {
+        //std::cout << "operator * 2\n";
         typedef matrix_multiply_exp<EXP1, EXP2> exp1;
         typedef matrix_mul_scal_exp<exp1,false> exp2;
         return exp2(exp1(m1.m, m2.m), m1.s*m2.s);
@@ -256,6 +258,7 @@
         const matrix_exp<EXP2>& m2
     )
     {
+        //std::cout << "operator * 3\n";
         typedef matrix_multiply_exp<EXP1, EXP2> exp1;
         typedef matrix_mul_scal_exp<exp1,false> exp2;
         return exp2(exp1(m1.m, m2.ref()), m1.s);
@@ -268,6 +271,7 @@
         const matrix_mul_scal_exp<EXP2>& m2
     )
     {
+        //std::cout << "operator * 4\n";
         typedef matrix_multiply_exp<EXP1, EXP2> exp1;
         typedef matrix_mul_scal_exp<exp1,false> exp2;
         return exp2(exp1(m1.ref(), m2.m), m2.s);
@@ -660,6 +664,7 @@
         M_ref_type m;
         const type s;
     };
+    /*
     template <
         typename EXP
         >
@@ -668,6 +673,7 @@
         const float& s
     )
     {
+        std::cout << "operator * 5\n";
         typedef typename EXP::type type;
         return matrix_mul_scal_exp<EXP>(m.ref(),static_cast<type>(s));
     }
@@ -679,10 +685,13 @@
         const matrix_exp<EXP>& m
     )
     {
+        std::cout << "operator * 6\n";
+        std::cout << m.nr() << " " << m.nc() << " " << m.size() << std::endl;
         typedef typename EXP::type type;
         return matrix_mul_scal_exp<EXP>(m.ref(),static_cast<type>(s));
     }
-/*
+    */
+
     template <
         typename EXP,
         typename S 
@@ -708,7 +717,7 @@
         typedef typename EXP::type type;
         return matrix_mul_scal_exp<EXP>(m.ref(),static_cast<type>(s));
     }
-*/
+
 
     template <
         typename EXP,
@@ -720,6 +729,8 @@
         const S& s
     )
     {
+        //std::cout << "operator * 7\n";
+        //std::cout << m.nr() << " " << m.nc() << " " << m.size() << std::endl;
         typedef typename EXP::type type;
         return matrix_mul_scal_exp<EXP>(m.m,static_cast<type>(s)*m.s);
     }
@@ -734,6 +745,7 @@
         const matrix_mul_scal_exp<EXP,B>& m
     )
     {
+        //std::cout << "operator * 8\n";
         typedef typename EXP::type type;
         return matrix_mul_scal_exp<EXP>(m.m,static_cast<type>(s)*m.s);
     }

@@ -94,13 +94,14 @@ int main(int argc, char *argv[])
     {
         test_vec.push_back(fname);
         test_label.push_back(label);
-        //cout << fname << endl;
+        cout << fname << endl;
     }
     in.close();
 
     //training
     matrix<rgb_pixel> img;
     std::vector<matrix<rgb_pixel>> faces;
+    std::vector<matrix<rgb_pixel>> test_faces;
     cout << "training...\n";
     for(i = 0; i < (int)train_vec.size(); i++)
     {
@@ -135,9 +136,58 @@ int main(int argc, char *argv[])
         }
         */
     }
+
     cout << "input\n";
     std::vector<matrix<float,0,1>> face_descriptors = net(faces);
     cout << "face descriptors size: " << face_descriptors.size() << endl;
+
+/*
+    for(i = 0; i < face_descriptors[0].nr(); i++)
+    {
+        for(j = 0; j < face_descriptors[0].nc(); j++)
+        {
+            cout << face_descriptors[0](i, j) << " ";
+        }
+        cout << endl;
+    }
+*/
+
+    cout << "read testing...\n";
+    for(i = 0; i < (int)test_vec.size(); i++)
+    {
+        Debug(i);
+        cv::Mat tmp_mat = cv::imread(test_vec[i]);
+        cv::resize(tmp_mat, tmp_mat, cv::Size(150, 150), (0, 0), (0, 0), cv::INTER_LINEAR);
+        assign_image(img, cv_image<rgb_pixel>(tmp_mat));
+        test_faces.push_back(img);
+    }
+
+    std::vector<matrix<float,0,1>> test_descriptors = net(test_faces);
+    double dist, min_dist = 100000;
+    int sum = 0;
+    label = -1;
+    for(i = 0; i < test_descriptors.size(); i++)
+    {
+        matrix<float,0,1> tmp_descriptor = test_descriptors[i];
+        min_dist = 100000;
+        for(j = 0; j < (int)face_descriptors.size(); j++)
+        {
+            dist = length(tmp_descriptor-face_descriptors[j]);
+            if(dist < min_dist && dist < 0.6)
+            {
+                min_dist = dist;
+                label = train_label[j];
+            }
+        }
+        cout << label << " " << test_label[i] << endl;
+        if(label == test_label[i])
+        {
+            sum++;
+        }
+    }
+    cout << sum << "/" << test_vec.size() << endl;
+
+
     int aaa;
     std::cin >> aaa;
 

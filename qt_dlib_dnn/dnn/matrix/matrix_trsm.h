@@ -6,7 +6,7 @@
 #include "cblas_constants.h"
 
 //namespace dlib
-{
+//{
     namespace blas_bindings
     {
 #ifndef CBLAS_H
@@ -646,7 +646,7 @@
     // ------------------------------------------------------------------------------------
 
     }
-}
+//}
 
 #endif // DLIB_MATRiX_TRSM_Hh_
 
