@@ -102,21 +102,21 @@
 /*
         friend void serialize(const sgd& item, std::ostream& out)
         {
-            serialize_str("sgd2", out);
+            serialize("sgd2", out);
             serialize(item.v, out);
-            serializef(item.weight_decay, out);
-            serializef(item.momentum, out);
+            serialize(item.weight_decay, out);
+            serialize(item.momentum, out);
         }
 */
         friend void deserialize(sgd& item, std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             if (version != "sgd2")
                 throw serialization_error("Unexpected version found while deserializing  sgd.");
             deserialize(item.v, in);
-            deserializef(item.weight_decay, in);
-            deserializef(item.momentum, in);
+            deserialize(item.weight_decay, in);
+            deserialize(item.momentum, in);
         }
 
     private:
@@ -269,29 +269,29 @@
 /*
         friend void serialize(const adam& item, std::ostream& out)
         {
-            serialize_str("adam2", out);
+            serialize("adam2", out);
             serialize(item.m, out);
             serialize(item.v, out);
             serialize(item.s, out);
-            serializef(item.weight_decay, out);
-            serializef(item.momentum1, out);
-            serializef(item.momentum2, out);
-            serializef(item.t, out);
+            serialize(item.weight_decay, out);
+            serialize(item.momentum1, out);
+            serialize(item.momentum2, out);
+            serialize(item.t, out);
         }
 */
         friend void deserialize(adam& item, std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             if (version != "adam2")
                 throw serialization_error("Unexpected version found while deserializing  adam.");
             deserialize(item.m, in);
             deserialize(item.v, in);
             deserialize(item.s, in);
-            deserializef(item.weight_decay, in);
-            deserializef(item.momentum1, in);
-            deserializef(item.momentum2, in);
-            deserializef(item.t, in);
+            deserialize(item.weight_decay, in);
+            deserialize(item.momentum1, in);
+            deserialize(item.momentum2, in);
+            deserialize(item.t, in);
         }
 
     private:

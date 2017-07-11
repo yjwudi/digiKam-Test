@@ -302,7 +302,7 @@
         serialize(item.mt, out);
         serialize(item.seed, out);
         serialize(item.has_gaussian, out);
-        serializelf(item.next_gaussian, out);
+        serialize(item.next_gaussian, out);
     }
 
     inline void deserialize(
@@ -317,8 +317,8 @@
 
         deserialize(item.mt, in);
         deserialize(item.seed, in);
-        deserialize_bool(item.has_gaussian, in);
-        deserializelf(item.next_gaussian, in);
+        deserialize(item.has_gaussian, in);
+        deserialize(item.next_gaussian, in);
     }
 
 //}

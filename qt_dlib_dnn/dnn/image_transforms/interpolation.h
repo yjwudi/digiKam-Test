@@ -1,8 +1,6 @@
 #ifndef INTERPOLATION_H
 #define INTERPOLATION_H
 
-#endif // INTERPOLATION_H
-
 #include "../assert.h"
 #include "../geomotry/vector.h"
 #include "../../shape-predictor/fullobjectdetection.h"
@@ -434,6 +432,334 @@ void transform_image (
 
 
     transform_image(in_img, out_img, interp, map_point, black_background(), get_rect(out_img));
+}
+
+// ----------------------------------------------------------------------------------------
+
+class interpolate_quadratic
+{
+    template <typename T>
+    struct is_rgb_image 
+    {
+        const static bool value = pixel_traits<typename T::pixel_type>::rgb;
+    };
+
+public:
+
+    template <typename T, typename image_view_type, typename pixel_type>
+    typename disable_if<is_rgb_image<image_view_type>,bool>::type operator() (
+        const image_view_type& img,
+        const dvector<T,2>& p,
+        pixel_type& result
+    ) const
+    {
+        COMPILE_TIME_ASSERT(pixel_traits<typename image_view_type::pixel_type>::has_alpha == false);
+
+        const point pp(p);
+
+        // if the interpolation goes outside img 
+        if (!get_rect(img).contains(grow_rect(pp,1))) 
+            return false;
+
+        const long r = pp.y();
+        const long c = pp.x();
+
+        const double temp = interpolate(p-pp, 
+                                img[r-1][c-1],
+                                img[r-1][c  ],
+                                img[r-1][c+1],
+                                img[r  ][c-1],
+                                img[r  ][c  ],
+                                img[r  ][c+1],
+                                img[r+1][c-1],
+                                img[r+1][c  ],
+                                img[r+1][c+1]);
+
+        assign_pixel(result, temp);
+        return true;
+    }
+
+    template <typename T, typename image_view_type, typename pixel_type>
+    typename enable_if<is_rgb_image<image_view_type>,bool>::type operator() (
+        const image_view_type& img,
+        const dvector<T,2>& p,
+        pixel_type& result
+    ) const
+    {
+        COMPILE_TIME_ASSERT(pixel_traits<typename image_view_type::pixel_type>::has_alpha == false);
+
+        const point pp(p);
+
+        // if the interpolation goes outside img 
+        if (!get_rect(img).contains(grow_rect(pp,1))) 
+            return false;
+
+        const long r = pp.y();
+        const long c = pp.x();
+
+        const double red = interpolate(p-pp, 
+                        img[r-1][c-1].red,
+                        img[r-1][c  ].red,
+                        img[r-1][c+1].red,
+                        img[r  ][c-1].red,
+                        img[r  ][c  ].red,
+                        img[r  ][c+1].red,
+                        img[r+1][c-1].red,
+                        img[r+1][c  ].red,
+                        img[r+1][c+1].red);
+        const double green = interpolate(p-pp, 
+                        img[r-1][c-1].green,
+                        img[r-1][c  ].green,
+                        img[r-1][c+1].green,
+                        img[r  ][c-1].green,
+                        img[r  ][c  ].green,
+                        img[r  ][c+1].green,
+                        img[r+1][c-1].green,
+                        img[r+1][c  ].green,
+                        img[r+1][c+1].green);
+        const double blue = interpolate(p-pp, 
+                        img[r-1][c-1].blue,
+                        img[r-1][c  ].blue,
+                        img[r-1][c+1].blue,
+                        img[r  ][c-1].blue,
+                        img[r  ][c  ].blue,
+                        img[r  ][c+1].blue,
+                        img[r+1][c-1].blue,
+                        img[r+1][c  ].blue,
+                        img[r+1][c+1].blue);
+
+
+        rgb_pixel temp;
+        assign_pixel(temp.red, red);
+        assign_pixel(temp.green, green);
+        assign_pixel(temp.blue, blue);
+        assign_pixel(result, temp);
+
+        return true;
+    }
+
+private:
+
+    /*  tl tm tr
+        ml mm mr
+        bl bm br
+    */
+    // The above is the pixel layout in our little 3x3 neighborhood.  interpolate() will 
+    // fit a quadratic to these 9 pixels and then use that quadratic to find the interpolated 
+    // value at point p.
+    inline double interpolate(
+        const dvector<double,2>& p,
+        double tl, double tm, double tr, 
+        double ml, double mm, double mr, 
+        double bl, double bm, double br
+    ) const
+    {
+        matrix<double,6,1> w;
+        // x
+        w(0) = (tr + mr + br - tl - ml - bl)*0.16666666666;
+        // y
+        w(1) = (bl + bm + br - tl - tm - tr)*0.16666666666;
+        // x^2
+        w(2) = (tl + tr + ml + mr + bl + br)*0.16666666666 - (tm + mm + bm)*0.333333333;
+        // x*y
+        w(3) = (tl - tr - bl + br)*0.25;
+        // y^2
+        w(4) = (tl + tm + tr + bl + bm + br)*0.16666666666 - (ml + mm + mr)*0.333333333;
+        // 1 (constant term)
+        w(5) = (tm + ml + mr + bm)*0.222222222 - (tl + tr + bl + br)*0.11111111 + (mm)*0.55555556;
+
+        const double x = p.x();
+        const double y = p.y();
+
+        matrix<double,6,1> z;
+        z = x, y, x*x, x*y, y*y, 1.0;
+                        
+        return dot(w,z);
+    }
+};
+
+
+
+
+class point_rotator
+{
+public:
+    point_rotator (
+    )
+    {
+        sin_angle = 0;
+        cos_angle = 1;
+    }
+
+    point_rotator (
+        const double& angle
+    )
+    {
+        sin_angle = std::sin(angle);
+        cos_angle = std::cos(angle);
+    }
+
+    template <typename T>
+    const dvector<T,2> operator() (
+        const dvector<T,2>& p
+    ) const
+    {
+        double x = cos_angle*p.x() - sin_angle*p.y();
+        double y = sin_angle*p.x() + cos_angle*p.y();
+
+        return dvector<double,2>(x,y);
+    }
+
+    const matrix<double,2,2> get_m(
+    ) const 
+    { 
+        matrix<double,2,2> temp;
+        temp = cos_angle, -sin_angle,
+               sin_angle, cos_angle;
+        return temp; 
+    }
+    /*
+    inline friend void serialize (const point_rotator& item, std::ostream& out)
+    {
+        serialize(item.sin_angle, out);
+        serialize(item.cos_angle, out);
+    }
+
+
+    inline friend void deserialize (point_rotator& item, std::istream& in)
+    {
+        deserialize(item.sin_angle, in);
+        deserialize(item.cos_angle, in);
+    }
+    */
+
+private:
+    double sin_angle;
+    double cos_angle;
+};
+
+template <typename T>
+const dvector<T,2> rotate_point (
+    const dvector<T,2>& center,
+    const dvector<T,2>& p,
+    double angle
+)
+{
+    point_rotator rot(angle);
+    return rot(p-center)+center;
+};
+
+inline matrix<double,2,2> rotation_matrix (
+     double angle
+)
+{
+    const double ca = std::cos(angle);
+    const double sa = std::sin(angle);
+
+    matrix<double,2,2> m;
+    m = ca, -sa,
+        sa, ca;
+    return m;
+}
+
+inline point_transform_affine inv (
+    const point_transform_affine& trans
+)
+{
+    matrix<double,2,2> im = inv(trans.get_m());
+    return point_transform_affine(im, -im*trans.get_b());
+}
+
+template <typename T>
+point_transform_affine find_affine_transform (
+    const std::vector<dvector<T,2> >& from_points,
+    const std::vector<dvector<T,2> >& to_points
+)
+{
+    // make sure requires clause is not broken
+    DLIB_ASSERT(from_points.size() == to_points.size() &&
+                from_points.size() >= 3,
+        "\t point_transform_affine find_affine_transform(from_points, to_points)"
+        << "\n\t Invalid inputs were given to this function."
+        << "\n\t from_points.size(): " << from_points.size()
+        << "\n\t to_points.size():   " << to_points.size()
+        );
+
+    matrix<double,3,0> P(3, from_points.size());
+    matrix<double,2,0> Q(2, from_points.size());
+
+    for (unsigned long i = 0; i < from_points.size(); ++i)
+    {
+        P(0,i) = from_points[i].x();
+        P(1,i) = from_points[i].y();
+        P(2,i) = 1;
+
+        Q(0,i) = to_points[i].x();
+        Q(1,i) = to_points[i].y();
+    }
+
+    const matrix<double,2,3> m = Q*pinv(P);
+    return point_transform_affine(subm(m,0,0,2,2), colm(m,2));
+};
+
+
+template <
+    typename image_type1,
+    typename image_type2,
+    typename interpolation_type
+    >
+point_transform_affine rotate_image (
+    const image_type1& in_img,
+    image_type2& out_img,
+    double angle,
+    const interpolation_type& interp
+)
+{
+    // make sure requires clause is not broken
+    DLIB_ASSERT( is_same_object(in_img, out_img) == false ,
+        "\t point_transform_affine rotate_image()"
+        << "\n\t Invalid inputs were given to this function."
+        << "\n\t is_same_object(in_img, out_img):  " << is_same_object(in_img, out_img)
+        );
+
+    const rectangle rimg = get_rect(in_img);
+
+
+    // figure out bounding box for rotated rectangle
+    rectangle rect;
+    rect += rotate_point(center(rimg), rimg.tl_corner(), -angle);
+    rect += rotate_point(center(rimg), rimg.tr_corner(), -angle);
+    rect += rotate_point(center(rimg), rimg.bl_corner(), -angle);
+    rect += rotate_point(center(rimg), rimg.br_corner(), -angle);
+    set_image_size(out_img, rect.height(), rect.width());
+
+    const matrix<double,2,2> R = rotation_matrix(angle);
+
+    point_transform_affine trans = point_transform_affine(R, -R*dcenter(get_rect(out_img)) + dcenter(rimg));
+    transform_image(in_img, out_img, interp, trans);
+    return inv(trans);
+}
+
+// ----------------------------------------------------------------------------------------
+
+template <
+    typename image_type1,
+    typename image_type2
+    >
+point_transform_affine rotate_image (
+    const image_type1& in_img,
+    image_type2& out_img,
+    double angle
+)
+{
+    // make sure requires clause is not broken
+    DLIB_ASSERT( is_same_object(in_img, out_img) == false ,
+        "\t point_transform_affine rotate_image()"
+        << "\n\t Invalid inputs were given to this function."
+        << "\n\t is_same_object(in_img, out_img):  " << is_same_object(in_img, out_img)
+        );
+
+    return rotate_image(in_img, out_img, angle, interpolate_quadratic());
 }
     
 
@@ -1074,105 +1400,6 @@ void basic_extract_image_chip (
     }
 }
 
-class point_rotator
-{
-public:
-    point_rotator (
-    )
-    {
-        sin_angle = 0;
-        cos_angle = 1;
-    }
-
-    point_rotator (
-        const double& angle
-    )
-    {
-        sin_angle = std::sin(angle);
-        cos_angle = std::cos(angle);
-    }
-
-    template <typename T>
-    const dvector<T,2> operator() (
-        const dvector<T,2>& p
-    ) const
-    {
-        double x = cos_angle*p.x() - sin_angle*p.y();
-        double y = sin_angle*p.x() + cos_angle*p.y();
-
-        return dvector<double,2>(x,y);
-    }
-
-    const matrix<double,2,2> get_m(
-    ) const 
-    { 
-        matrix<double,2,2> temp;
-        temp = cos_angle, -sin_angle,
-               sin_angle, cos_angle;
-        return temp; 
-    }
-    /*
-    inline friend void serialize (const point_rotator& item, std::ostream& out)
-    {
-        serialize(item.sin_angle, out);
-        serialize(item.cos_angle, out);
-    }
-
-
-    inline friend void deserialize (point_rotator& item, std::istream& in)
-    {
-        deserialize(item.sin_angle, in);
-        deserialize(item.cos_angle, in);
-    }
-    */
-
-private:
-    double sin_angle;
-    double cos_angle;
-};
-
-template <typename T>
-const dvector<T,2> rotate_point (
-    const dvector<T,2>& center,
-    const dvector<T,2>& p,
-    double angle
-)
-{
-    point_rotator rot(angle);
-    return rot(p-center)+center;
-};
-
-template <typename T>
-point_transform_affine find_affine_transform (
-    const std::vector<dvector<T,2> >& from_points,
-    const std::vector<dvector<T,2> >& to_points
-)
-{
-    // make sure requires clause is not broken
-    DLIB_ASSERT(from_points.size() == to_points.size() &&
-                from_points.size() >= 3,
-        "\t point_transform_affine find_affine_transform(from_points, to_points)"
-        << "\n\t Invalid inputs were given to this function."
-        << "\n\t from_points.size(): " << from_points.size()
-        << "\n\t to_points.size():   " << to_points.size()
-        );
-
-    matrix<double,3,0> P(3, from_points.size());
-    matrix<double,2,0> Q(2, from_points.size());
-
-    for (unsigned long i = 0; i < from_points.size(); ++i)
-    {
-        P(0,i) = from_points[i].x();
-        P(1,i) = from_points[i].y();
-        P(2,i) = 1;
-
-        Q(0,i) = to_points[i].x();
-        Q(1,i) = to_points[i].y();
-    }
-
-    const matrix<double,2,3> m = Q*pinv(P);
-    return point_transform_affine(subm(m,0,0,2,2), colm(m,2));
-};
 
 template <
     typename image_type1,
@@ -1312,7 +1539,7 @@ void extract_image_chip (
 }
 
 
-
+#endif // INTERPOLATION_H
 
 
 

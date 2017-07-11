@@ -124,6 +124,27 @@ void assign_border_pixels (
 }
 
 template <
+    typename image_type
+    >
+void zero_border_pixels (
+    image_type& img,
+    long x_border_size,
+    long y_border_size
+)
+{
+    DLIB_ASSERT( x_border_size >= 0 && y_border_size >= 0,
+        "\tvoid zero_border_pixels(img, p, border_size)"
+        << "\n\tYou have given an invalid border_size"
+        << "\n\tx_border_size: " << x_border_size
+        << "\n\ty_border_size: " << y_border_size
+        );
+
+    typename image_traits<image_type>::pixel_type zero_pixel;
+    assign_pixel_intensity(zero_pixel, 0);
+    assign_border_pixels(img, x_border_size, y_border_size, zero_pixel);
+}
+
+template <
     typename dest_image_type,
     typename src_pixel_type
     >
@@ -140,6 +161,22 @@ void assign_all_pixels (
         }
     }
 }
+// ----------------------------------------------------------------------------------------
+
+template <
+    typename dest_image_type,
+    typename src_pixel_type
+    >
+void assign_all_pixels (
+    dest_image_type& dest_img_,
+    const src_pixel_type& src_pixel
+)
+{
+    image_view<dest_image_type> dest_img(dest_img_);
+    assign_all_pixels(dest_img, src_pixel);
+}
+
+// ----------------------------------------------------------------------------------------
 
 template <
     typename image_type

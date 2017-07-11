@@ -103,8 +103,8 @@
         std::ostream& out
     )
     {
-        serializelf(item.get_iou_thresh(), out);
-        serializelf(item.get_percent_covered_thresh(), out);
+        serialize(item.get_iou_thresh(), out);
+        serialize(item.get_percent_covered_thresh(), out);
     }
 
     inline void deserialize (
@@ -113,8 +113,8 @@
     )
     {
         double percent_covered_thresh, iou_thresh;
-        deserializelf(iou_thresh, in);
-        deserializelf(percent_covered_thresh, in);
+        deserialize(iou_thresh, in);
+        deserialize(percent_covered_thresh, in);
         item = test_box_overlap(iou_thresh, percent_covered_thresh);
     }
 

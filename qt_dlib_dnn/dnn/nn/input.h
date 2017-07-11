@@ -117,7 +117,7 @@
 /*
         friend void serialize(const input_rgb_image& item, std::ostream& out)
         {
-            serialize_str("input_rgb_image", out);
+            serialize("input_rgb_image", out);
             serialize(item.avg_red, out);
             serialize(item.avg_green, out);
             serialize(item.avg_blue, out);
@@ -129,9 +129,9 @@
             deserialize(version, in);
             if (version != "input_rgb_image")
                 throw serialization_error("Unexpected version found while deserializing  input_rgb_image.");
-            deserializef(item.avg_red, in);
-            deserializef(item.avg_green, in);
-            deserializef(item.avg_blue, in);
+            deserialize(item.avg_red, in);
+            deserialize(item.avg_green, in);
+            deserialize(item.avg_blue, in);
         }
 
 
@@ -239,7 +239,7 @@
 /*
         friend void serialize(const input_rgb_image_sized& item, std::ostream& out)
         {
-            serialize_str("input_rgb_image_sized", out);
+            serialize("input_rgb_image_sized", out);
             serialize(item.avg_red, out);
             serialize(item.avg_green, out);
             serialize(item.avg_blue, out);
@@ -250,12 +250,12 @@
         friend void deserialize(input_rgb_image_sized& item, std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             if (version != "input_rgb_image_sized")
                 throw serialization_error("Unexpected version found while deserializing  input_rgb_image_sized.");
-            deserializef(item.avg_red, in);
-            deserializef(item.avg_green, in);
-            deserializef(item.avg_blue, in);
+            deserialize(item.avg_red, in);
+            deserialize(item.avg_green, in);
+            deserialize(item.avg_blue, in);
             size_t nr, nc;
             deserialize(nr, in);
             deserialize(nc, in);
@@ -370,7 +370,7 @@
 
 //        friend void serialize(const input& /*item*/, std::ostream& out)
 //        {
-//            serialize_str("input<matrix>", out);
+//            serialize("input<matrix>", out);
 //        }
 
         friend void deserialize(input& /*item*/, std::istream& in)
@@ -467,7 +467,7 @@
         /*
         friend void serialize(const input& item, std::ostream& out)
         {
-            serialize_str("input<array2d>", out);
+            serialize("input<array2d>", out);
         }
 */
 
@@ -609,7 +609,7 @@
 /*
         friend void serialize(const input_rgb_image_pyramid& item, std::ostream& out)
         {
-            serialize_str("input_rgb_image_pyramid", out);
+            serialize("input_rgb_image_pyramid", out);
             serialize(item.avg_red, out);
             serialize(item.avg_green, out);
             serialize(item.avg_blue, out);

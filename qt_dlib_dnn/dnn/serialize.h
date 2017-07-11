@@ -6,7 +6,7 @@
 /*!
     There are two global functions in the dlib namespace that provide serialization and
     deserialization support.  Their signatures and specifications are as follows:
-
+        
         void serialize (
             const serializable_type& item,
             std::ostream& out
@@ -16,7 +16,7 @@
                 - writes the state of item to the output stream out
                 - if (serializable_type implements the enumerable interface) then
                     - item.at_start() == true
-            throws
+            throws                    
                 - serialization_error
                     This exception is thrown if there is some problem which prevents
                     us from successfully writing item to the output stream.
@@ -37,21 +37,21 @@
                   them all back in, one after another, using deserialize().
                 - if (serializable_type implements the enumerable interface) then
                     - item.at_start() == true
-            throws
+            throws                    
                 - serialization_error
                     This exception is thrown if there is some problem which prevents
                     us from successfully deserializing item from the input stream.
-                    If this exception is thrown then item will have an initial value
+                    If this exception is thrown then item will have an initial value 
                     for its type.
                 - any other exception
         *!/
 
     For convenience, you can also serialize to a file using this syntax:
-        serialize_str("your_file.dat") << some_object << another_object;
+        serialize("your_file.dat") << some_object << another_object;
 
     That overwrites the contents of your_file.dat with the serialized data from some_object
     and another_object.  Then to recall the objects from the file you can do:
-        deserialize_str("your_file.dat") >> some_object >> another_object;
+        deserialize("your_file.dat") >> some_object >> another_object;
 
     Finally, you can chain as many objects together using the << and >> operators as you
     like.
@@ -68,8 +68,8 @@
         - std::set
         - std::pair
         - std::complex
-        -  duint64
-        -  dint64
+        - dlib::duint64
+        - dlib::dint64
         - float_details
         - enumerable<T> where T is a serializable type
         - map_pair<D,R> where D and R are both serializable types.
@@ -87,39 +87,39 @@
         - std::set
         - std::pair
         - std::complex
-        -  duint64
-        -  dint64
+        - dlib::duint64
+        - dlib::dint64
         - float_details
         - C style arrays of serializable types
         - Google protocol buffer objects.
 
     Support for deserialization of objects which implement the enumerable or
-    map_pair interfaces is the responsibility of those objects.
-
-    Note that you can deserialize an integer value to any integral type (except for a
-    char type) if its value will fit into the target integer type.  I.e.  the types
-    short, int, long, unsigned short, unsigned int, unsigned long, and  duint64
-    can all receive serialized data from each other so long as the actual serizlied
+    map_pair interfaces is the responsibility of those objects.  
+    
+    Note that you can deserialize an integer value to any integral type (except for a 
+    char type) if its value will fit into the target integer type.  I.e.  the types 
+    short, int, long, unsigned short, unsigned int, unsigned long, and dlib::duint64 
+    can all receive serialized data from each other so long as the actual serizlied 
     value fits within the receiving integral type's range.
 
-    Also note that for any container to be serializable the type of object it contains
+    Also note that for any container to be serializable the type of object it contains 
     must be serializable.
 
     FILE STREAMS
-        If you are serializing to and from file streams it is important to
+        If you are serializing to and from file streams it is important to 
         remember to set the file streams to binary mode using the std::ios::binary
-        flag.
+        flag.  
 
 
     INTEGRAL SERIALIZATION FORMAT
         All C++ integral types (except the char types) are serialized to the following
         format:
-        The first byte is a control byte.  It tells you if the serialized number is
-        positive or negative and also tells you how many of the following bytes are
-        part of the number.  The absolute value of the number is stored in little
+        The first byte is a control byte.  It tells you if the serialized number is 
+        positive or negative and also tells you how many of the following bytes are 
+        part of the number.  The absolute value of the number is stored in little 
         endian byte order and follows the control byte.
 
-        The control byte:
+        The control byte:  
             The high order bit of the control byte is a flag that tells you if the
             encoded number is negative or not.  It is set to 1 when the number is
             negative and 0 otherwise.
@@ -167,9 +167,9 @@
 
 // ----------------------------------------------------------------------------------------
 
-    class serialization_error : public error
+    class serialization_error : public error 
     {
-    public:
+    public: 
         serialization_error(const std::string& e):error(e) {}
     };
 
@@ -212,7 +212,7 @@
 
             for (unsigned char i = 1; i <= sizeof(T); ++i)
             {
-                buf[i] = static_cast<unsigned char>(item&0xFF);
+                buf[i] = static_cast<unsigned char>(item&0xFF);                
                 item >>= 8;
                 if (item == 0) { size = i; break; }
             }
@@ -275,7 +275,7 @@
             else
                 is_negative = false;
             size &= 0x0F;
-
+            
             // check if the serialized object is too big
             if (size > sizeof(T))
             {
@@ -299,7 +299,7 @@
 
             if (is_negative)
                 item *= -1;
-
+        
 
             return false;
         }
@@ -330,7 +330,7 @@
 
             for (unsigned char i = 1; i <= sizeof(T); ++i)
             {
-                buf[i] = static_cast<unsigned char>(item&0xFF);
+                buf[i] = static_cast<unsigned char>(item&0xFF);                
                 item >>= 8;
                 if (item == 0) { size = i; break; }
             }
@@ -390,10 +390,10 @@
             // mask out the 3 reserved bits
             size &= 0x8F;
 
-            // check if an error occurred
-            if (size > sizeof(T))
+            // check if an error occurred 
+            if (size > sizeof(T)) 
                 return true;
-
+           
 
             if (sbuf->sgetn(reinterpret_cast<char*>(&buf),size) != size)
             {
@@ -420,7 +420,7 @@
         inline void serialize (const T& item, std::ostream& out) \
         { if (ser_helper::pack_int(item,out)) throw serialization_error("Error serializing object of type " + std::string(#T)); }   \
         inline void deserialize (T& item, std::istream& in) \
-        { if (ser_helper::unpack_int(item,in)) throw serialization_error("Error deserializing object of type " + std::string(#T)); }
+        { if (ser_helper::unpack_int(item,in)) throw serialization_error("Error deserializing object of type " + std::string(#T)); }   
 
     template <typename T>
     inline bool pack_byte (
@@ -455,9 +455,25 @@
         inline void serialize (const T& item,std::ostream& out) \
         { if (pack_byte(item,out)) throw serialization_error("Error serializing object of type " + std::string(#T)); } \
         inline void deserialize (T& item, std::istream& in) \
-        { if (unpack_byte(item,in)) throw serialization_error("Error deserializing object of type " + std::string(#T)); }
+        { if (unpack_byte(item,in)) throw serialization_error("Error deserializing object of type " + std::string(#T)); }   
 
 // ----------------------------------------------------------------------------------------
+/*  
+#ifdef __GNUC__
+    typedef unsigned long long duint64;
+    typedef long long dint64;
+#elif defined(__BORLANDC__)
+    typedef unsigned __int64 duint64;
+    typedef __int64 dint64;
+#elif defined(_MSC_VER)
+    typedef unsigned __int64 duint64;
+    typedef __int64 dint64;
+#else
+    typedef unsigned long long duint64;
+    typedef long long dint64;
+#endif
+*/
+
 
     USE_DEFAULT_INT_SERIALIZATION_FOR(short)
     USE_DEFAULT_INT_SERIALIZATION_FOR(int)
@@ -467,63 +483,14 @@
     USE_DEFAULT_INT_SERIALIZATION_FOR(unsigned long)
     USE_DEFAULT_INT_SERIALIZATION_FOR(duint64)
     USE_DEFAULT_INT_SERIALIZATION_FOR(dint64)
-    
 
     USE_DEFAULT_BYTE_SERIALIZATION_FOR(char)
     USE_DEFAULT_BYTE_SERIALIZATION_FOR(signed char)
     USE_DEFAULT_BYTE_SERIALIZATION_FOR(unsigned char)
 
-
-    void serialize_int (const int& item, std::ostream& out)
-    { 
-        if (ser_helper::pack_int(item,out)) 
-            throw serialization_error("Error serializing object of type "); 
-    }
-    void deserialize_int (int& item, std::istream& in)
-    { 
-        if (ser_helper::unpack_int(item,in)) 
-            throw serialization_error("Error deserializing object of type "); 
-    }
-
-    void serialize_long (const long& item, std::ostream& out)
-    { 
-        if (ser_helper::pack_int(item,out)) 
-            throw serialization_error("Error serializing object of type "); 
-    }
-    void deserialize_long (long& item, std::istream& in)
-    { 
-        if (ser_helper::unpack_int(item,in)) 
-            throw serialization_error("Error deserializing object of type "); 
-    }
-
-    void serialize_ulong (const unsigned long& item, std::ostream& out)
-    { 
-        if (ser_helper::pack_int(item,out)) 
-            throw serialization_error("Error serializing object of type "); 
-    }
-    void deserialize_ulong (unsigned long& item, std::istream& in)
-    { 
-        if (ser_helper::unpack_int(item,in)) 
-            throw serialization_error("Error deserializing object of type "); 
-    }
-
-
-    /*
-    inline void serialize (const unsigned char& item,std::ostream& out)
-    { 
-        if (pack_byte(item,out)) 
-            throw serialization_error("Error serializing object of type unsigned char"); 
-    }
-    inline void deserialize (unsigned char& item, std::istream& in)
-    { 
-        if (unpack_byte(item,in)) 
-            throw serialization_error("Error deserializing object of type  unsigned char"); 
-    }
-    */
-
     // Don't define serialization for wchar_t when using visual studio and
     // _NATIVE_WCHAR_T_DEFINED isn't defined since if it isn't they improperly set
-    // wchar_t to be a typedef rather than its own type as required by the C++
+    // wchar_t to be a typedef rather than its own type as required by the C++ 
     // standard.
 #if !defined(_MSC_VER) || _NATIVE_WCHAR_T_DEFINED
     USE_DEFAULT_INT_SERIALIZATION_FOR(wchar_t)
@@ -542,7 +509,7 @@
 
     inline void deserialize(
         float_details& item,
-        std::istream& in
+        std::istream& in 
     )
     {
         deserialize(item.mantissa, in);
@@ -556,7 +523,7 @@
         const T& item,
         std::ostream& out
     )
-    {
+    { 
         try
         {
             float_details temp = item;
@@ -569,12 +536,12 @@
     template <typename T>
     inline bool old_deserialize_floating_point (
         T& item,
-        std::istream& in
+        std::istream& in 
     )
     {
-        std::ios::fmtflags oldflags = in.flags();
-        in.flags();
-        std::streamsize ss = in.precision(35);
+        std::ios::fmtflags oldflags = in.flags();  
+        in.flags(); 
+        std::streamsize ss = in.precision(35); 
         if (in.peek() == 'i')
         {
             item = std::numeric_limits<T>::infinity();
@@ -599,17 +566,17 @@
         }
         else
         {
-            in >> item;
+            in >> item; 
         }
-        in.flags(oldflags);
-        in.precision(ss);
+        in.flags(oldflags); 
+        in.precision(ss); 
         return (in.get() != ' ');
     }
 
     template <typename T>
     inline void deserialize_floating_point (
         T& item,
-        std::istream& in
+        std::istream& in 
     )
     {
         // check if the serialized data uses the older ASCII based format.  We can check
@@ -638,33 +605,33 @@
         }
     }
 
-    inline void serializef ( const float& item, std::ostream& out)
-    {
+    inline void serialize ( const float& item, std::ostream& out) 
+    { 
         serialize_floating_point(item,out);
     }
 
-    inline void deserializef (float& item, std::istream& in)
-    {
+    inline void deserialize (float& item, std::istream& in) 
+    { 
         deserialize_floating_point(item,in);
     }
 
-    inline void serializelf ( const double& item, std::ostream& out)
-    {
+    inline void serialize ( const double& item, std::ostream& out) 
+    { 
         serialize_floating_point(item,out);
     }
 
-    inline void deserializelf (double& item, std::istream& in)
-    {
+    inline void deserialize (double& item, std::istream& in) 
+    { 
         deserialize_floating_point(item,in);
     }
 
-    inline void serialize ( const long double& item, std::ostream& out)
-    {
+    inline void serialize ( const long double& item, std::ostream& out) 
+    { 
         serialize_floating_point(item,out);
     }
 
-    inline void deserialize ( long double& item, std::istream& in)
-    {
+    inline void deserialize ( long double& item, std::istream& in) 
+    { 
         deserialize_floating_point(item,in);
     }
 
@@ -789,7 +756,7 @@
 // ----------------------------------------------------------------------------------------
 // ----------------------------------------------------------------------------------------
 
-    inline void serialize_bool (
+    inline void serialize (
         bool item,
         std::ostream& out
     )
@@ -799,11 +766,11 @@
         else
             out << '0';
 
-        if (!out)
-            throw serialization_error("Error serializing object of type bool");
+        if (!out) 
+            throw serialization_error("Error serializing object of type bool");    
     }
 
-    inline void deserialize_bool (
+    inline void deserialize (
         bool& item,
         std::istream& in
     )
@@ -816,11 +783,11 @@
             else if (ch == '0')
                 item = false;
             else
-                throw serialization_error("Error deserializing object of type bool");
+                throw serialization_error("Error deserializing object of type bool");    
         }
         else
         {
-            throw serialization_error("Error deserializing object of type bool");
+            throw serialization_error("Error deserializing object of type bool");    
         }
     }
 
@@ -833,9 +800,9 @@
     )
     {
         try
-        {
-            serialize(item.first,out);
-            serialize(item.second,out);
+        { 
+            serialize(item.first,out); 
+            serialize(item.second,out); 
         }
         catch (serialization_error& e)
         { throw serialization_error(e.info + "\n   while serializing object of type std::pair"); }
@@ -844,13 +811,13 @@
     template <typename first_type, typename second_type>
     void deserialize (
         std::pair<first_type, second_type>& item,
-        std::istream& in
+        std::istream& in 
     )
     {
         try
-        {
-            deserialize(item.first,in);
-            deserialize(item.second,in);
+        { 
+            deserialize(item.first,in); 
+            deserialize(item.second,in); 
         }
         catch (serialization_error& e)
         { throw serialization_error(e.info + "\n   while deserializing object of type std::pair"); }
@@ -865,10 +832,10 @@
     )
     {
         try
-        {
+        { 
             const unsigned long size = static_cast<unsigned long>(item.size());
 
-            serialize(size,out);
+            serialize(size,out); 
             typename std::map<domain,range,compare,alloc>::const_iterator i;
             for (i = item.begin(); i != item.end(); ++i)
             {
@@ -887,12 +854,12 @@
         std::istream& in
     )
     {
-        try
-        {
+        try 
+        { 
             item.clear();
 
             unsigned long size;
-            deserialize(size,in);
+            deserialize(size,in); 
             domain d;
             range r;
             for (unsigned long i = 0; i < size; ++i)
@@ -915,10 +882,10 @@
     )
     {
         try
-        {
+        { 
             const unsigned long size = static_cast<unsigned long>(item.size());
 
-            serialize(size,out);
+            serialize(size,out); 
             typename std::set<domain,compare,alloc>::const_iterator i;
             for (i = item.begin(); i != item.end(); ++i)
             {
@@ -936,12 +903,12 @@
         std::istream& in
     )
     {
-        try
-        {
+        try 
+        { 
             item.clear();
 
             unsigned long size;
-            deserialize(size,in);
+            deserialize(size,in); 
             domain d;
             for (unsigned long i = 0; i < size; ++i)
             {
@@ -975,7 +942,7 @@
     template <typename alloc>
     void deserialize (
         std::vector<bool,alloc>& item,
-        std::istream& in
+        std::istream& in 
     )
     {
         std::vector<unsigned char> temp;
@@ -999,10 +966,10 @@
     )
     {
         try
-        {
+        { 
             const unsigned long size = static_cast<unsigned long>(item.size());
 
-            serialize(size,out);
+            serialize(size,out); 
             for (unsigned long i = 0; i < item.size(); ++i)
                 serialize(item[i],out);
         }
@@ -1016,10 +983,10 @@
         std::istream& in
     )
     {
-        try
-        {
+        try 
+        { 
             unsigned long size;
-            deserialize(size,in);
+            deserialize(size,in); 
             item.resize(size);
             for (unsigned long i = 0; i < size; ++i)
                 deserialize(item[i],in);
@@ -1037,9 +1004,9 @@
     )
     {
         try
-        {
+        { 
             const unsigned long size = static_cast<unsigned long>(item.size());
-            serialize(size,out);
+            serialize(size,out); 
             if (item.size() != 0)
                 out.write(&item[0], item.size());
         }
@@ -1053,10 +1020,10 @@
         std::istream& in
     )
     {
-        try
-        {
+        try 
+        { 
             unsigned long size;
-            deserialize(size,in);
+            deserialize(size,in); 
             item.resize(size);
             if (item.size() != 0)
                 in.read(&item[0], item.size());
@@ -1074,9 +1041,9 @@
     )
     {
         try
-        {
+        { 
             const unsigned long size = static_cast<unsigned long>(item.size());
-            serialize(size,out);
+            serialize(size,out); 
             if (item.size() != 0)
                 out.write((char*)&item[0], item.size());
         }
@@ -1090,10 +1057,10 @@
         std::istream& in
     )
     {
-        try
-        {
+        try 
+        { 
             unsigned long size;
-            deserialize(size,in);
+            deserialize(size,in); 
             item.resize(size);
             if (item.size() != 0)
                 in.read((char*)&item[0], item.size());
@@ -1111,10 +1078,10 @@
     )
     {
         try
-        {
+        { 
             const unsigned long size = static_cast<unsigned long>(item.size());
 
-            serialize(size,out);
+            serialize(size,out); 
             for (unsigned long i = 0; i < item.size(); ++i)
                 serialize(item[i],out);
         }
@@ -1128,10 +1095,10 @@
         std::istream& in
     )
     {
-        try
-        {
+        try 
+        { 
             unsigned long size;
-            deserialize(size,in);
+            deserialize(size,in); 
             item.resize(size);
             for (unsigned long i = 0; i < size; ++i)
                 deserialize(item[i],in);
@@ -1142,7 +1109,7 @@
 
 // ----------------------------------------------------------------------------------------
 
-    inline void serialize_str (
+    inline void serialize (
         const std::string& item,
         std::ostream& out
     )
@@ -1156,7 +1123,7 @@
         if (!out) throw serialization_error("Error serializing object of type std::string");
     }
 
-    inline void deserialize_str (
+    inline void deserialize (
         std::string& item,
         std::istream& in
     )
@@ -1329,7 +1296,7 @@
             if (!out)
                 throw serialization_error("Error serializing a C-style string");
         }
-        else
+        else 
         {
             try
             {
@@ -1360,11 +1327,11 @@
         size_t size;
         try
         {
-            deserialize(size,in);
+            deserialize(size,in); 
             if (size == length)
             {
                 for (size_t i = 0; i < length; ++i)
-                    deserialize(array[i],in);
+                    deserialize(array[i],in);            
             }
         }
         catch (serialization_error& e)
@@ -1387,7 +1354,7 @@
         size_t size;
         try
         {
-            deserialize(size,in);
+            deserialize(size,in); 
         }
         catch (serialization_error& e)
         {
@@ -1436,7 +1403,7 @@
         >
     inline void deserialize (
         std::array<T,N>& array,
-        std::istream& in
+        std::istream& in 
     )
     {
         typedef T c_array_type[N];
@@ -1460,7 +1427,7 @@
         >
     inline void deserialize (
         std::array<T,0>& /*array*/,
-        std::istream& in
+        std::istream& in 
     )
     {
         size_t N;
@@ -1507,8 +1474,8 @@
         try
         {
             T real, imag;
-            deserialize(real,in);
-            deserialize(imag,in);
+            deserialize(real,in); 
+            deserialize(imag,in); 
             item = std::complex<T>(real,imag);
         }
         catch (serialization_error& e)
@@ -1519,12 +1486,12 @@
 
 // ----------------------------------------------------------------------------------------
 
-    class proxy_serialize
+    class proxy_serialize 
     {
     public:
         explicit proxy_serialize (
             const std::string& filename
-        )
+        ) 
         {
             fout.reset(new std::ofstream(filename.c_str(), std::ios::binary));
             if (!(*fout))
@@ -1542,12 +1509,12 @@
         shared_ptr<std::ofstream> fout;
     };
 
-    class proxy_deserialize
+    class proxy_deserialize 
     {
     public:
         explicit proxy_deserialize (
             const std::string& filename
-        )
+        ) 
         {
             fin.reset(new std::ifstream(filename.c_str(), std::ios::binary));
             if (!(*fin))
@@ -1587,11 +1554,11 @@ namespace google
 //{
 
     /*!A is_protocol_buffer
-        This is a template that tells you if a type is a Google protocol buffer object.
+        This is a template that tells you if a type is a Google protocol buffer object.  
     !*/
 
-    template <typename T, typename U = void >
-    struct is_protocol_buffer
+    template <typename T, typename U = void > 
+    struct is_protocol_buffer 
     {
         static const bool value = false;
     };
@@ -1605,10 +1572,10 @@ namespace google
     template <typename T>
     typename enable_if<is_protocol_buffer<T> >::type serialize(const T& item, std::ostream& out)
     {
-        // Note that Google protocol buffer messages are not self delimiting
+        // Note that Google protocol buffer messages are not self delimiting 
         // (see https://developers.google.com/protocol-buffers/docs/techniques)
-        // This means they don't record their length or where they end, so we have
-        // to record this information ourselves.  So we save the size as a little endian 32bit
+        // This means they don't record their length or where they end, so we have 
+        // to record this information ourselves.  So we save the size as a little endian 32bit 
         // integer prefixed onto the front of the message.
 
         byte_orderer bo;
@@ -1616,9 +1583,9 @@ namespace google
         // serialize into temp string
         std::string temp;
         if (!item.SerializeToString(&temp))
-            throw  serialization_error("Error while serializing a Google Protocol Buffer object.");
+            throw serialization_error("Error while serializing a Google Protocol Buffer object.");
         if (temp.size() > std::numeric_limits<uint32>::max())
-            throw  serialization_error("Error while serializing a Google Protocol Buffer object, message too large.");
+            throw serialization_error("Error while serializing a Google Protocol Buffer object, message too large.");
 
         // write temp to the output stream
         uint32 size = temp.size();
@@ -1630,10 +1597,10 @@ namespace google
     template <typename T>
     typename enable_if<is_protocol_buffer<T> >::type deserialize(T& item, std::istream& in)
     {
-        // Note that Google protocol buffer messages are not self delimiting
+        // Note that Google protocol buffer messages are not self delimiting 
         // (see https://developers.google.com/protocol-buffers/docs/techniques)
-        // This means they don't record their length or where they end, so we have
-        // to record this information ourselves.  So we save the size as a little endian 32bit
+        // This means they don't record their length or where they end, so we have 
+        // to record this information ourselves.  So we save the size as a little endian 32bit 
         // integer prefixed onto the front of the message.
 
         byte_orderer bo;
@@ -1643,7 +1610,7 @@ namespace google
         in.read((char*)&size, sizeof(size));
         bo.little_to_host(size);
         if (!in || size == 0)
-            throw  serialization_error("Error while deserializing a Google Protocol Buffer object.");
+            throw serialization_error("Error while deserializing a Google Protocol Buffer object.");
 
         // read the bytes into temp
         std::string temp;
@@ -1653,7 +1620,7 @@ namespace google
         // parse temp into item
         if (!in || !item.ParseFromString(temp))
         {
-            throw  serialization_error("Error while deserializing a Google Protocol Buffer object.");
+            throw serialization_error("Error while deserializing a Google Protocol Buffer object.");
         }
     }
 

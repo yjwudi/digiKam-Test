@@ -5,15 +5,25 @@
 
 //#include "frontal_face_detector_abstract.h"
 #include "../base64/base64_kernel_1.h"
+#include "../base64/base64_kernel_1.cpp"
 #include "../compress_stream/compress_stream_kernel_1.h"
 #include "../image_processing/object_detector.h"
 #include "../image_processing/scan_fhog_pyramid.h"
+#include "../entropy_encoder_model.h"
+#include "../entropy_encoder.h"
+#include "../entropy_decoder_model.h"
+#include "../entropy_decoder.h"
+#include "../crc32/crc32_kernel_1.h"
 #include <sstream>
 //#include "../compress_stream.h"
 //#include "../base64.h"
 
 //namespace dlib
 //{
+
+    typedef entropy_encoder_model<257,entropy_encoder::kernel_2a>::kernel_5a fce5a;
+    typedef entropy_decoder_model<257,entropy_decoder::kernel_2a>::kernel_5a fcd5a;
+
     typedef compress_stream_kernel_1 <fce5a,fcd5a,crc32::kernel_1a> kernel_1ea;
     typedef object_detector<scan_fhog_pyramid<pyramid_down<6> > > frontal_face_detector;
     inline const std::string get_serialized_frontal_faces();

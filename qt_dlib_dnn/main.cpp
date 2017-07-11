@@ -1,8 +1,13 @@
 #include <QCoreApplication>
+#include <QFile>
 #include "dnn/dnn.h"
 #include "dnn/matrix.h"
 #include "dnn/cv_image.h"
 #include "dnn/image_transforms/assign_image.h"
+#include "dnn/image_transforms/interpolation.h"
+#include "dnn/image_processing/frontal_face_detector.h"
+#include "shape-predictor/fullobjectdetection.h"
+#include "shape-predictor/shapepredictor.h"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -49,18 +54,43 @@ max_pool<3,3,2,2,relu<affine<con<32,7,7,2,2,
 input_rgb_image_sized<150>
 >>>>>>>>>>>>;
 
+void preprocess_img(cv::Mat img, cv::Mat & gray, cv::Rect & rect);
+bool detectAndDraw( cv::Mat& img, cv::Rect & rect );
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
     anet_type net;
 
-    std::cout << "start read\n";
+    frontal_face_detector detector = get_frontal_face_detector();
+    std::cout << "start reading model\n";
     //serialize.h 1521行读文件
     deserialize("dlib_face_recognition_resnet_model_v1.dat") >> net;
     std::cout << "read over\n";
 
-    std::string trainf = "/home/yjwudi/face_recognizer/orl/orltrain.txt";
-    std::string testf = "/home/yjwudi/face_recognizer/orl/orltest.txt";
+    QString path2 = "shapepredictor.dat";
+    ShapePredictor sp;
+    QFile model(path2);
+    std::cout << "read file\n";
+    if (model.open(QIODevice::ReadOnly))
+    {
+        ShapePredictor* const temp = new ShapePredictor();
+        QDataStream dataStream(&model);
+        dataStream.setFloatingPointPrecision(QDataStream::SinglePrecision);
+        dataStream >> *temp;
+        sp = *temp;
+    }
+    else
+    {
+        std::cout << "Error open file shapepredictor.dat";
+        return 0;
+    }
+    std::cout << "read over\n";
+
+
+    //std::string trainf = "/home/yjwudi/face_recognizer/orl/orltrain.txt";
+    //std::string testf = "/home/yjwudi/face_recognizer/orl/orltest.txt";
+    std::string trainf = "/home/yjwudi/face_recognizer/orl/small_train.txt";
+    std::string testf = "/home/yjwudi/face_recognizer/orl/small_test.txt";
     std::vector<std::string> train_vec, test_vec;
     std::vector<int> train_label, test_label;
     int i, j;
@@ -107,25 +137,25 @@ int main(int argc, char *argv[])
     {
         Debug(i);
         cv::Mat tmp_mat = cv::imread(train_vec[i]);
-        cv::resize(tmp_mat, tmp_mat, cv::Size(150, 150), (0, 0), (0, 0), cv::INTER_LINEAR);
+        //cv::resize(tmp_mat, tmp_mat, cv::Size(150, 150), (0, 0), (0, 0), cv::INTER_LINEAR);
         assign_image(img, cv_image<rgb_pixel>(tmp_mat));
-        faces.push_back(img);
-        /*
+        //faces.push_back(img);
+
+
+
         int cc = 0;
         for (auto face : detector(img))
         {
             if(cc>1)
                 break;
-            auto shape = sp(img, face);
+            cout << face.top() << " " << face.left() << " " << face.bottom() << " " << face.right() << endl;
+            cv::Mat gray;
+            cv::Rect rect;
+            preprocess_img(tmp_mat, gray, rect);
+            FullObjectDetection object = sp(gray,rect);
             matrix<rgb_pixel> face_chip;
-            extract_image_chip(img, get_face_chip_details(shape,150,0.25), face_chip);
+            extract_image_chip(img, get_face_chip_details(object,150,0.25), face_chip);
             faces.push_back(move(face_chip));
-            cc++;
-            // Also put some boxes on the faces so we can see that the detector is finding
-            // them.
-            //win.add_overlay(face);
-            //image_window win(face);
-            //cin.get();
         }
         if(cc==0)
         {
@@ -134,13 +164,12 @@ int main(int argc, char *argv[])
             assign_image(img, cv_image<rgb_pixel>(tmp_mat));
             faces.push_back(img);
         }
-        */
+
     }
 
     cout << "input\n";
     std::vector<matrix<float,0,1>> face_descriptors = net(faces);
     cout << "face descriptors size: " << face_descriptors.size() << endl;
-
 /*
     for(i = 0; i < face_descriptors[0].nr(); i++)
     {
@@ -151,15 +180,44 @@ int main(int argc, char *argv[])
         cout << endl;
     }
 */
-
     cout << "read testing...\n";
     for(i = 0; i < (int)test_vec.size(); i++)
     {
         Debug(i);
         cv::Mat tmp_mat = cv::imread(test_vec[i]);
-        cv::resize(tmp_mat, tmp_mat, cv::Size(150, 150), (0, 0), (0, 0), cv::INTER_LINEAR);
+        //cv::resize(tmp_mat, tmp_mat, cv::Size(150, 150), (0, 0), (0, 0), cv::INTER_LINEAR);
         assign_image(img, cv_image<rgb_pixel>(tmp_mat));
-        test_faces.push_back(img);
+        //test_faces.push_back(img);
+
+        int cc = 0;
+        //for (auto face : detector(img))
+        //{
+            if(cc>1)
+                break;
+            //cout << face.top() << " " << face.left() << " " << face.bottom() << " " << face.right() << endl;
+            cv::Mat gray;
+            cv::Rect rect;
+            preprocess_img(tmp_mat, gray, rect);
+            bool flag = detectAndDraw(tmp_mat, rect);
+            if(!flag)
+            {
+                cout << "undetected\n";
+                continue;
+            }
+            FullObjectDetection object = sp(gray,rect);
+            matrix<rgb_pixel> face_chip;
+            extract_image_chip(img, get_face_chip_details(object,150,0.25), face_chip);
+            test_faces.push_back(move(face_chip));
+        //}
+        /*
+        if(cc==0)
+        {
+            puts("bad");
+            cv::resize(tmp_mat, tmp_mat, cv::Size(150, 150));
+            assign_image(img, cv_image<rgb_pixel>(tmp_mat));
+            test_faces.push_back(img);
+        }
+        */
     }
 
     std::vector<matrix<float,0,1>> test_descriptors = net(test_faces);
@@ -192,6 +250,57 @@ int main(int argc, char *argv[])
     std::cin >> aaa;
 
     return 0;
+}
+void preprocess_img(cv::Mat img, cv::Mat & gray, cv::Rect & rect)
+{
+    int type = img.type();
+    //std::cout << "type: " << type << endl;
+    if(type == CV_8UC3 || type == CV_16UC3)
+    {
+        //cout << "3 channels\n";
+        cv::cvtColor(img, gray, CV_RGB2GRAY);  // 3 channels
+    }
+    else
+    {
+        //cout << "4 channels\n";
+        cv::cvtColor(img, gray, CV_RGBA2GRAY);  // 4 channels
+    }
+
+    if (type == CV_16UC3 || type == CV_16UC4)
+    {
+        //cout << "16 type\n";
+        gray.convertTo(gray, CV_8UC1, 1 / 255.0);
+    }
+
+    cv::Rect new_rect(0,0,gray.cols, gray.rows);
+    //cv::Rect new_rect(15,5,gray.cols, gray.rows-10);
+    rect = new_rect;
+}
+bool detectAndDraw( cv::Mat& img, cv::Rect & rect )
+{
+    string xmlPath="/home/yjwudi/opencv/opencv/data/haarcascades/haarcascade_frontalface_alt.xml";
+    cv::CascadeClassifier cascade;
+    if(!cascade.load(xmlPath))
+    {
+        cout << "no xml file\n";
+        return false;
+    }
+    vector<cv::Rect> faces;  //创建一个容器保存检测出来的脸
+    cv::Mat gray;
+    cv::cvtColor(img,gray,CV_BGR2GRAY);
+    cv::equalizeHist(gray,gray);
+    cascade.detectMultiScale(gray,faces,1.1,3,0,cv::Size(10,10),cv::Size(100,100)); //检测人脸
+    if(faces.size()<1)
+    {
+        return false;
+    }
+    rect = faces[0];
+
+    cv::rectangle(img,faces[0],cv::Scalar(0,0,255),2,8); //画出脸部矩形
+    cv::imshow("faces",img);
+    cv::waitKey(0);
+
+    return true;
 }
 
 

@@ -162,7 +162,9 @@ public:
     ) const
     {
         const double ratio = N/(N-1.0);
-        return p*ratio + 0.3;
+        //return p*ratio + 0.3;
+        double new_x = p.x()*ratio+0.3, new_y = p.y()*ratio+0.3;
+        return dvector<double,2>(new_x, new_y);
     }
 
 // -----------------------------

@@ -10,6 +10,8 @@
 #include "../array2d.h"
 #include "object_detector.h"
 #include "../image_transforms/assign_image.h"
+#include "../image_transforms/fhog.h"
+#include "../image_transforms/spatial_filtering.h"
 
 //namespace dlib
 //{
@@ -65,7 +67,7 @@
     };
 
     //inline void serialize   (const default_fhog_feature_extractor&, std::ostream&) {}
-    //inline void deserialize (default_fhog_feature_extractor&, std::istream&) {}
+    inline void deserialize (default_fhog_feature_extractor&, std::istream&) {}
 
 // ----------------------------------------------------------------------------------------
 
@@ -349,13 +351,13 @@
             const scan_fhog_pyramid<T,U>& item,
             std::ostream& out
         );
-
+*/
         template <typename T, typename U>
         friend void deserialize (
             scan_fhog_pyramid<T,U>& item,
             std::istream& in 
         );
-*/
+
     private:
         inline void compute_fhog_window_size(
             unsigned long& width,
@@ -489,7 +491,7 @@
         serialize(item.nuclear_norm_regularization_strength, out);
         serialize(item.get_num_dimensions(), out);
     }
-
+*/
 // ----------------------------------------------------------------------------------------
 
     template <typename T, typename U>
@@ -523,7 +525,7 @@
         if (item.get_num_dimensions() != dims)
             throw serialization_error("Number of dimensions in serialized scan_fhog_pyramid doesn't match the expected number.");
     }
-*/
+
 // ----------------------------------------------------------------------------------------
 // ----------------------------------------------------------------------------------------
 //                         scan_fhog_pyramid member functions

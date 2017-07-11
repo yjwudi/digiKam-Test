@@ -7,7 +7,7 @@
 #include "geomotry/drectangle.h"
 #include "geomotry/vector.h"
 //#include "geometry/border_enumerator.h"
-//#include "geometry/point_transforms.h"
+//#include "geomotry/point_transforms.h"
 
 #endif // DLIB_GEOMETRy_HEADER
 

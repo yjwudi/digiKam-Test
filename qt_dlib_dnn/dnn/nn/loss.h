@@ -96,13 +96,13 @@
 
         friend void serialize(const loss_binary_hinge_& , std::ostream& out)
         {
-            serialize_str("loss_binary_hinge_", out);
+            serialize("loss_binary_hinge_", out);
         }
 
         friend void deserialize(loss_binary_hinge_& , std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             if (version != "loss_binary_hinge_")
                 throw serialization_error("Unexpected version found while deserializing  loss_binary_hinge_.");
         }
@@ -213,13 +213,13 @@
 
         friend void serialize(const loss_binary_log_& , std::ostream& out)
         {
-            serialize_str("loss_binary_log_", out);
+            serialize("loss_binary_log_", out);
         }
 
         friend void deserialize(loss_binary_log_& , std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             if (version != "loss_binary_log_")
                 throw serialization_error("Unexpected version found while deserializing  loss_binary_log_.");
         }
@@ -330,13 +330,13 @@
 
         friend void serialize(const loss_multiclass_log_& , std::ostream& out)
         {
-            serialize_str("loss_multiclass_log_", out);
+            serialize("loss_multiclass_log_", out);
         }
 
         friend void deserialize(loss_multiclass_log_& , std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             if (version != "loss_multiclass_log_")
                 throw serialization_error("Unexpected version found while deserializing  loss_multiclass_log_.");
         }
@@ -419,12 +419,12 @@
     {
         int version = 1;
 
-        serialize_int(version, out);
-        serialize_ulong(item.detector_width, out);
-        serialize_ulong(item.detector_height, out);
-        serializelf(item.loss_per_false_alarm, out);
-        serializelf(item.loss_per_missed_target, out);
-        serializelf(item.truth_match_iou_threshold, out);
+        serialize(version, out);
+        serialize(item.detector_width, out);
+        serialize(item.detector_height, out);
+        serialize(item.loss_per_false_alarm, out);
+        serialize(item.loss_per_missed_target, out);
+        serialize(item.truth_match_iou_threshold, out);
         serialize(item.overlaps_nms, out);
         serialize(item.overlaps_ignore, out);
     }
@@ -432,14 +432,14 @@
     inline void deserialize(mmod_options& item, std::istream& in)
     {
         int version = 0;
-        deserialize_int(version, in);
+        deserialize(version, in);
         if (version != 1)
             throw serialization_error("Unexpected version found while deserializing  mmod_options");
-        deserialize_ulong(item.detector_width, in);
-        deserialize_ulong(item.detector_height, in);
-        deserializelf(item.loss_per_false_alarm, in);
-        deserializelf(item.loss_per_missed_target, in);
-        deserializelf(item.truth_match_iou_threshold, in);
+        deserialize(item.detector_width, in);
+        deserialize(item.detector_height, in);
+        deserialize(item.loss_per_false_alarm, in);
+        deserialize(item.loss_per_missed_target, in);
+        deserialize(item.truth_match_iou_threshold, in);
         deserialize(item.overlaps_nms, in);
         deserialize(item.overlaps_ignore, in);
     }
@@ -677,14 +677,14 @@
 
         friend void serialize(const loss_mmod_& item, std::ostream& out)
         {
-            serialize_str("loss_mmod_", out);
+            serialize("loss_mmod_", out);
             serialize(item.options, out);
         }
 
         friend void deserialize(loss_mmod_& item, std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             if (version != "loss_mmod_")
                 throw serialization_error("Unexpected version found while deserializing  loss_mmod_.");
             deserialize(item.options, in);
@@ -1060,15 +1060,15 @@
 
         friend void serialize(const loss_metric_& item, std::ostream& out)
         {
-            serialize_str("loss_metric_2", out);
-            serializef(item.margin, out);
-            serializef(item.dist_thresh, out);
+            serialize("loss_metric_2", out);
+            serialize(item.margin, out);
+            serialize(item.dist_thresh, out);
         }
 
         friend void deserialize(loss_metric_& item, std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             if (version == "loss_metric_")
             {
                 // These values used to be hard coded, so for this version of the metric
@@ -1079,8 +1079,8 @@
             }
             else if (version == "loss_metric_2")
             {
-                deserializef(item.margin, in);
-                deserializef(item.dist_thresh, in);
+                deserialize(item.margin, in);
+                deserialize(item.dist_thresh, in);
             }
             else
             {
@@ -1193,13 +1193,13 @@
 
         friend void serialize(const loss_mean_squared_& , std::ostream& out)
         {
-            serialize_str("loss_mean_squared_", out);
+            serialize("loss_mean_squared_", out);
         }
 
         friend void deserialize(loss_mean_squared_& , std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             if (version != "loss_mean_squared_")
                 throw serialization_error("Unexpected version found while deserializing  loss_mean_squared_.");
         }
@@ -1312,13 +1312,13 @@
 
         friend void serialize(const loss_mean_squared_multioutput_& , std::ostream& out)
         {
-            serialize_str("loss_mean_squared_multioutput_", out);
+            serialize("loss_mean_squared_multioutput_", out);
         }
 
         friend void deserialize(loss_mean_squared_multioutput_& , std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             if (version != "loss_mean_squared_multioutput_")
                 throw serialization_error("Unexpected version found while deserializing  loss_mean_squared_.");
         }

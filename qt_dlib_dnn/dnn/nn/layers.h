@@ -183,13 +183,13 @@
 
         friend void serialize(const con_& item, std::ostream& out)
         {
-            serialize_str("con_4", out);
+            serialize("con_4", out);
             serialize(item.params, out);
-            serialize_long(_num_filters, out);
-            serialize_long(_nr, out);
-            serialize_long(_nc, out);
-            serialize_int(_stride_y, out);
-            serialize_int(_stride_x, out);
+            serialize(_num_filters, out);
+            serialize(_nr, out);
+            serialize(_nc, out);
+            serialize(_stride_y, out);
+            serialize(_stride_x, out);
             serialize(item.padding_y_, out);
             serialize(item.padding_x_, out);
             serialize(item.filters, out);
@@ -203,7 +203,7 @@
         friend void deserialize(con_& item, std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             long num_filters;
             long nr;
             long nc;
@@ -212,19 +212,19 @@
             if (version == "con_4")
             {
                 deserialize(item.params, in);
-                deserialize_long(num_filters, in);
-                deserialize_long(nr, in);
-                deserialize_long(nc, in);
-                deserialize_int(stride_y, in);
-                deserialize_int(stride_x, in);
+                deserialize(num_filters, in);
+                deserialize(nr, in);
+                deserialize(nc, in);
+                deserialize(stride_y, in);
+                deserialize(stride_x, in);
                 deserialize(item.padding_y_, in);
                 deserialize(item.padding_x_, in);
                 deserialize(item.filters, in);
                 deserialize(item.biases, in);
-                deserializelf(item.learning_rate_multiplier, in);
-                deserializelf(item.weight_decay_multiplier, in);
-                deserializelf(item.bias_learning_rate_multiplier, in);
-                deserializelf(item.bias_weight_decay_multiplier, in);
+                deserialize(item.learning_rate_multiplier, in);
+                deserialize(item.weight_decay_multiplier, in);
+                deserialize(item.bias_learning_rate_multiplier, in);
+                deserialize(item.bias_weight_decay_multiplier, in);
                 if (item.padding_y_ != _padding_y) throw serialization_error("Wrong padding_y found while deserializing  con_");
                 if (item.padding_x_ != _padding_x) throw serialization_error("Wrong padding_x found while deserializing  con_");
                 if (num_filters != _num_filters) 
@@ -421,11 +421,11 @@
 
         friend void serialize(const max_pool_& item, std::ostream& out)
         {
-            serialize_str("max_pool_2", out);
-            serialize_long(_nr, out);
-            serialize_long(_nc, out);
-            serialize_int(_stride_y, out);
-            serialize_int(_stride_x, out);
+            serialize("max_pool_2", out);
+            serialize(_nr, out);
+            serialize(_nc, out);
+            serialize(_stride_y, out);
+            serialize(_stride_x, out);
             serialize(item.padding_y_, out);
             serialize(item.padding_x_, out);
         }
@@ -433,17 +433,17 @@
         friend void deserialize(max_pool_& item, std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             long nr;
             long nc;
             int stride_y;
             int stride_x;
             if (version == "max_pool_2")
             {
-                deserialize_long(nr, in);
-                deserialize_long(nc, in);
-                deserialize_int(stride_y, in);
-                deserialize_int(stride_x, in);
+                deserialize(nr, in);
+                deserialize(nc, in);
+                deserialize(stride_y, in);
+                deserialize(stride_x, in);
                 deserialize(item.padding_y_, in);
                 deserialize(item.padding_x_, in);
             }
@@ -619,11 +619,11 @@
 
         friend void serialize(const avg_pool_& item, std::ostream& out)
         {
-            serialize_str("avg_pool_2", out);
-            serialize_long(_nr, out);
-            serialize_long(_nc, out);
-            serialize_int(_stride_y, out);
-            serialize_int(_stride_x, out);
+            serialize("avg_pool_2", out);
+            serialize(_nr, out);
+            serialize(_nc, out);
+            serialize(_stride_y, out);
+            serialize(_stride_x, out);
             serialize(item.padding_y_, out);
             serialize(item.padding_x_, out);
         }
@@ -631,7 +631,7 @@
         friend void deserialize(avg_pool_& item, std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
 
             long nr;
             long nc;
@@ -639,10 +639,10 @@
             int stride_x;
             if (version == "avg_pool_2")
             {
-                deserialize_long(nr, in);
-                deserialize_long(nc, in);
-                deserialize_int(stride_y, in);
-                deserialize_int(stride_x, in);
+                deserialize(nr, in);
+                deserialize(nc, in);
+                deserialize(stride_y, in);
+                deserialize(stride_x, in);
                 deserialize(item.padding_y_, in);
                 deserialize(item.padding_x_, in);
             }
@@ -834,9 +834,9 @@
         friend void serialize(const bn_& item, std::ostream& out)
         {
             if (mode == CONV_MODE)
-                serialize_str("bn_con2", out);
+                serialize("bn_con2", out);
             else // if FC_MODE
-                serialize_str("bn_fc2", out);
+                serialize("bn_fc2", out);
             serialize(item.params, out);
             serialize(item.gamma, out);
             serialize(item.beta, out);
@@ -856,7 +856,7 @@
         friend void deserialize(bn_& item, std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             if (mode == CONV_MODE) 
             {
                 if (version != "bn_con2")
@@ -1131,13 +1131,13 @@
 
         friend void serialize(const fc_& item, std::ostream& out)
         {
-            serialize_str("fc_2", out);
+            serialize("fc_2", out);
             serialize(item.num_outputs, out);
             serialize(item.num_inputs, out);
             serialize(item.params, out);
             serialize(item.weights, out);
             serialize(item.biases, out);
-            serialize_int((int)bias_mode, out);
+            serialize((int)bias_mode, out);
             //serialize(item.m_bias_mode, out);
             serialize(item.learning_rate_multiplier, out);
             serialize(item.weight_decay_multiplier, out);
@@ -1148,7 +1148,7 @@
         friend void deserialize(fc_& item, std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             if (version != "fc_2")
                 throw serialization_error("Unexpected version '"+version+"' found while deserializing  fc_.");
 
@@ -1158,12 +1158,12 @@
             deserialize(item.weights, in);
             deserialize(item.biases, in);
             int bmode = 0;
-            deserialize_int(bmode, in);
+            deserialize(bmode, in);
             if (bias_mode != (fc_bias_mode)bmode) throw serialization_error("Wrong fc_bias_mode found while deserializing  fc_");
-            deserializelf(item.learning_rate_multiplier, in);
-            deserializelf(item.weight_decay_multiplier, in);
-            deserializelf(item.bias_learning_rate_multiplier, in);
-            deserializelf(item.bias_weight_decay_multiplier, in);
+            deserialize(item.learning_rate_multiplier, in);
+            deserialize(item.weight_decay_multiplier, in);
+            deserialize(item.bias_learning_rate_multiplier, in);
+            deserialize(item.bias_weight_decay_multiplier, in);
         }
 
         friend std::ostream& operator<<(std::ostream& out, const fc_& item)
@@ -1310,18 +1310,18 @@
 /*
         friend void serialize(const dropout_& item, std::ostream& out)
         {
-            serialize_str("dropout_", out);
-            serializef(item.drop_rate, out);
+            serialize("dropout_", out);
+            serialize(item.drop_rate, out);
             serialize(item.mask, out);
         }
 */
         friend void deserialize(dropout_& item, std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             if (version != "dropout_")
                 throw serialization_error("Unexpected version '"+version+"' found while deserializing  dropout_.");
-            deserializef(item.drop_rate, in);
+            deserialize(item.drop_rate, in);
             deserialize(item.mask, in);
         }
 
@@ -1401,14 +1401,14 @@
 /*
         friend void serialize(const multiply_& item, std::ostream& out)
         {
-            serialize_str("multiply_", out);
-            serializef(item.val, out);
+            serialize("multiply_", out);
+            serialize(item.val, out);
         }
 */
         friend void deserialize(multiply_& item, std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             if (version == "dropout_")
             {
                 // Since we can build a multiply_ from a dropout_ we check if that's what
@@ -1422,7 +1422,7 @@
 
             if (version != "multiply_")
                 throw serialization_error("Unexpected version '"+version+"' found while deserializing  multiply_.");
-            deserializef(item.val, in);
+            deserialize(item.val, in);
         }
 
         friend std::ostream& operator<<(std::ostream& out, const multiply_& item)
@@ -1556,17 +1556,17 @@
 /*
         friend void serialize(const affine_& item, std::ostream& out)
         {
-            serialize_str("affine_", out);
+            serialize("affine_", out);
             serialize(item.params, out);
             serialize(item.gamma, out);
             serialize(item.beta, out);
-            serialize_int((int)item.mode, out);
+            serialize((int)item.mode, out);
         }
 */
         friend void deserialize(affine_& item, std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             if (version == "bn_con2")
             {
                 // Since we can build an affine_ from a bn_ we check if that's what is in
@@ -1594,7 +1594,7 @@
             deserialize(item.gamma, in);
             deserialize(item.beta, in);
             int mode;
-            deserialize_int(mode, in);
+            deserialize(mode, in);
             item.mode = (layer_mode)mode;
         }
 
@@ -1670,13 +1670,13 @@
 
         friend void serialize(const add_prev_& , std::ostream& out)
         {
-            serialize_str("add_prev_", out);
+            serialize("add_prev_", out);
         }
 
         friend void deserialize(add_prev_& , std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             if (version != "add_prev_")
                 throw serialization_error("Unexpected version '"+version+"' found while deserializing  add_prev_.");
         }
@@ -1761,13 +1761,13 @@
 
         friend void serialize(const relu_& , std::ostream& out)
         {
-            serialize_str("relu_", out);
+            serialize("relu_", out);
         }
 
         friend void deserialize(relu_& , std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             if (version != "relu_")
                 throw serialization_error("Unexpected version '"+version+"' found while deserializing  relu_.");
         }
@@ -1841,19 +1841,19 @@
 /*
         friend void serialize(const prelu_& item, std::ostream& out)
         {
-            serialize_str("prelu_", out);
+            serialize("prelu_", out);
             serialize(item.params, out);
-            serializef(item.initial_param_value, out);
+            serialize(item.initial_param_value, out);
         }
 */
         friend void deserialize(prelu_& item, std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             if (version != "prelu_")
                 throw serialization_error("Unexpected version '"+version+"' found while deserializing  prelu_.");
             deserialize(item.params, in);
-            deserializef(item.initial_param_value, in);
+            deserialize(item.initial_param_value, in);
         }
 
         friend std::ostream& operator<<(std::ostream& out, const prelu_& item)
@@ -1916,13 +1916,13 @@
 
         friend void serialize(const sig_& , std::ostream& out)
         {
-            serialize_str("sig_", out);
+            serialize("sig_", out);
         }
 
         friend void deserialize(sig_& , std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             if (version != "sig_")
                 throw serialization_error("Unexpected version '"+version+"' found while deserializing  sig_.");
         }
@@ -1984,13 +1984,13 @@
 
         friend void serialize(const htan_& , std::ostream& out)
         {
-            serialize_str("htan_", out);
+            serialize("htan_", out);
         }
 
         friend void deserialize(htan_& , std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             if (version != "htan_")
                 throw serialization_error("Unexpected version '"+version+"' found while deserializing  htan_.");
         }
@@ -2049,13 +2049,13 @@
 
         friend void serialize(const softmax_& , std::ostream& out)
         {
-            serialize_str("softmax_", out);
+            serialize("softmax_", out);
         }
 
         friend void deserialize(softmax_& , std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             if (version != "softmax_")
                 throw serialization_error("Unexpected version '"+version+"' found while deserializing  softmax_.");
         }
@@ -2183,19 +2183,19 @@
 
         friend void serialize(const concat_& item, std::ostream& out)
         {
-            serialize_str("concat_", out);
+            serialize("concat_", out);
             int count = tag_count();
-            serialize_int(count, out);
+            serialize(count, out);
         }
 
         friend void deserialize(concat_& item, std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             if (version != "concat_")
                 throw serialization_error("Unexpected version '"+version+"' found while deserializing  concat_.");
             int count_tags;
-            deserialize_int(count_tags, in);
+            deserialize(count_tags, in);
             if (count_tags != tag_count())
                 throw serialization_error("Invalid count of tags "+ std::to_string(count_tags) +", expecting " +
                                           std::to_string(tag_count()) +
@@ -2341,17 +2341,17 @@
 
         friend void serialize(const l2normalize_& item, std::ostream& out)
         {
-            serialize_str("l2normalize_", out);
-            serializelf(item.eps, out);
+            serialize("l2normalize_", out);
+            serialize(item.eps, out);
         }
 
         friend void deserialize(l2normalize_& item, std::istream& in)
         {
             std::string version;
-            deserialize_str(version, in);
+            deserialize(version, in);
             if (version != "l2normalize_")
                 throw serialization_error("Unexpected version '"+version+"' found while deserializing  l2normalize_.");
-            deserializelf(item.eps, in);
+            deserialize(item.eps, in);
         }
 
         friend std::ostream& operator<<(std::ostream& out, const l2normalize_& item)

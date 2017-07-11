@@ -925,9 +925,9 @@
                 throw serialization_error("Unexpected version found while deserializing  add_layer.");
             deserialize(*item.subnetwork, in);
             deserialize(item.details, in);
-            deserialize_bool(item.this_layer_setup_called, in);
-            deserialize_bool(item.gradient_input_is_stale, in);
-            deserialize_bool(item.get_output_and_gradient_input_disabled, in);
+            deserialize(item.this_layer_setup_called, in);
+            deserialize(item.gradient_input_is_stale, in);
+            deserialize(item.get_output_and_gradient_input_disabled, in);
             deserialize(item.x_grad, in);
             deserialize(item.cached_output, in);
             if (version == 2)
@@ -1288,9 +1288,9 @@
                 throw serialization_error("Unexpected version found while deserializing  add_layer.");
             deserialize(item.input_layer, in);
             deserialize(item.details, in);
-            deserialize_bool(item.this_layer_setup_called, in);
-            deserialize_bool(item.gradient_input_is_stale, in);
-            deserialize_bool(item.get_output_and_gradient_input_disabled, in);
+            deserialize(item.this_layer_setup_called, in);
+            deserialize(item.gradient_input_is_stale, in);
+            deserialize(item.get_output_and_gradient_input_disabled, in);
             deserialize(item.x_grad, in);
             deserialize(item.cached_output, in);
             deserialize(item.grad_final, in);

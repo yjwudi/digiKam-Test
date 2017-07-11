@@ -72,7 +72,7 @@
         )
         {
             int version = 1;
-            serialize_int(version, out);
+            serialize(version, out);
             serialize(item.rect, out);
             serialize(item.parts, out);
         }
@@ -83,7 +83,7 @@
         )
         {
             int version = 0;
-            deserialize_int(version, in);
+            deserialize(version, in);
             if (version != 1)
                 throw serialization_error("Unexpected version encountered while deserializing  full_object_detection.");
 
@@ -152,21 +152,21 @@
     inline void serialize(const mmod_rect& item, std::ostream& out)
     {
         int version = 1;
-        serialize_int(version, out);
+        serialize(version, out);
         serialize(item.rect, out);
-        serializelf(item.detection_confidence, out);
-        serialize_bool(item.ignore, out);
+        serialize(item.detection_confidence, out);
+        serialize(item.ignore, out);
     }
 
     inline void deserialize(mmod_rect& item, std::istream& in)
     {
         int version = 0;
-        deserialize_int(version, in);
+        deserialize(version, in);
         if (version != 1)
             throw serialization_error("Unexpected version found while deserializing  mmod_rect");
         deserialize(item.rect, in);
-        deserializelf(item.detection_confidence, in);
-        deserialize_bool(item.ignore, in);
+        deserialize(item.detection_confidence, in);
+        deserialize(item.ignore, in);
     }
 
 // ----------------------------------------------------------------------------------------

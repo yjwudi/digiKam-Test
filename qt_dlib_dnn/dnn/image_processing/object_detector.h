@@ -229,7 +229,7 @@
         for (unsigned long i = 0; i < item.w.size(); ++i)
             serialize(item.w[i].w, out);
     }
-
+*/
 // ----------------------------------------------------------------------------------------
 
     template <typename T>
@@ -266,7 +266,7 @@
             throw serialization_error("Unexpected version encountered while deserializing a dlib::object_detector object.");
         }
     }
-    */
+
 
 // ----------------------------------------------------------------------------------------
 // ----------------------------------------------------------------------------------------
