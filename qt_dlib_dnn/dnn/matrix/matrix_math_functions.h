@@ -3,7 +3,7 @@
 #ifndef DLIB_MATRIx_MATH_FUNCTIONS
 #define DLIB_MATRIx_MATH_FUNCTIONS 
 
-#include "matrix_math_functions_abstract.h"
+//#include "matrix_math_functions_abstract.h"
 #include "matrix_op.h"
 #include "matrix_utilities.h"
 #include "matrix.h"

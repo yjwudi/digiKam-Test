@@ -3,7 +3,7 @@
 #ifndef DLIB_DNn_CORE_H_
 #define DLIB_DNn_CORE_H_
 
-#include "core_abstract.h"
+//#include "core_abstract.h"
 #include "tensor.h"
 #include <iterator>
 #include <memory>

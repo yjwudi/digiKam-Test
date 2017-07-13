@@ -8,8 +8,7 @@
 #include "../assert.h"
 
 
-//namespace dlib
-//{
+
 
     namespace edmk5
     {
@@ -784,9 +783,7 @@
         }
     }
 
-// ----------------------------------------------------------------------------------------
 
-//}
 
 #endif // DLIB_ENTROPY_DECODER_MODEL_KERNEl_5_
 

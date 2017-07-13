@@ -6,10 +6,9 @@
 #include "../algs.h"
 #include <string>
 #include <vector>
-#include "crc32_kernel_abstract.h"
+//#include "crc32_kernel_abstract.h"
 
-//namespace dlib
-//{
+
 
     class crc32 
     {
@@ -256,7 +255,6 @@
 
 // ----------------------------------------------------------------------------------------
 
-//}
 
 #endif // DLIB_CRC32_KERNEl_1_
 

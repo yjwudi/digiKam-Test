@@ -11,6 +11,8 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <time.h>
+#include <stdlib.h>
 
 using std::cout;
 using std::endl;
@@ -91,6 +93,8 @@ int main(int argc, char *argv[])
     //std::string testf = "/home/yjwudi/face_recognizer/orl/orltest.txt";
     std::string trainf = "/home/yjwudi/face_recognizer/orl/small_train.txt";
     std::string testf = "/home/yjwudi/face_recognizer/orl/small_test.txt";
+    //std::string trainf = "/home/yjwudi/face_recognizer/orl/new_train.txt";
+    //std::string testf = "/home/yjwudi/face_recognizer/orl/new_test.txt";
     std::vector<std::string> train_vec, test_vec;
     std::vector<int> train_label, test_label;
     int i, j;
@@ -127,7 +131,8 @@ int main(int argc, char *argv[])
         cout << fname << endl;
     }
     in.close();
-
+double  start, finish;
+start = clock();
     //training
     matrix<rgb_pixel> img;
     std::vector<matrix<rgb_pixel>> faces;
@@ -148,11 +153,14 @@ int main(int argc, char *argv[])
         {
             if(cc>1)
                 break;
+            cc++;
             cout << face.top() << " " << face.left() << " " << face.bottom() << " " << face.right() << endl;
             cv::Mat gray;
             cv::Rect rect;
             preprocess_img(tmp_mat, gray, rect);
-            FullObjectDetection object = sp(gray,rect);
+            cv::Rect new_rect(face.left(), face.top(), face.right()-face.left(), face.bottom()-face.top());
+            FullObjectDetection object = sp(gray,new_rect);
+            cout << object.part(0)[0] << " " << object.part(0)[1] << endl;
             matrix<rgb_pixel> face_chip;
             extract_image_chip(img, get_face_chip_details(object,150,0.25), face_chip);
             faces.push_back(move(face_chip));
@@ -164,6 +172,8 @@ int main(int argc, char *argv[])
             assign_image(img, cv_image<rgb_pixel>(tmp_mat));
             faces.push_back(img);
         }
+        //net(faces);
+        //faces.clear();
 
     }
 
@@ -179,7 +189,10 @@ int main(int argc, char *argv[])
         }
         cout << endl;
     }
-*/
+    */
+finish = clock();//取结束时间
+printf( "%f seconds\n",(finish - start) / CLOCKS_PER_SEC);//以秒为单位显示之'
+//return 0;
     cout << "read testing...\n";
     for(i = 0; i < (int)test_vec.size(); i++)
     {
@@ -190,26 +203,22 @@ int main(int argc, char *argv[])
         //test_faces.push_back(img);
 
         int cc = 0;
-        //for (auto face : detector(img))
-        //{
+        for (auto face : detector(img))
+        {
             if(cc>1)
                 break;
-            //cout << face.top() << " " << face.left() << " " << face.bottom() << " " << face.right() << endl;
+            cc++;
+            cout << face.top() << " " << face.left() << " " << face.bottom() << " " << face.right() << endl;
             cv::Mat gray;
             cv::Rect rect;
             preprocess_img(tmp_mat, gray, rect);
-            bool flag = detectAndDraw(tmp_mat, rect);
-            if(!flag)
-            {
-                cout << "undetected\n";
-                continue;
-            }
-            FullObjectDetection object = sp(gray,rect);
+            cv::Rect new_rect(face.left(), face.top(), face.right()-face.left(), face.bottom()-face.top());
+            FullObjectDetection object = sp(gray,new_rect);
             matrix<rgb_pixel> face_chip;
             extract_image_chip(img, get_face_chip_details(object,150,0.25), face_chip);
             test_faces.push_back(move(face_chip));
-        //}
-        /*
+        }
+
         if(cc==0)
         {
             puts("bad");
@@ -217,7 +226,7 @@ int main(int argc, char *argv[])
             assign_image(img, cv_image<rgb_pixel>(tmp_mat));
             test_faces.push_back(img);
         }
-        */
+
     }
 
     std::vector<matrix<float,0,1>> test_descriptors = net(test_faces);

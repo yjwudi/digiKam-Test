@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 3.6.1, 2017-07-08T11:12:37. -->
+<!-- Written by QtCreator 3.6.1, 2017-07-12T21:25:24. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
-  <value type="QByteArray">{e9ca22c8-356c-41c6-aa08-d15af2056643}</value>
+  <value type="QByteArray">{736c74a1-a1fa-4318-b99c-a22a21427841}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -301,8 +301,8 @@
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">qt_dlib_dnn</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/yjwudi/qt_dlib_dnn/qt_dlib_dnn.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">qt_dlib_dnn2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/yjwudi/qt-project/digiKam-Test-master/qt_dlib_dnn/qt_dlib_dnn.pro</value>
     <value type="bool" key="QmakeProjectManager.QmakeRunConfiguration.UseLibrarySearchPath">true</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">qt_dlib_dnn.pro</value>

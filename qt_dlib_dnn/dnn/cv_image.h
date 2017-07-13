@@ -3,7 +3,7 @@
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/core/types_c.h>
-#include "cv_image_abstract.h"
+//#include "cv_image_abstract.h"
 #include "algs.h"
 #include "pixel.h"
 #include "matrix/matrix_mat.h"

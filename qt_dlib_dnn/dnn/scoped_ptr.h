@@ -6,7 +6,7 @@
 #include <algorithm>
 #include "noncopyable.h"
 #include "algs.h"
-#include "scoped_ptr_abstract.h"
+//#include "scoped_ptr_abstract.h"
 
 
 

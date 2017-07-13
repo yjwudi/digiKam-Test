@@ -3,7 +3,7 @@
 #ifndef DLIB_MURMUR_HAsH_3_Hh_ 
 #define DLIB_MURMUR_HAsH_3_Hh_ 
 
-#include "murmur_hash3_abstract.h"
+//#include "murmur_hash3_abstract.h"
 #include "../uintn.h"
 #include <utility>
 #include <string.h>

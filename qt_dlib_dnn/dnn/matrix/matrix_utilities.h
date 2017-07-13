@@ -3,7 +3,7 @@
 #ifndef DLIB_MATRIx_UTILITIES_
 #define DLIB_MATRIx_UTILITIES_
 
-#include "matrix_utilities_abstract.h"
+//#include "matrix_utilities_abstract.h"
 #include "matrix.h"
 #include <cmath>
 #include <complex>

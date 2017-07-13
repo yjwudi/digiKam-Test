@@ -8,7 +8,7 @@
 #include <typeinfo>
 #include <string>       // for the exceptions
 #include "../algs.h"
-#include "shared_ptr_abstract.h"
+//#include "shared_ptr_abstract.h"
 
 // Don't warn about the use of std::auto_ptr in this file.  There is a pragma at the end of
 // this file that re-enables the warning.

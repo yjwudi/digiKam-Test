@@ -6,7 +6,7 @@
 #include "../algs.h"
 #include "../is_kind.h"
 #include "matrix_fwd.h"
-#include "matrix_exp_abstract.h"
+//#include "matrix_exp_abstract.h"
 #include <iterator>
 
 //namespace dlib

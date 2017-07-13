@@ -6,7 +6,7 @@
 #include <vector>
 #include <algorithm>
 #include "../assert.h"
-#include "std_vector_c_abstract.h"
+//#include "std_vector_c_abstract.h"
 #include "../serialize.h"
 #include "../is_kind.h"
 

@@ -4,11 +4,11 @@
 #define DLIB_TeNSOR_TOOLS_H_
 
 #include "tensor.h"
-#include "cudnn_dlibapi.h"
-#include "cublas_dlibapi.h"
-#include "curand_dlibapi.h"
+//#include "cudnn_dlibapi.h"
+//#include "cublas_dlibapi.h"
+//#include "curand_dlibapi.h"
 #include "cpu_dlib.cpp"
-#include "cuda_dlib.h"
+//#include "cuda_dlib.h"
 #include "../rand_kernel_1.h"
 #include <memory>
 
@@ -1174,6 +1174,65 @@ namespace tt
 
 // ----------------------------------------------------------------------------------------
 
+    class enable_peer_access
+        {
+        public:
+            enable_peer_access() = delete;
+            enable_peer_access(const enable_peer_access&) = delete;
+            enable_peer_access& operator=(const enable_peer_access&) = delete;
+            enable_peer_access( int, int ){}
+            enable_peer_access( const tensor&, const tensor& ) {}
+        };
+    inline void set_device (
+                int id
+            )
+        {
+                DLIB_CASSERT(id == 0, " cuda::set_device(id) called with an invalid device id.");
+        }
+
+    inline int get_device ()
+    {
+        return 0;
+    }
+
+    class raii_set_device
+        {
+        public:
+            raii_set_device() = delete;
+            raii_set_device(const raii_set_device&) = delete;
+            raii_set_device& operator=(const raii_set_device&) = delete;
+
+            raii_set_device(int dev)
+            {
+                prev_dev = get_device();
+                set_device(dev);
+            }
+
+            raii_set_device(const tensor& dev)
+            {
+                prev_dev = get_device();
+                set_device(dev.device_id());
+            }
+
+            void operator() (int dev)
+            {
+                set_device(dev);
+            }
+
+            void operator() (const tensor& dev)
+            {
+                set_device(dev.device_id());
+            }
+
+            ~raii_set_device() noexcept(false)
+            {
+                set_device(prev_dev);
+            }
+
+        private:
+            int prev_dev;
+        };
+
     class multi_device_tensor_averager
     {
         /*!
@@ -1187,6 +1246,11 @@ namespace tt
         multi_device_tensor_averager& operator=(const multi_device_tensor_averager&) = delete;
 
         multi_device_tensor_averager() = default;
+
+        inline bool can_access_peer (int , int )
+        { return false; }
+        inline bool can_access_peer (const tensor& , const tensor& )
+        { return false; }
 
         void set(
             std::vector<tensor*> items
@@ -1304,7 +1368,7 @@ namespace tt
         }
 
     private:
-        std::vector<std::unique_ptr< cuda::enable_peer_access>> epa;
+        std::vector<std::unique_ptr< enable_peer_access>> epa;
         std::vector<std::vector<tensor*>> accessible_groups;
         float scale;
 

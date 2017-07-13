@@ -3,7 +3,6 @@
 #ifndef DLIB_ARRAY_KERNEl_2_
 #define DLIB_ARRAY_KERNEl_2_
 
-#include "array_kernel_abstract.h"
 #include "../interfaces/enumerable.h"
 #include "../algs.h"
 #include "../serialize.h"
@@ -72,9 +71,6 @@
         typedef array expand_1c_c;
         typedef array expand_1d;
         typedef array expand_1d_c;
-
-
-
 
         typedef T type;
         typedef T value_type;
@@ -265,8 +261,8 @@
         try
         {
             unsigned long max_size, size;
-            //deserialize(max_size,in);
-            //deserialize(size,in);
+            deserialize(max_size,in);
+            deserialize(size,in);
             item.set_max_size(max_size);
             item.set_size(size);
             for (unsigned long i = 0; i < size; ++i)
@@ -467,10 +463,7 @@
         typename T,
         typename mem_manager
         >
-    void array<T,mem_manager>::
-    swap (
-        array<T,mem_manager>& item
-    )
+    void array<T,mem_manager>::swap(array<T,mem_manager>& item)
     {
         unsigned long    array_size_temp        = item.array_size;
         unsigned long    max_array_size_temp    = item.max_array_size;
@@ -500,9 +493,7 @@
         typename T,
         typename mem_manager
         >
-    bool array<T,mem_manager>::
-    at_start (
-    ) const
+    bool array<T,mem_manager>::at_start() const
     {
         return _at_start;
     }
@@ -513,9 +504,7 @@
         typename T,
         typename mem_manager
         >
-    void array<T,mem_manager>::
-    reset (
-    ) const
+    void array<T,mem_manager>::reset () const
     {
         _at_start = true;
         pos = 0;
@@ -527,9 +516,7 @@
         typename T,
         typename mem_manager
         >
-    bool array<T,mem_manager>::
-    current_element_valid (
-    ) const
+    bool array<T,mem_manager>::current_element_valid () const
     {
         return pos != 0;
     }
@@ -540,9 +527,7 @@
         typename T,
         typename mem_manager
         >
-    const T& array<T,mem_manager>::
-    element (
-    ) const
+    const T& array<T,mem_manager>::element () const
     {
         // make sure requires clause is not broken
         DLIB_ASSERT(this->current_element_valid(),
@@ -560,9 +545,7 @@
         typename T,
         typename mem_manager
         >
-    T& array<T,mem_manager>::
-    element (
-    )
+    T& array<T,mem_manager>::element()
     {
         // make sure requires clause is not broken
         DLIB_ASSERT(this->current_element_valid(),
@@ -573,6 +556,7 @@
 
         return *pos;
     }
+    
 
 // ----------------------------------------------------------------------------------------
 
@@ -580,9 +564,7 @@
         typename T,
         typename mem_manager
         >
-    bool array<T,mem_manager>::
-    move_next (
-    ) const
+    bool array<T,mem_manager>::move_next() const
     {
         if (!_at_start)
         {
@@ -622,9 +604,7 @@
         typename T,
         typename mem_manager
         >
-    void array<T,mem_manager>::
-    sort (
-    )
+    void array<T,mem_manager>::sort()
     {
         if (this->size() > 1)
         {
@@ -640,10 +620,7 @@
         typename T,
         typename mem_manager
         >
-    void array<T,mem_manager>::
-    resize (
-        unsigned long new_size
-    )
+    void array<T,mem_manager>::resize(unsigned long new_size)
     {
         if (this->max_size() < new_size)
         {
@@ -668,9 +645,7 @@
         typename T,
         typename mem_manager
         >
-    T& array<T,mem_manager>::
-    back (
-    ) 
+    T& array<T,mem_manager>::back() 
     {
         // make sure requires clause is not broken
         DLIB_ASSERT( this->size() > 0 , 
@@ -689,9 +664,7 @@
         typename T,
         typename mem_manager
         >
-    const T& array<T,mem_manager>::
-    back (
-    ) const
+    const T& array<T,mem_manager>::back() const
     {
         // make sure requires clause is not broken
         DLIB_ASSERT( this->size() > 0 , 
@@ -710,10 +683,7 @@
         typename T,
         typename mem_manager
         >
-    void array<T,mem_manager>::
-    pop_back (
-        T& item
-    ) 
+    void array<T,mem_manager>::pop_back(T& item) 
     {
         // make sure requires clause is not broken
         DLIB_ASSERT( this->size() > 0 , 
@@ -733,9 +703,7 @@
         typename T,
         typename mem_manager
         >
-    void array<T,mem_manager>::
-    pop_back (
-    ) 
+    void array<T,mem_manager>::pop_back() 
     {
         // make sure requires clause is not broken
         DLIB_ASSERT( this->size() > 0 , 
@@ -754,10 +722,7 @@
         typename T,
         typename mem_manager
         >
-    void array<T,mem_manager>::
-    push_back (
-        T& item
-    ) 
+    void array<T,mem_manager>::push_back(T& item) 
     {
         if (this->max_size() == this->size())
         {
@@ -779,18 +744,6 @@
         }
     }
 
-// ----------------------------------------------------------------------------------------
-/*
-    template <typename T, typename MM>
-    struct is_array <array<T,MM> >  
-    {
-        const static bool value = true;
-    };
-    */
-
-// ----------------------------------------------------------------------------------------
-
-//}
 
 #endif // DLIB_ARRAY_KERNEl_2_
 

@@ -3,10 +3,10 @@
 #ifndef DLIB_DNn_TENSOR_H_
 #define DLIB_DNn_TENSOR_H_
 
-#include "tensor_abstract.h"
+//#include "tensor_abstract.h"
 #include <cstring>
 #include "../matrix.h"
-#include "cudnn_dlibapi.h"
+//#include "cudnn_dlibapi.h"
 #include "gpu_data.h"
 #include "../byte_orderer/byte_orderer_kernel_1.h"
 #include <memory>

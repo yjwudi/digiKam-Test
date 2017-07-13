@@ -3,7 +3,7 @@
 #ifndef DLIB_uNSERIALIZE_Hh_
 #define DLIB_uNSERIALIZE_Hh_
 
-#include "unserialize_abstract.h"
+//#include "unserialize_abstract.h"
 
 #include "../serialize.h"
 #include "../algs.h"

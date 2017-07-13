@@ -3,7 +3,7 @@
 #ifndef DLIB_DNn_LAYERS_H_
 #define DLIB_DNn_LAYERS_H_
 
-#include "layers_abstract.h"
+//#include "layers_abstract.h"
 #include "tensor.h"
 #include "core.h"
 #include <iostream>

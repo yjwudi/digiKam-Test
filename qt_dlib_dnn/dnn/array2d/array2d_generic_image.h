@@ -6,8 +6,7 @@
 #include "array2d_kernel.h"
 #include "../generic_image.h"
 
-//namespace dlib
-//{
+
     template <typename T, typename mm>
     struct image_traits<array2d<T,mm> >
     {
@@ -61,7 +60,6 @@
         return img.width_step(); 
     }
 
-//}
 
 #endif // DLIB_ARRAY2D_GENERIC_iMAGE_Hh_
 

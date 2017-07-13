@@ -4,7 +4,7 @@
 #define DLIB_FULL_OBJECT_DeTECTION_Hh_
 
 #include "../geometry.h"
-#include "full_object_detection_abstract.h"
+//#include "full_object_detection_abstract.h"
 #include <vector>
 #include "../serialize.h"
 
@@ -76,6 +76,7 @@
             serialize(item.rect, out);
             serialize(item.parts, out);
         }
+
 
         friend void deserialize (
             full_object_detection& item,

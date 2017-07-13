@@ -3,7 +3,7 @@
 #ifndef DLIB_VECTORStREAM_Hh_
 #define DLIB_VECTORStREAM_Hh_
 
-#include "vectorstream_abstract.h"
+//#include "vectorstream_abstract.h"
 
 #include <cstring>
 #include <iostream>

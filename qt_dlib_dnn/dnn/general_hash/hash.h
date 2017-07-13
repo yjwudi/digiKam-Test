@@ -3,7 +3,7 @@
 #ifndef DLIB_HAsH_Hh_ 
 #define DLIB_HAsH_Hh_ 
 
-#include "hash_abstract.h"
+//#include "hash_abstract.h"
 #include <vector>
 #include <string>
 #include <map>

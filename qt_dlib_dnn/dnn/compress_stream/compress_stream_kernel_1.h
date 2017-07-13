@@ -7,10 +7,8 @@
 #include <iostream>
 #include <streambuf>
 #include <cstdio>
-//#include "compress_stream_kernel_abstract.h"
 
-//namespace dlib
-//{
+
 
     template <
         typename fce,
@@ -246,7 +244,6 @@
 
 // ----------------------------------------------------------------------------------------
 
-//}
 
 #endif // DLIB_COMPRESS_STREAM_KERNEl_1_
 

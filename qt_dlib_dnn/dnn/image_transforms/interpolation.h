@@ -661,7 +661,7 @@ inline matrix<double,2,2> rotation_matrix (
         sa, ca;
     return m;
 }
-
+/*
 inline point_transform_affine inv (
     const point_transform_affine& trans
 )
@@ -669,7 +669,7 @@ inline point_transform_affine inv (
     matrix<double,2,2> im = inv(trans.get_m());
     return point_transform_affine(im, -im*trans.get_b());
 }
-
+*/
 template <typename T>
 point_transform_affine find_affine_transform (
     const std::vector<dvector<T,2> >& from_points,
@@ -702,7 +702,7 @@ point_transform_affine find_affine_transform (
     return point_transform_affine(subm(m,0,0,2,2), colm(m,2));
 };
 
-
+/*
 template <
     typename image_type1,
     typename image_type2,
@@ -762,7 +762,7 @@ point_transform_affine rotate_image (
     return rotate_image(in_img, out_img, angle, interpolate_quadratic());
 }
     
-
+*/
 // ----------------------------------------------------------------------------------------
 
 namespace impl

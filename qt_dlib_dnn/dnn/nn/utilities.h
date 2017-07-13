@@ -4,7 +4,7 @@
 #define DLIB_DNn_UTILITIES_H_
 
 #include "core.h"
-#include "utilities_abstract.h"
+//#include "utilities_abstract.h"
 //#include "../geometry.h"
 
 //namespace dlib

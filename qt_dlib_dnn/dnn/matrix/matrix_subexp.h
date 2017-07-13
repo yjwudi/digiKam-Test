@@ -3,7 +3,7 @@
 #ifndef DLIB_MATRIx_SUBEXP_
 #define DLIB_MATRIx_SUBEXP_
 
-#include "matrix_subexp_abstract.h"
+//#include "matrix_subexp_abstract.h"
 #include "matrix_op.h"
 #include "matrix.h"
 #include "../geomotry/rectangle.h"

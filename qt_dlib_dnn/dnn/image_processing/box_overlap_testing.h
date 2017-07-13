@@ -3,7 +3,7 @@
 #ifndef DLIB_BOX_OVERlAP_TESTING_Hh_
 #define DLIB_BOX_OVERlAP_TESTING_Hh_
 
-#include "box_overlap_testing_abstract.h"
+//#include "box_overlap_testing_abstract.h"
 #include "../geomotry/drectangle.h"
 #include "../geomotry/rectangle.h"
 #include <vector>

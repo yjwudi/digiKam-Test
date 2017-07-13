@@ -6,8 +6,6 @@
 #include "array2d_kernel.h"
 #include "../pixel.h"
 
-//namespace dlib
-//{
 
 // ----------------------------------------------------------------------------------------
 
@@ -24,34 +22,6 @@
     template <
         typename mem_manager
         >
-    void serialize (
-        const array2d<rgb_pixel,mem_manager>& item, 
-        std::ostream& out 
-    )   
-    {
-        try
-        {
-            // The reason the serialization is a little funny is because we are trying to
-            // maintain backwards compatibility with an older serialization format used by
-            // dlib while also encoding things in a way that lets the array2d and matrix
-            // objects have compatible serialization formats.
-            serialize(-item.nr(),out);
-            serialize(-item.nc(),out);
-
-            COMPILE_TIME_ASSERT(sizeof(rgb_pixel) == 3);
-            
-            if (item.size() != 0)
-                out.write((char*)&item[0][0], sizeof(rgb_pixel)*item.size());
-        }
-        catch (serialization_error e)
-        { 
-            throw serialization_error(e.info + "\n   while serializing object of type array2d"); 
-        }
-    }
-
-    template <
-        typename mem_manager
-        >
     void deserialize (
         array2d<rgb_pixel,mem_manager>& item, 
         std::istream& in
@@ -62,8 +32,8 @@
             COMPILE_TIME_ASSERT(sizeof(rgb_pixel) == 3);
 
             long nr, nc;
-            //deserialize(nr,in);
-           // deserialize(nc,in);
+            deserialize(nr,in);
+            deserialize(nc,in);
 
             // this is the newer serialization format
             if (nr < 0 || nc < 0)
@@ -90,35 +60,7 @@
 
 // ----------------------------------------------------------------------------------------
 
-    template <
-        typename mem_manager
-        >
-    void serialize (
-        const array2d<bgr_pixel,mem_manager>& item, 
-        std::ostream& out 
-    )   
-    {
-        try
-        {
-            // The reason the serialization is a little funny is because we are trying to
-            // maintain backwards compatibility with an older serialization format used by
-            // dlib while also encoding things in a way that lets the array2d and matrix
-            // objects have compatible serialization formats.
-            serialize(-item.nr(),out);
-            serialize(-item.nc(),out);
-
-            COMPILE_TIME_ASSERT(sizeof(bgr_pixel) == 3);
-
-            if (item.size() != 0)
-                out.write((char*)&item[0][0], sizeof(bgr_pixel)*item.size());
-        }
-        catch (serialization_error e)
-        { 
-            throw serialization_error(e.info + "\n   while serializing object of type array2d"); 
-        }
-    }
-
-    template <
+        template <
         typename mem_manager
         >
     void deserialize (
@@ -131,8 +73,8 @@
             COMPILE_TIME_ASSERT(sizeof(bgr_pixel) == 3);
 
             long nr, nc;
-            //deserialize(nr,in);
-            //deserialize(nc,in);
+            deserialize(nr,in);
+            deserialize(nc,in);
 
             // this is the newer serialization format
             if (nr < 0 || nc < 0)
@@ -163,34 +105,6 @@
     template <
         typename mem_manager
         >
-    void serialize (
-        const array2d<hsi_pixel,mem_manager>& item, 
-        std::ostream& out 
-    )   
-    {
-        try
-        {
-            // The reason the serialization is a little funny is because we are trying to
-            // maintain backwards compatibility with an older serialization format used by
-            // dlib while also encoding things in a way that lets the array2d and matrix
-            // objects have compatible serialization formats.
-            serialize(-item.nr(),out);
-            serialize(-item.nc(),out);
-
-            COMPILE_TIME_ASSERT(sizeof(hsi_pixel) == 3);
-
-            if (item.size() != 0)
-                out.write((char*)&item[0][0], sizeof(hsi_pixel)*item.size());
-        }
-        catch (serialization_error e)
-        { 
-            throw serialization_error(e.info + "\n   while serializing object of type array2d"); 
-        }
-    }
-
-    template <
-        typename mem_manager
-        >
     void deserialize (
         array2d<hsi_pixel,mem_manager>& item, 
         std::istream& in
@@ -201,8 +115,8 @@
             COMPILE_TIME_ASSERT(sizeof(hsi_pixel) == 3);
 
             long nr, nc;
-            //deserialize(nr,in);
-            //deserialize(nc,in);
+            deserialize(nr,in);
+            deserialize(nc,in);
 
             // this is the newer serialization format
             if (nr < 0 || nc < 0)
@@ -233,34 +147,6 @@
     template <
         typename mem_manager
         >
-    void serialize (
-        const array2d<rgb_alpha_pixel,mem_manager>& item, 
-        std::ostream& out 
-    )   
-    {
-        try
-        {
-            // The reason the serialization is a little funny is because we are trying to
-            // maintain backwards compatibility with an older serialization format used by
-            // dlib while also encoding things in a way that lets the array2d and matrix
-            // objects have compatible serialization formats.
-            serialize(-item.nr(),out);
-            serialize(-item.nc(),out);
-
-            COMPILE_TIME_ASSERT(sizeof(rgb_alpha_pixel) == 4);
-
-            if (item.size() != 0)
-                out.write((char*)&item[0][0], sizeof(rgb_alpha_pixel)*item.size());
-        }
-        catch (serialization_error e)
-        { 
-            throw serialization_error(e.info + "\n   while serializing object of type array2d"); 
-        }
-    }
-
-    template <
-        typename mem_manager
-        >
     void deserialize (
         array2d<rgb_alpha_pixel,mem_manager>& item, 
         std::istream& in
@@ -271,8 +157,8 @@
             COMPILE_TIME_ASSERT(sizeof(rgb_alpha_pixel) == 4);
 
             long nr, nc;
-            //deserialize(nr,in);
-            //deserialize(nc,in);
+            deserialize(nr,in);
+            deserialize(nc,in);
 
             // this is the newer serialization format
             if (nr < 0 || nc < 0)
@@ -303,32 +189,6 @@
     template <
         typename mem_manager
         >
-    void serialize (
-        const array2d<unsigned char,mem_manager>& item, 
-        std::ostream& out 
-    )   
-    {
-        try
-        {
-            // The reason the serialization is a little funny is because we are trying to
-            // maintain backwards compatibility with an older serialization format used by
-            // dlib while also encoding things in a way that lets the array2d and matrix
-            // objects have compatible serialization formats.
-            serialize(-item.nr(),out);
-            serialize(-item.nc(),out);
-
-            if (item.size() != 0)
-                out.write((char*)&item[0][0], sizeof(unsigned char)*item.size());
-        }
-        catch (serialization_error e)
-        { 
-            throw serialization_error(e.info + "\n   while serializing object of type array2d"); 
-        }
-    }
-
-    template <
-        typename mem_manager
-        >
     void deserialize (
         array2d<unsigned char,mem_manager>& item, 
         std::istream& in
@@ -337,8 +197,8 @@
         try
         {
             long nr, nc;
-            //deserialize(nr,in);
-            //deserialize(nc,in);
+            deserialize(nr,in);
+            deserialize(nc,in);
             // this is the newer serialization format
             if (nr < 0 || nc < 0)
             {
@@ -363,9 +223,7 @@
         }
     }
 
-// ----------------------------------------------------------------------------------------
 
-//}
 
 #endif // DLIB_ARRAY2D_SERIALIZE_PIXEL_OvERLOADS_Hh_
 

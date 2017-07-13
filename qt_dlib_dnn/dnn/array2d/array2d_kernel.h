@@ -3,14 +3,13 @@
 #ifndef DLIB_ARRAY2D_KERNEl_1_
 #define DLIB_ARRAY2D_KERNEl_1_
 
-#include "array2d_kernel_abstract.h"
+
 #include "../algs.h"
 #include "../interfaces/enumerable.h"
 #include "../serialize.h"
 #include "../geomotry/rectangle.h"
 
-//namespace dlib
-//{
+
     template <
         typename T,
         typename mem_manager = default_memory_manager
@@ -347,36 +346,6 @@
         array2d<T,mem_manager>& b 
     ) { a.swap(b); }   
 
-
-    template <
-        typename T,
-        typename mem_manager
-        >
-    void serialize (
-        const array2d<T,mem_manager>& item, 
-        std::ostream& out 
-    )   
-    {
-        try
-        {
-            // The reason the serialization is a little funny is because we are trying to
-            // maintain backwards compatibility with an older serialization format used by
-            // dlib while also encoding things in a way that lets the array2d and matrix
-            // objects have compatible serialization formats.
-            serialize(-item.nr(),out);
-            serialize(-item.nc(),out);
-
-            item.reset();
-            while (item.move_next())
-                serialize(item.element(),out);
-            item.reset();
-        }
-        catch (serialization_error e)
-        { 
-            throw serialization_error(e.info + "\n   while serializing object of type array2d"); 
-        }
-    }
-
     template <
         typename T,
         typename mem_manager
@@ -389,8 +358,8 @@
         try
         {
             long nr, nc;
-            //deserialize(nr,in);
-            //deserialize(nc,in);
+            deserialize(nr,in);
+            deserialize(nc,in);
 
             // this is the newer serialization format
             if (nr < 0 || nc < 0)
@@ -483,17 +452,6 @@
         }
     }
 
-// ----------------------------------------------------------------------------------------
-
-    template <typename T, typename MM>
-    struct is_array2d <array2d<T,MM> >  
-    {
-        const static bool value = true;
-    };
-
-// ----------------------------------------------------------------------------------------
-
-//}
 
 #endif // DLIB_ARRAY2D_KERNEl_1_ 
 

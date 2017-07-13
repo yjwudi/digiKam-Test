@@ -2,7 +2,7 @@
 #define DLIB_AnY_H_
 
 #include "algs.h"
-#include "any_abstract.h"
+//#include "any_abstract.h"
 #include "scoped_ptr.h"
 #include <typeinfo>
 

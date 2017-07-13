@@ -157,7 +157,7 @@
 #include "interfaces/enumerable.h"
 #include "interfaces/map_pair.h"
 #include "enable_if.h"
-#include "unicode.h"
+#include "unicode/unicode.h"
 #include "byte_orderer/byte_orderer_kernel_1.h"
 #include "float_details.h"
 #include "smart_pointers/shared_ptr.h"

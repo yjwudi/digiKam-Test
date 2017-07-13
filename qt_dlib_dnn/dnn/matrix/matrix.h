@@ -4,13 +4,13 @@
 #define DLIB_MATRIx_
 
 #include "matrix_exp.h"
-#include "matrix_abstract.h"
+//#include "matrix_abstract.h"
 #include "../algs.h"
 #include "../serialize.h"
 #include "../enable_if.h"
 #include <sstream>
 #include <algorithm>
-#include "../memory_manager.h"
+//#include "../memory_manager.h"
 #include "../is_kind.h"
 #include "matrix_data_layout.h"
 #include "matrix_assign_fwd.h"
@@ -1948,8 +1948,8 @@
         try
         {
             long nr, nc;
-            //deserialize(nr,in);
-            //deserialize(nc,in);
+            deserialize(nr,in);
+            deserialize(nc,in);
 
             // this is the newer serialization format
             if (nr < 0 || nc < 0)

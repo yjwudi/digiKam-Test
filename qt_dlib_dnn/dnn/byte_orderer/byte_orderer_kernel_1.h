@@ -3,7 +3,7 @@
 #ifndef DLIB_BYTE_ORDEREr_KERNEL_1_ 
 #define DLIB_BYTE_ORDEREr_KERNEL_1_ 
 
-#include "byte_orderer_kernel_abstract.h"
+//#include "byte_orderer_kernel_abstract.h"
 #include "../algs.h"
 
 

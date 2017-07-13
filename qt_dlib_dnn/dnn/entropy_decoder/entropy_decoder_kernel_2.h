@@ -8,8 +8,7 @@
 #include <iosfwd>
 #include "../uintn.h"
 
-//namespace dlib
-//{
+
 
     class entropy_decoder_kernel_2 
     {
@@ -117,11 +116,7 @@
     };   
    
 
-//}
 
-#ifdef NO_MAKEFILE
-#include "entropy_decoder_kernel_2.cpp"
-#endif
 
 #endif // DLIB_ENTROPY_DECODER_KERNEl_2_
 

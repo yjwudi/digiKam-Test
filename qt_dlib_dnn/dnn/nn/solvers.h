@@ -3,7 +3,7 @@
 #ifndef DLIB_DNn_SOLVERS_H_
 #define DLIB_DNn_SOLVERS_H_
 
-#include "solvers_abstract.h"
+//#include "solvers_abstract.h"
 #include "tensor.h"
 #include <iostream>
 #include "layers.h"

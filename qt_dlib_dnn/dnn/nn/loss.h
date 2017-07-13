@@ -3,7 +3,7 @@
 #ifndef DLIB_DNn_LOSS_H_
 #define DLIB_DNn_LOSS_H_
 
-#include "loss_abstract.h"
+//#include "loss_abstract.h"
 #include "core.h"
 #include "../matrix.h"
 #include "tensor_tools.h"

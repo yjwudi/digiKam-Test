@@ -5,7 +5,7 @@
 
 #include "../algs.h"
 #include "matrix_fwd.h"
-#include "matrix_data_layout_abstract.h"
+//#include "matrix_data_layout_abstract.h"
 #ifdef MATLAB_MEX_FILE
 #include <mex.h>
 #endif

@@ -2,7 +2,7 @@
 #define ASSIGN_IMAGE_H
 
 #include "../pixel.h"
-#include "assign_image_abstract.h"
+//#include "assign_image_abstract.h"
 //#include "../statistics.h"
 #include "../generic_image.h"
 #include "../cv_image.h"

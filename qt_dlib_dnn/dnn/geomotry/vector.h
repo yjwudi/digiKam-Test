@@ -4,7 +4,7 @@
 #define DLIB_VECTOr_H_
 
 #include <cmath>
-#include "vector_abstract.h"
+//#include "vector_abstract.h"
 #include "../algs.h"
 #include "../serialize.h"
 #include <functional>

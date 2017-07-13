@@ -3,7 +3,7 @@
 #ifndef DLIB_DNn_INPUT_H_
 #define DLIB_DNn_INPUT_H_
 
-#include "input_abstract.h"
+//#include "input_abstract.h"
 #include "../matrix.h"
 #include "../array2d.h"
 #include "../pixel.h"

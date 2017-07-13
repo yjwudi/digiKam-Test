@@ -84,9 +84,5 @@
    
 //}
 
-#ifdef NO_MAKEFILE
-#include "base64_kernel_1.cpp"
-#endif
-
 #endif // DLIB_BASE64_KERNEl_1_
 

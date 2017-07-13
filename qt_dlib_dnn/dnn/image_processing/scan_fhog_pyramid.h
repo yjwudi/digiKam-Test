@@ -6,15 +6,14 @@
 //#include "scan_fhog_pyramid_abstract.h"
 #include "../matrix.h"
 //#include "../image_transforms.h"
-#include "../array.h"
+#include "../array/array_kernel.h"
 #include "../array2d.h"
 #include "object_detector.h"
 #include "../image_transforms/assign_image.h"
 #include "../image_transforms/fhog.h"
 #include "../image_transforms/spatial_filtering.h"
 
-//namespace dlib
-//{
+
 
 // ----------------------------------------------------------------------------------------
 
@@ -469,29 +468,6 @@
         }
     }
 
-// ----------------------------------------------------------------------------------------
-/*
-    template <typename T, typename U>
-    void serialize (
-        const scan_fhog_pyramid<T,U>& item,
-        std::ostream& out
-    )
-    {
-        int version = 1;
-        serialize(version, out);
-        serialize(item.fe, out);
-        serialize(item.feats, out);
-        serialize(item.cell_size, out);
-        serialize(item.padding, out);
-        serialize(item.window_width, out);
-        serialize(item.window_height, out);
-        serialize(item.max_pyramid_levels, out);
-        serialize(item.min_pyramid_layer_width, out);
-        serialize(item.min_pyramid_layer_height, out);
-        serialize(item.nuclear_norm_regularization_strength, out);
-        serialize(item.get_num_dimensions(), out);
-    }
-*/
 // ----------------------------------------------------------------------------------------
 
     template <typename T, typename U>
@@ -1350,7 +1326,7 @@
 // ----------------------------------------------------------------------------------------
 // ----------------------------------------------------------------------------------------
 
-//}
+
 
 #endif // DLIB_SCAN_fHOG_PYRAMID_Hh_
 

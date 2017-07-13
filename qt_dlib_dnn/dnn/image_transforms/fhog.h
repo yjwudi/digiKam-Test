@@ -1,6 +1,6 @@
 #include "../matrix.h"
 #include "../array2d.h"
-#include "../array.h"
+#include "../array/array_kernel.h"
 #include "../geometry.h"
 #include "assign_image.h"
 //#include "draw.h"
@@ -1375,29 +1375,6 @@ namespace impl_fhog
             }
         }
     }
-
-// ------------------------------------------------------------------------------------
-
-    inline void create_fhog_bar_images (
-        array<matrix<float> >& mbars,
-        const long w
-    )
-    {
-        const long bdims = 9;
-        // Make the oriented lines we use to draw on each HOG cell.
-        mbars.resize(bdims);
-        array<array2d<unsigned char> > bars(bdims);
-        array2d<unsigned char> temp(w,w);
-        for (unsigned long i = 0; i < bars.size(); ++i)
-        {
-            assign_all_pixels(temp, 0);
-            draw_line(temp, point(w/2,0), point(w/2,w-1), 255);
-            rotate_image(temp, bars[i], i*-pi/bars.size());
-
-            mbars[i] = subm(matrix_cast<float>(mat(bars[i])), centered_rect(get_rect(bars[i]),w,w) );
-        }
-    }
-
 } // end namespace impl_fhog
 
 

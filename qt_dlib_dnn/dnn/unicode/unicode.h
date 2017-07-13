@@ -5,7 +5,7 @@
 
 #include "../uintn.h"
 #include "../algs.h"
-#include "unicode_abstract.h"
+//#include "unicode_abstract.h"
 #include <string>
 #include <cstring>
 

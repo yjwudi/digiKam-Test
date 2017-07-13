@@ -288,13 +288,10 @@
     {
         try
         {
-            /*
             serialize(item.left(),out); 
             serialize(item.top(),out); 
             serialize(item.right(),out); 
             serialize(item.bottom(),out); 
-            */
-            int aaaa = 0;
         }
         catch (serialization_error& e)
         {
@@ -309,13 +306,10 @@
     {
         try
         {
-            int aaaa = 0;
-            /*
             deserialize(item.left(),in); 
             deserialize(item.top(),in); 
             deserialize(item.right(),in); 
             deserialize(item.bottom(),in); 
-            */
         }
         catch (serialization_error& e)
         {

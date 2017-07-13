@@ -4,7 +4,7 @@
 #define DLIB_ENTROPY_ENCODER_MODEL_KERNEl_5_
 
 #include "../algs.h"
-#include "entropy_encoder_model_kernel_abstract.h"
+//#include "entropy_encoder_model_kernel_abstract.h"
 #include "../assert.h"
 
 
