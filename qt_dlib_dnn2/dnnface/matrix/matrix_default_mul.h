@@ -57,7 +57,7 @@
         const EXP1& lhs,
         const EXP2& rhs
     )
-    {std::cout << "default matrix multiply 1\n";
+    {
         matrix_assign_default(dest, lhs*rhs, 1, true);
     }
 
@@ -74,16 +74,16 @@
         const EXP1& lhs,
         const EXP2& rhs
     )
-    {std::cout << "default matrix multiply 2\n";
+    {
         const long bs = 90;
 
         // if the matrices are small enough then just use the simple multiply algorithm
         if (lhs.nc() <= 2 || rhs.nc() <= 2 || lhs.nr() <= 2 || rhs.nr() <= 2 || (lhs.size() <= bs*10 && rhs.size() <= bs*10) )
-        {std::cout << "default matrix multiply 2 b 1\n";
+        {
             matrix_assign_default(dest, lhs*rhs, 1, true);
         }
         else
-        {std::cout << "default matrix multiply 2 b 2 size: \n" << lhs.nr() << " " << lhs.nc() << " " << rhs.nr() << " " << rhs.nc() << std::endl;
+        {
             // if the lhs and rhs matrices are big enough we should use a cache friendly
             // algorithm that computes the matrix multiply in blocks.  
 
